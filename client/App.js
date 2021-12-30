@@ -1,4 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import LoginSignupPage from "./LoginSignupPage";
 
-ReactDOM.render(<div>asdf</div>, document.getElementById("root"));
+ReactDOM.render(
+  <LoginSignupPage></LoginSignupPage>,
+  document.getElementById("root")
+);
