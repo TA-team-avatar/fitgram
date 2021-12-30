@@ -1,15 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import LoginForm from './LoginForm';
+import LoginSignupPage from "./LoginSignupPage";
 
-
-const App = () => {
-
-	return (
-		<div>
-			<LoginForm></LoginForm>
-		</div>
-	);
-};
-
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <LoginSignupPage></LoginSignupPage>,
+  document.getElementById("root")
+);
