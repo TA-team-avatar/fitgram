@@ -3,21 +3,25 @@ Stripped MVP: login/signup, posting, seeing other users/clicking to see their po
 
 
 Login/Signup Page
+    Login Page Container
     Title of App
     marketing copy for App
     some kind of image in the background
 
-    Username field
-    Password field
-    Login button 
-    login with google button
-    
-    SignUp button (which opens the fields below)
-        Username
-        Password
-        athlete name
-        age 
-        submit button
+    Login Fields Container
+        Username field
+        Password field
+        Login button 
+        
+        TODO: login with google button
+        
+    Signup Button/Container
+        SignUp button (which opens the fields below)
+            Username
+            Password
+            athlete name
+            age 
+            submit button
 
 Main page dashboard (once logged in)
     navBar with log out button (MVP)
