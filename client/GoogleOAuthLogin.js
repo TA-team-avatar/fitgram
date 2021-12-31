@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
-// import dotenv from "dotenv";
 
 export default function GoogleOAuthButton() {
-  // const clientId = process.env.REACT_APP_CLIENT_ID;
-
   const onLoginFailure = (res) => {
     console.log("Login failed:", res);
   };
