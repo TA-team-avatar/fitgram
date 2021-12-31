@@ -3,9 +3,8 @@ const app = express();
 const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
-const PORT = 3000;
-
-require("dotenv").config();
+const env = require("dotenv").config();
+const PORT = process.env.PORT;
 
 app.use(cors());
 
@@ -33,4 +32,4 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => console.log(`listening at port ${PORT}`));
+app.listen(PORT, () => console.log(`Listening at port ${PORT}`));
