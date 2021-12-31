@@ -1,19 +1,37 @@
 import React, { useState, useEffect } from "react";
 
-const LoginForm = (props) => {
+const SignupForm = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [age, setAge] = useState("");
 
   const handleSubmit = e => {
     e.preventDefault();
+		console.log(fullName);
+    console.log(age);
     console.log(username);
     console.log(password);
   }
 
 	return (
-		<div className="login-wrapper">
-      <h3>Log In</h3>
+		<div className="signup-wrapper">
+      <h3>Sign Up</h3>
       <form onSubmit={handleSubmit}>
+				<div>
+          <input 
+            type="text"
+            onChange={e => setFullName(e.target.value)}
+            placeholder="Full Name"
+          />
+        </div>  
+				<div>
+          <input 
+            type="text"
+            onChange={e => setAge(e.target.value)}
+            placeholder="Age"
+          />
+        </div>  
         <div>
           <input 
             type="text" 
@@ -28,12 +46,13 @@ const LoginForm = (props) => {
             placeholder="Password"
           />
         </div>  
+				
         <div>
-          <button type="submit">Login</button>
+          <button type="submit">Sign Up</button>
         </div>
       </form>
     </div>
 	);
 };
 
-export default LoginForm;
+export default SignupForm;
