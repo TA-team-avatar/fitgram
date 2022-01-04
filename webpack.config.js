@@ -1,13 +1,14 @@
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { node } = require("webpack");
 
 module.exports = {
-	mode: process.env.NODE_ENV,
+  mode: process.env.NODE_ENV,
   entry: "/client/App.js",
-  output: { 
-		path: path.resolve(__dirname, "build"),
-		filename: "bundle.js" 
-	},
+  output: {
+    path: path.resolve(__dirname, "build"),
+    filename: "bundle.js",
+  },
   module: {
     rules: [
       {
@@ -20,28 +21,28 @@ module.exports = {
           },
         },
       },
-			{
-				test: /\.(sa|sc|c)ss$/i,
-				exclude: /node_modules/,
-				use: [
-					"style-loader",
-					// Translates CSS into CommonJS
-					"css-loader",
-					// Compiles Sass to CSS
-					"sass-loader",
-				],
-			}
+      {
+        test: /\.(sa|sc|c)ss$/i,
+        exclude: /node_modules/,
+        use: [
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
     ],
   },
-	plugins: [
-		new HtmlWebPackPlugin({
-			template: "./client/index.html",
-		}),
-	],
-	devServer: {
-		static: {
-			//directory: path.resolve(__dirname, 'build'),
-			publicPath: '/build',
-		},
-	}
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: "./client/index.html",
+    }),
+  ],
+  devServer: {
+    static: {
+      //directory: path.resolve(__dirname, 'build'),
+      publicPath: "/build",
+    },
+  },
 };
