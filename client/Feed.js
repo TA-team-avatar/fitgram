@@ -13,8 +13,6 @@ const Feed = (props) => {
 	}, [])
 
 	const workoutCards = []
-	console.log(Array.isArray(workoutsList))
-	console.log(workoutsList)
 	workoutsList.forEach((workout, i) => {
 		workoutCards.push(<WorkoutCard 
 			workoutContent={workout['workout_content']}
