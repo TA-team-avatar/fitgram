@@ -20,6 +20,11 @@ app.get("/workouts-list", queriesRouter.getWorkoutsList, (req, res) => {
   return res.status(200).json({ workoutsList });
 });
 
+//handle post-workout route to add a workout to workout_card table
+app.post("/post-workout", queriesRouter.postWorkout, (req, res) => {
+  return res.status(200).send("workout posted");
+});
+
 //global error middleware
 app.use((err, req, res, next) => {
   const defaultErr = {
