@@ -46,7 +46,7 @@ module.exports = {
     },
     proxy: {
       // "*": "https://[::1]:3000",
-      "/workoutsList/**": "http://localhost:3000",
+      "/workouts-list/**": "http://localhost:3000",
     },
   },
 };
