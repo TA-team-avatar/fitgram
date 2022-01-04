@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../.env" });
+require('dotenv').config({ path: '../.env' })
 const { Pool } = require("pg");
 
 const databaseConfig = { connectionString: process.env.DATABASE_URL };
