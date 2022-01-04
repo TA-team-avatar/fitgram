@@ -20,6 +20,7 @@ const queriesRouter = {
     return pool.query(text, params, callback);
   },
 
+  //gets the workouts list from the DB as an array of workout objects
   getWorkoutsList: (req, res, next) => {
     pool
       .query("SELECT * FROM workout_card;")
@@ -31,7 +32,28 @@ const queriesRouter = {
       .catch((err) =>
         next({
           log: "error retrieving workoutsList from database",
-          message: { err: `error received from workoutsList query` },
+          message: { err: `error received from workoutsList query: ${err}` },
+        })
+      );
+  },
+
+  //takes in athlete_id & workout_content from req.body and queries to add
+  //entry to workout_card table in the database
+  postWorkout: (req, res, next) => {
+    const { athlete_id, workout_content } = req.body;
+    console.log(athlete_id, workout_content);
+    pool
+      .query(
+        `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW(), ${athlete_id});`
+      )
+      .then((data) => {
+        console.log("workout posted");
+        return next();
+      })
+      .catch((err) =>
+        next({
+          log: "error posting workout to workout_card table in database",
+          message: { err: `error received from postWorkout query: ${err}` },
         })
       );
   },
