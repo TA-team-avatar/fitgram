@@ -14,9 +14,27 @@ const pool = new Pool(databaseConfig);
 //   pool.end();
 // });
 
-module.exports = {
+const queriesRouter = {
   query: (text, params, callback) => {
     console.log("executed query", text);
     return pool.query(text, params, callback);
   },
+
+  getWorkoutsList: (req, res, next) => {
+    pool
+      .query("SELECT * FROM workout_card;")
+      .then((workoutsListData) => {
+        if (!workoutsListData) return next({ log: "no workouts found" });
+        res.locals.workoutsList = workoutsListData.rows;
+        return next();
+      })
+      .catch((err) =>
+        next({
+          log: "error retrieving workoutsList from database",
+          message: { err: `error received from workoutsList query` },
+        })
+      );
+  },
 };
+
+module.exports = queriesRouter;
