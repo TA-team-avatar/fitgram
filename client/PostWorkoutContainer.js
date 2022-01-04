@@ -5,7 +5,7 @@ const PostWorkoutContainer = (props) => {
   return (
     <div className='post-workout-container'>
       <h3>Post workout</h3>
-      <label for="fname">Workout description:</label><br></br>
+      <label>Workout description:</label><br></br>
       <textarea type="textarea"
         id="textbox"
         name="description" 
