@@ -44,5 +44,9 @@ module.exports = {
       //directory: path.resolve(__dirname, 'build'),
       publicPath: "/build",
     },
+    proxy: {
+      // "*": "https://[::1]:3000",
+      "/workouts-list/**": "http://localhost:3000",
+    },
   },
 };
