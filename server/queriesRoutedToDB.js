@@ -32,7 +32,7 @@ const queriesRouter = {
       .catch((err) =>
         next({
           log: "error retrieving workoutsList from database",
-          message: { err: `error received from workoutsList query` },
+          message: { err: `error received from workoutsList query: ${err}` },
         })
       );
   },
@@ -41,21 +41,19 @@ const queriesRouter = {
   //entry to workout_card table in the database
   postWorkout: (req, res, next) => {
     const { athlete_id, workout_content } = req.body;
+    console.log(athlete_id, workout_content);
     pool
       .query(
-        `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES (${workout_content}, now(), ${athlete_id});`
+        `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW(), ${athlete_id});`
       )
       .then((data) => {
-        console.log(
-          "this is what was returned from query to add entry to workout_card table:  ",
-          data
-        );
+        console.log("workout posted");
         return next();
       })
       .catch((err) =>
         next({
           log: "error posting workout to workout_card table in database",
-          message: { err: `error received from postWorkout query` },
+          message: { err: `error received from postWorkout query: ${err}` },
         })
       );
   },
