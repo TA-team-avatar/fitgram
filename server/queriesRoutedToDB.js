@@ -23,7 +23,10 @@ const queriesRouter = {
   //gets the workouts list from the DB as an array of workout objects
   getWorkoutsList: (req, res, next) => {
     pool
-      .query("SELECT * FROM workout_card;")
+      .query(`SELECT a.athlete_name, w.* 
+              FROM workout_card w
+              JOIN athletes a
+                ON w.athlete_id = a._id;`)
       .then((workoutsListData) => {
         if (!workoutsListData) return next({ log: "no workouts found" });
         res.locals.workoutsList = workoutsListData.rows;
