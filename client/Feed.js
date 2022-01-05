@@ -36,14 +36,13 @@ const Feed = (props) => {
 
 const styles = {
   container: {
-    border: '1px black solid',
-    width: '50%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '10px',
+    border: "1px black solid",
+    width: "50%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "10px",
   },
 };
-
 
 export default Feed;
