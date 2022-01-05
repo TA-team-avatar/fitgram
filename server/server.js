@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const env = require("dotenv").config();
 const PORT = process.env.PORT;
 const queriesRouter = require("./queriesRoutedToDB");
+const authentification = require("./authentification");
 
 app.use(cors());
 
@@ -24,6 +25,13 @@ app.get("/workouts-list", queriesRouter.getWorkoutsList, (req, res) => {
 app.post("/post-workout", queriesRouter.postWorkout, (req, res) => {
   return res.status(200).send("workout posted");
 });
+
+app.post("/api/google-auth", 
+    authentification.google, 
+    authentification.setSessionId, 
+    (req, res) => {
+      return res.status(201).send("user add successful");
+})
 
 //global error middleware
 app.use((err, req, res, next) => {
