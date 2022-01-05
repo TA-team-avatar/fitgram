@@ -1,13 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginSignupPage from "./LoginSignupPage";
+import DashBoardContainer from "./DashboardContainer";
 
-ReactDOM.render(
-  <Router>
-    <Routes>
-      <LoginSignupPage></LoginSignupPage>
-    </Routes>
-  </Router>,
-  document.getElementById("root")
-);
+//All route should establish at the App level
+export default function App() {
+  return (
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<LoginSignupPage />}></Route>
+        <Route path="mainpage" element={<DashBoardContainer />}></Route>
+      </Routes>
+    </div>
+  );
+}
