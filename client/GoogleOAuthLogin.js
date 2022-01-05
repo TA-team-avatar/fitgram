@@ -8,6 +8,7 @@ export default function GoogleOAuthButton() {
 
   const onLoginSuccess = (res) => {
     console.log("Login successful:", res.profileObj);
+    console.log("all data from google:", res);
   };
 
   return (
