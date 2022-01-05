@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-const WorkoutCard = ({workoutContent, date, athleteId}) => {
+const WorkoutCard = ({workoutContent, date, athleteId, athleteName}) => {
 	return (
     <div style={styles.container}>
 			<div>{workoutContent}</div>
-			<div>Athlete Name: {athleteId} Date: {date}</div>
+			<div>Athlete Name: {athleteName} Date: {date}</div>
 		</div>
 	);
 };

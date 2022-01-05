@@ -11,13 +11,15 @@ const Feed = (props) => {
 			// set state
 			.then(data => setWorkoutsList(data.workoutsList));
 	}, [])
-
+  
+	// populate array with workout card components
 	const workoutCards = []
 	workoutsList.forEach((workout, i) => {
 		workoutCards.push(<WorkoutCard 
 			workoutContent={workout['workout_content']}
 			date={workout['date']}
 			athleteId={workout['athlete_id']}
+			athleteName={workout['athlete_name']}
 			key={workout['_id']}
 			>
 			</WorkoutCard>);
