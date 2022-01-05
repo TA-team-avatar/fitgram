@@ -6,12 +6,12 @@ const Feed = (props) => {
 
 	// on mount fetch workout-list from server
 	useEffect(() => {
-    fetch('/workouts-list')
+	fetch('/workouts-list')
 			.then(res => res.json())
 			// set state
 			.then(data => setWorkoutsList(data.workoutsList));
 	}, [])
-  
+
 	// populate array with workout card components
 	const workoutCards = []
 	workoutsList.forEach((workout, i) => {
@@ -30,8 +30,6 @@ const Feed = (props) => {
 			{workoutCards}
 		</div>
 	)
-
-
 };
 
 const styles = {
