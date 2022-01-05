@@ -4,7 +4,7 @@ const { node } = require("webpack");
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: ["regenerator-runtime/runtime.js", "/client/App.js"],
+  entry: ["regenerator-runtime/runtime.js", "/client/index.js"],
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",

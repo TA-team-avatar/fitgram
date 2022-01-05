@@ -16,5 +16,3 @@ CREATE TABLE IF NOT EXISTS workout_card (
     "athlete_id" serial REFERENCES athletes("_id"),
     CONSTRAINT "workout_card_id_pk" PRIMARY KEY ("_id")
 );
-
-INSERT INTO athletes VALUES (3, 'hello@world.com', 'ahash_832934y69', 'Jane Doe', 34);
