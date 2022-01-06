@@ -8,10 +8,11 @@ import DashBoardContainer from "./DashboardContainer";
 export default function App() {
   return (
     <div className="App">
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<LoginSignupPage />}></Route>
         <Route path="mainpage" element={<DashBoardContainer />}></Route>
-      </Routes>
+      </Routes> */}
+      <DashBoardContainer />
     </div>
   );
 }
