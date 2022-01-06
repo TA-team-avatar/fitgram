@@ -37,8 +37,10 @@ const authentification = {
       .query(`SELECT _id FROM athletes WHERE email_address='${email}'`)
       .then((queryData) => {
         console.log("query to select the user from athletes table ran");
+        console.log(queryData);
         //check if an athlete entry came back and if not add the user to the table
-        if (!queryData) {
+        if (queryData.rows[0] === undefined) {
+          console.log("I am inside the queryData");
           //this adds the user to the athlete table
           pool
             .query(
@@ -69,16 +71,18 @@ const authentification = {
       );
   },
 
+  //this is where we will add a cookie, but right now it gets the athlete_id from the table
+  //and sends that back as state from the server file
   setSessionId: (req, res, next) => {
     const { email } = res.locals;
     console.log(email, "email");
     pool
       .query(`SELECT _id FROM athletes WHERE email_address='${email}';`)
-      //returning multiple ID's because there are multiple entries with the same email address now
       .then((athleteIdFromDB) => {
         const userId = athleteIdFromDB.rows[0]._id;
         console.log(userId, "<- this is the athlete_id from query");
         // req.session.userId = userId;
+        // do we add cookies here
         res.locals.userId = userId;
         return next();
       })
@@ -94,6 +98,8 @@ const authentification = {
 };
 
 module.exports = authentification;
+
+// this was the walkthrough code we worked off of
 
 // const { OAuth2Client } = require('google-auth-library')
 // const client = new OAuth2Client(process.env.CLIENT_ID)
