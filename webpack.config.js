@@ -44,5 +44,10 @@ module.exports = {
       //directory: path.resolve(__dirname, 'build'),
       publicPath: "/build",
     },
+    proxy: {
+      "/workouts-list/**": "http://localhost:3000",
+      "/post-workout/**": "http://localhost:3000",
+      "/api/google-auth/**": "http://localhost:3000",
+    },
   },
 };

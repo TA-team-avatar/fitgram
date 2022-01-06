@@ -3,13 +3,15 @@ import { GoogleLogin } from "react-google-login";
 import "regenerator-runtime/runtime";
 
 export default function GoogleOAuthButton() {
+  const [userId, setUserId] = useState(null);
+
   const onLoginFailure = (googleResponse) => {
     console.log("Login failed:", googleResponse);
   };
 
   //needs to hit the server to verify tokenID
   const onLoginSuccess = async (googleResponse) => {
-    console.log("Login successful:", googleResponse.tokenId);
+    console.log("Login successful");
 
     const serverResponse = await fetch("/api/google-auth", {
       method: "POST",
@@ -19,10 +21,10 @@ export default function GoogleOAuthButton() {
       headers: {
         "Content-Type": "application/json",
       },
-    });
-    // const data = await serverResponse.json()
-
-    //store returned user somehow here?
+    })
+      .then((data) => data.json())
+      .then((id) => setUserId(id.userId))
+      .catch((err) => console.log("error received from fetch post:", err));
   };
 
   return (
@@ -36,6 +38,8 @@ export default function GoogleOAuthButton() {
         onFailure={onLoginFailure}
         cookiePolicy={"single_host_origin"}
       />
+      <br></br>
+      <p>{userId}</p>
     </div>
   );
 }

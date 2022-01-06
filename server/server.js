@@ -26,12 +26,15 @@ app.post("/post-workout", queriesRouter.postWorkout, (req, res) => {
   return res.status(200).send("workout posted");
 });
 
-app.post("/api/google-auth", 
-    authentification.google, 
-    authentification.setSessionId, 
-    (req, res) => {
-      return res.status(201).send("user add successful");
-})
+app.post(
+  "/api/google-auth",
+  authentification.google,
+  authentification.setSessionId,
+  (req, res) => {
+    const { userId } = res.locals;
+    return res.status(201).json({ userId });
+  }
+);
 
 //global error middleware
 app.use((err, req, res, next) => {

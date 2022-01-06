@@ -33,20 +33,37 @@ const authentification = {
     //for either the below which is already written to add the user to the athlete table
     // or to proceed to log them in since they already exist on the table
 
-    //this adds the user to the athlete table
     pool
-      .query(
-        `INSERT INTO athletes (athlete_name, email_address) VALUES('${name}', '${email}');`
-      )
-      .then((responseFromDB) => {
-        console.log(responseFromDB);
+      .query(`SELECT _id FROM athletes WHERE email_address='${email}'`)
+      .then((queryData) => {
+        console.log("query to select the user from athletes table ran");
+        //check if an athlete entry came back and if not add the user to the table
+        if (!queryData) {
+          //this adds the user to the athlete table
+          pool
+            .query(
+              `INSERT INTO athletes (athlete_name, email_address) VALUES('${name}', '${email}');`
+            )
+            .then((responseFromDB) => {
+              console.log("insert query to add to DB ran");
+            })
+            .catch((err) =>
+              next({
+                log: "error adding new athlete to database",
+                message: {
+                  err: `error received from authentification/new athlete adding query: ${err}`,
+                },
+              })
+            );
+        }
+
         return next();
       })
       .catch((err) =>
         next({
-          log: "error adding new athlete to database",
+          log: "error finding athlete's email in the database",
           message: {
-            err: `error received from authentification/new athlete adding query: ${err}`,
+            err: `error received while seeing if athlete's email exists in the : ${err}`,
           },
         })
       );
@@ -54,12 +71,15 @@ const authentification = {
 
   setSessionId: (req, res, next) => {
     const { email } = res.locals;
+    console.log(email, "email");
     pool
-      .query(`SELECT _id FROM athletes WHERE email_address = '${email}';`)
+      .query(`SELECT _id FROM athletes WHERE email_address='${email}';`)
       //returning multiple ID's because there are multiple entries with the same email address now
       .then((athleteIdFromDB) => {
-        req.session.userId = athleteIdFromDB;
-        console.log(athleteIdFromDB, "<- this is the athlete_id from query");
+        const userId = athleteIdFromDB.rows[0]._id;
+        console.log(userId, "<- this is the athlete_id from query");
+        // req.session.userId = userId;
+        res.locals.userId = userId;
         return next();
       })
       .catch((err) =>
