@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '../.env' })
+require("dotenv").config({ path: "../.env" });
 const { Pool } = require("pg");
 
 const databaseConfig = { connectionString: process.env.DATABASE_URL };
@@ -23,10 +23,12 @@ const queriesRouter = {
   //gets the workouts list from the DB as an array of workout objects
   getWorkoutsList: (req, res, next) => {
     pool
-      .query(`SELECT a.athlete_name, w.* 
+      .query(
+        `SELECT a.athlete_name, w.* 
               FROM workout_card w
               JOIN athletes a
-                ON w.athlete_id = a._id;`)
+                ON w.athlete_id = a._id;`
+      )
       .then((workoutsListData) => {
         if (!workoutsListData) return next({ log: "no workouts found" });
         res.locals.workoutsList = workoutsListData.rows;
@@ -50,7 +52,7 @@ const queriesRouter = {
         `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW(), ${athlete_id});`
       )
       .then((data) => {
-        console.log("workout posted");
+        console.log(data);
         return next();
       })
       .catch((err) =>
