@@ -23,6 +23,4 @@ const Feed = ({ workoutsList }) => {
   );
 };
 
-};
-
 export default Feed;
