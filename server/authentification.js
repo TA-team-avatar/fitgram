@@ -11,7 +11,7 @@ var session = require("express-session");
 const pool = new Pool(databaseConfig);
 
 const authentification = {
-  google: async (req, res, next) => {
+  googleVerify: async (req, res, next) => {
     const { token } = req.body;
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -38,10 +38,10 @@ const authentification = {
       .then((queryData) => {
         console.log("query to select the user from athletes table ran");
         console.log(queryData);
-        //check if an athlete entry came back and if not add the user to the table
+        //check if an athlete entry came back and if not add the current user to the athlete table
         if (queryData.rows[0] === undefined) {
           console.log("I am inside the queryData");
-          //this adds the user to the athlete table
+          //this adds the user to the athlete table as an athlete entry
           pool
             .query(
               `INSERT INTO athletes (athlete_name, email_address) VALUES('${name}', '${email}');`
@@ -73,22 +73,21 @@ const authentification = {
 
   //this is where we will add a cookie, but right now it gets the athlete_id from the table
   //and sends that back as state from the server file
-  setSessionId: (req, res, next) => {
+  getAthleteId: (req, res, next) => {
     const { email } = res.locals;
     console.log(email, "email");
     pool
       .query(`SELECT _id FROM athletes WHERE email_address='${email}';`)
       .then((athleteIdFromDB) => {
-        const userId = athleteIdFromDB.rows[0]._id;
-        console.log(userId, "<- this is the athlete_id from query");
-        // req.session.userId = userId;
-        // do we add cookies here
-        res.locals.userId = userId;
+        const athlete_id = athleteIdFromDB.rows[0]._id;
+        console.log(athlete_id, "<- this is the athlete_id from query");
+
+        res.locals.athlete_id = athlete_id;
         return next();
       })
       .catch((err) =>
         next({
-          log: "error finding user Id to set session Id",
+          log: "error finding athlete Id to pass as cookie",
           message: {
             err: `error received from database when querying for athlete_id: ${err}`,
           },

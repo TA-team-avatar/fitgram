@@ -28,11 +28,16 @@ app.post("/post-workout", queriesRouter.postWorkout, (req, res) => {
 
 app.post(
   "/api/google-auth",
-  authentification.google,
-  authentification.setSessionId,
+  authentification.googleVerify,
+  authentification.getAthleteId,
   (req, res) => {
-    const { userId } = res.locals;
-    return res.status(201).json({ userId });
+    //gets the userId from the middleware's res.locals (once authenticated and/or created in table)
+    //then sends it as a cookie to the front-end so state can grab it where needed
+    const { athlete_id } = res.locals;
+    res.cookie("athleteId", athlete_id, {
+      expires: new Date(Date.now() + 1800000),
+    });
+    return res.status(201).send("cookie athlete_id sent");
   }
 );
 
