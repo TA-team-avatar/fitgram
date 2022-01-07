@@ -70,3 +70,21 @@ Workouts Table
 
 for feed, query most recent entries in workoutsTable
 for specific athlete feed, query inner join using athlete_id as foreign key
+
+
+
+main page dashboard -> holds all components
+
+const [workoutState, setWorkoutState ] = useState();
+
+const stateFunc = () => {
+    setWorkoutState(something...)
+}
+
+prop drill stateFunc down into component of post workout
+
+top level component holds the state
+top level component holds a function that sets the state
+that function is drilled down to lower components
+lower components invoke it
+state is passed back up to top component by invoking function down below

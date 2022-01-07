@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
 import "regenerator-runtime/runtime";
+import Cookies from "js-cookie";
 
 export default function GoogleOAuthButton() {
-  const [userId, setUserId] = useState(null);
-
   const onLoginFailure = (googleResponse) => {
     console.log("Login failed:", googleResponse);
   };
@@ -22,8 +21,16 @@ export default function GoogleOAuthButton() {
         "Content-Type": "application/json",
       },
     })
-      .then((data) => data.json())
-      .then((id) => setUserId(id.userId))
+      //after cookie with userId is received in response, gets the cookie on the front-end
+      //and sets the state with it
+      .then((res) => {
+        console.log(res);
+        const athleteId = Cookies.get("athleteId");
+        return setUserAthleteId(athleteId);
+      })
+      //to send back json userId as state, use below
+      // .then((data) => data.json())
+      // .then((id) => {setUserId(id.userId)})
       .catch((err) => console.log("error received from fetch post:", err));
   };
 
@@ -38,8 +45,6 @@ export default function GoogleOAuthButton() {
         onFailure={onLoginFailure}
         cookiePolicy={"single_host_origin"}
       />
-      <br></br>
-      <p>{userId}</p>
     </div>
   );
 }
