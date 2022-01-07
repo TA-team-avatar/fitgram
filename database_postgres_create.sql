@@ -3,7 +3,7 @@
 CREATE TABLE IF NOT EXISTS athletes (
     "_id" serial NOT NULL, 
     "email_address" varchar NOT NULL, 
-    "password" varchar NOT NULL,
+    "password" varchar,
     "athlete_name" varchar NOT NULL,
     "age" int,
     CONSTRAINT "athletes_id_pk" PRIMARY KEY ("_id") 

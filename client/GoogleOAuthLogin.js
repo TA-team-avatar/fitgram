@@ -1,13 +1,30 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
+import "regenerator-runtime/runtime";
 
 export default function GoogleOAuthButton() {
-  const onLoginFailure = (res) => {
-    console.log("Login failed:", res);
+  const [userId, setUserId] = useState(null);
+
+  const onLoginFailure = (googleResponse) => {
+    console.log("Login failed:", googleResponse);
   };
 
-  const onLoginSuccess = (res) => {
-    console.log("Login successful:", res.profileObj);
+  //needs to hit the server to verify tokenID
+  const onLoginSuccess = async (googleResponse) => {
+    console.log("Login successful");
+
+    const serverResponse = await fetch("/api/google-auth", {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleResponse.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((data) => data.json())
+      .then((id) => setUserId(id.userId))
+      .catch((err) => console.log("error received from fetch post:", err));
   };
 
   return (
@@ -21,6 +38,8 @@ export default function GoogleOAuthButton() {
         onFailure={onLoginFailure}
         cookiePolicy={"single_host_origin"}
       />
+      <br></br>
+      <p>{userId}</p>
     </div>
   );
 }
