@@ -27,7 +27,8 @@ const queriesRouter = {
         `SELECT a.athlete_name, w.* 
               FROM workout_card w
               JOIN athletes a
-                ON w.athlete_id = a._id;`
+                ON w.athlete_id = a._id
+              ORDER BY date DESC;`
       )
       .then((workoutsListData) => {
         if (!workoutsListData) return next({ log: "no workouts found" });
