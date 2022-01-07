@@ -50,7 +50,7 @@ const PostWorkoutContainer = ({ getWorkOutsList }) => {
         <button 
           type="submit" 
           onClick={handlePost}
-          className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
+          className="bg-primary text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
           Post
         </button>
       </div>  
