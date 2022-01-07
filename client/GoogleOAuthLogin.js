@@ -1,13 +1,37 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
+import "regenerator-runtime/runtime";
+import Cookies from "js-cookie";
 
 export default function GoogleOAuthButton() {
-  const onLoginFailure = (res) => {
-    console.log("Login failed:", res);
+  const onLoginFailure = (googleResponse) => {
+    console.log("Login failed:", googleResponse);
   };
 
-  const onLoginSuccess = (res) => {
-    console.log("Login successful:", res.profileObj);
+  //needs to hit the server to verify tokenID
+  const onLoginSuccess = async (googleResponse) => {
+    console.log("Login successful");
+
+    const serverResponse = await fetch("/api/google-auth", {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleResponse.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      //after cookie with userId is received in response, gets the cookie on the front-end
+      //and sets the state with it
+      .then((res) => {
+        console.log(res);
+        const athleteId = Cookies.get("athleteId");
+        return setUserAthleteId(athleteId);
+      })
+      //to send back json userId as state, use below
+      // .then((data) => data.json())
+      // .then((id) => {setUserId(id.userId)})
+      .catch((err) => console.log("error received from fetch post:", err));
   };
 
   return (

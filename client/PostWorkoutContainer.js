@@ -1,7 +1,30 @@
-import React from "react";
-
+import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 const PostWorkoutContainer = (props) => {
+  const [body, setBody] = useState("");
+  const [athleteId, setAthleteId] = useState(Cookies.get("athleteId"));
+
+  const onBodyChange = (e) => setBody(e.target.value);
+
+  const handlePost = (e) => {
+    e.preventDefault();
+    console.log("You have clicked the submit button.");
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        athlete_id: athleteId,
+        workout_content: body,
+      }),
+    };
+
+    fetch("/post-workout", requestOptions)
+      .then((res) => console.log("Workout Posted"))
+      .catch((err) => console.log("Error: could not post workout to database"));
+  };
+
   return (
     <div className="flex mx-auto items-center justify-center shadow-lg mt-56 mx-8 mb-4 max-w-lg">
       <div className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
@@ -12,11 +35,14 @@ const PostWorkoutContainer = (props) => {
           id="textbox"
           name="description" 
           placeholder="Workout description"
+          value={body}
+          onChange={onBodyChange}
           rows={10}
           cols={50}
         /><br></br>
         <button 
           type="submit" 
+          onClick={handlePost}
           className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100">
           Post
         </button>

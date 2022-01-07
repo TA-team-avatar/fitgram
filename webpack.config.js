@@ -4,7 +4,7 @@ const { node } = require("webpack");
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: "/client/index.js",
+  entry: ["regenerator-runtime/runtime.js", "/client/index.js"],
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
@@ -45,9 +45,9 @@ module.exports = {
       publicPath: "/build",
     },
     proxy: {
-      // "*": "https://[::1]:3000",
       "/workouts-list/**": "http://localhost:3000",
       "/post-workout/**": "http://localhost:3000",
+      "/api/google-auth/**": "http://localhost:3000",
     },
   },
 };

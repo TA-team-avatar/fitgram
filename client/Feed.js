@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import WorkoutCard from "./WorkoutCard";
 
 const Feed = (props) => {
-	const [workoutsList, setWorkoutsList] = useState([]);
+  const [workoutsList, setWorkoutsList] = useState([]);
 
 	// on mount fetch workout-list from server
 	useEffect(() => {
@@ -30,8 +30,6 @@ const Feed = (props) => {
 			{workoutCards}
 		</div>
 	)
-
-
 };
 
 export default Feed;
