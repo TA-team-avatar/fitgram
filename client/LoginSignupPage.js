@@ -16,6 +16,21 @@ const LoginSignupPage = (props) => {
   return (
     <div>
       <h1 className="app-name">Follow Fit</h1>
+      <p className="tagline-copy">
+        Never go without a workout plan again. Share your daily workout with
+        friends, and follow the plans of others from your favorite celebrities
+        and influencers to the world’s best athletes and coaches.
+      </p>
+      <p>
+        Never go without a workout plan again. Share your daily workout with
+        friends, and follow the plans of others from your favorite celebrities
+        and influencers to the world’s best athletes and coaches.
+      </p>
+      <p>
+        Never go without a workout plan again. Share your daily workout with
+        friends, and follow the plans the world’s top athletes, coaches, and
+        trainers.
+      </p>
       <h3 className="tagline">marketing copy placeholder</h3>
       <LoginForm />
       <SignupForm />
