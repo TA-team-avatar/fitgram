@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 
-const PostWorkoutContainer = (props) => {
+const PostWorkoutContainer = ({ getWorkOutsList }) => {
   const [body, setBody] = useState("");
   const [athleteId, setAthleteId] = useState(Cookies.get("athleteId"));
 
@@ -11,6 +11,7 @@ const PostWorkoutContainer = (props) => {
     e.preventDefault();
     console.log("You have clicked the submit button.");
 
+    //writing to the database
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -23,6 +24,12 @@ const PostWorkoutContainer = (props) => {
     fetch("/post-workout", requestOptions)
       .then((res) => console.log("Workout Posted"))
       .catch((err) => console.log("Error: could not post workout to database"));
+
+    //post on the feed.
+    getWorkOutsList();
+
+    //reset the content of text field after post
+    setBody("");
   };
 
   return (
@@ -52,3 +59,12 @@ const PostWorkoutContainer = (props) => {
 };
 
 export default PostWorkoutContainer;
+
+// 1. move feed component state up into main page dashboard component (including the fetch
+// to the DB to set the initial state). 2. define a setState function that returns a
+// copy of DB workouts + an append of the new workout state with a hook inside of it.
+// 3. drill the workout card data's state down into the feed, where it will be rendered into
+// card components. 4. drill the change state function down into the post workout component.
+// 5. invoke the change state function in the post workout component when submit is engaged,
+// so that it simultaneously passes the state back up/down, and passes the new data to the DB
+//  for future refresh.
