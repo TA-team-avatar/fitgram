@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 const PostWorkoutContainer = (props) => {
   const [body, setBody] = useState("");
+  const [athleteId, setAthleteId] = useState(Cookies.get("athleteId"));
+
   const onBodyChange = (e) => setBody(e.target.value);
 
   const handlePost = (e) => {
@@ -12,7 +15,7 @@ const PostWorkoutContainer = (props) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        athlete_id: 1,
+        athlete_id: athleteId,
         workout_content: body,
       }),
     };
@@ -25,6 +28,8 @@ const PostWorkoutContainer = (props) => {
   return (
     <div className="post-workout-container">
       <h3>Post workout</h3>
+      {/* this was testing if the state could be grabbed from cookies  */}
+      {/* <span>{athleteId}</span> */}
       <label>Workout description:</label>
       <br></br>
       <textarea
