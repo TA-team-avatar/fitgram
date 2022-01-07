@@ -26,23 +26,12 @@ const Feed = (props) => {
 	});
 
 	return(
-		<div id="feed" style={styles.container}>
+		<div id="feed" className="grid grid-cols-1 gap-6 my-6 px-4 md:px-6 lg:px-8">
 			{workoutCards}
 		</div>
 	)
 
 
-};
-
-const styles = {
-  container: {
-    border: "1px black solid",
-    width: "50%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "10px",
-  },
 };
 
 export default Feed;

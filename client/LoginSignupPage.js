@@ -15,7 +15,7 @@ import DashBoardContainer from "./DashboardContainer";
 const LoginSignupPage = (props) => {
   return (
     <div>
-      <h1 className="app-name">Follow Fit</h1>
+      <h1 className="text-3xl font-bold underline">Follow Fit</h1>
       <h3 className="tagline">marketing copy placeholder</h3>
       <LoginForm />
       <SignupForm />
