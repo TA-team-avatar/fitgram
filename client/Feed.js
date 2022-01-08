@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
 import WorkoutCard from "./WorkoutCard";
 
-const Feed = (props) => {
-  const [workoutsList, setWorkoutsList] = useState([]);
-
-  // on mount fetch workout-list from server
-  useEffect(() => {
-    fetch("/workouts-list")
-      .then((res) => res.json())
-      // set state
-      .then((data) => setWorkoutsList(data.workoutsList));
-  }, []);
-
+const Feed = ({ workoutsList }) => {
   // populate array with workout card components
   const workoutCards = [];
   workoutsList.forEach((workout, i) => {
@@ -27,21 +17,10 @@ const Feed = (props) => {
   });
 
   return (
-    <div id="feed" style={styles.container}>
+    <div id="feed" className="grid grid-cols-1 gap-6 my-6 px-4 md:px-6 lg:px-8">
       {workoutCards}
     </div>
   );
-};
-
-const styles = {
-  container: {
-    border: "1px black solid",
-    width: "50%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "10px",
-  },
 };
 
 export default Feed;

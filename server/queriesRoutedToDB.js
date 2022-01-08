@@ -27,7 +27,8 @@ const queriesRouter = {
         `SELECT a.athlete_name, w.* 
               FROM workout_card w
               JOIN athletes a
-                ON w.athlete_id = a._id;`
+                ON w.athlete_id = a._id
+              ORDER BY date DESC;`
       )
       .then((workoutsListData) => {
         if (!workoutsListData) return next({ log: "no workouts found" });
@@ -46,13 +47,13 @@ const queriesRouter = {
   //entry to workout_card table in the database
   postWorkout: (req, res, next) => {
     const { athlete_id, workout_content } = req.body;
-    console.log(athlete_id, workout_content);
+    // console.log(athlete_id, workout_content);
     pool
       .query(
         `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW(), ${athlete_id});`
       )
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         return next();
       })
       .catch((err) =>
