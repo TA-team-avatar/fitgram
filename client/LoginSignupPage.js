@@ -23,6 +23,7 @@ const LoginSignupPage = (props) => {
 
       <nav>
         <Link to="/mainpage"> Mainpage </Link>
+        <Link to="/athletepage"> My Athlete Page </Link>
       </nav>
 
       <img

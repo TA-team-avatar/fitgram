@@ -47,7 +47,7 @@ const queriesRouter = {
   //entry to workout_card table in the database
   postWorkout: (req, res, next) => {
     const { athlete_id, workout_content } = req.body;
-    console.log(athlete_id, workout_content);
+    // console.log(athlete_id, workout_content);
     pool
       .query(
         `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW(), ${athlete_id});`
@@ -60,6 +60,68 @@ const queriesRouter = {
         next({
           log: "error posting workout to workout_card table in database",
           message: { err: `error received from postWorkout query: ${err}` },
+        })
+      );
+  },
+
+  //gets the workouts list from the DB as an array of workout objects
+  getWorkoutsByAthlete: (req, res, next) => {
+    const athleteId = req.query.id;
+
+    if (athleteId === undefined) return next({ log: "no athlete_id found" });
+
+    pool
+      .query(
+        `SELECT a.athlete_name, w.* 
+              FROM workout_card w
+              JOIN athletes a
+                ON w.athlete_id = a._id
+                WHERE a._id = ${athleteId}
+              ORDER BY date DESC;`
+      )
+      .then((workoutsListData) => {
+        // console.log(workoutsListData);
+        if (!workoutsListData.rows[0])
+          return next({ log: "no workouts found for this athlete" });
+        res.locals.workoutsList = workoutsListData.rows;
+        return next();
+      })
+      .catch((err) =>
+        next({
+          log: "error retrieving workoutsList of this athlete from database",
+          message: {
+            err: `error received from workoutsList by athlete query: ${err}`,
+          },
+        })
+      );
+  },
+
+  //gets the athlete info from the DB (just the name to start with)
+  getAthleteInfo: (req, res, next) => {
+    const athleteId = req.query.id;
+
+    if (athleteId === undefined) return next({ log: "no athlete_id found" });
+
+    pool
+      .query(
+        `SELECT athlete_name 
+        FROM athletes 
+        WHERE _id = ${athleteId};`
+      )
+      .then((dbResponse) => {
+        if (!dbResponse.rows[0]) {
+          return next({ log: "no athlete found with this id" });
+        }
+        // console.log(dbResponse.rows[0].athlete_name);
+        res.locals.athleteName = dbResponse.rows[0].athlete_name;
+        return next();
+      })
+      .catch((err) =>
+        next({
+          log: "error retrieving name of this athlete from database",
+          message: {
+            err: `error received from athlete info query by athlete id: ${err}`,
+          },
         })
       );
   },
