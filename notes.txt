@@ -1,0 +1,92 @@
+Stripped MVP: login/signup, posting, seeing other users/clicking to see their posts 
+(and add to your own list?).
+
+
+Login/Signup Page
+    Login Page Container
+    Title of App
+    marketing copy for App
+    some kind of image in the background
+
+    Login Fields Container
+        Username field
+        Password field
+        Login button 
+        
+        TODO: login with google button
+        
+    Signup Button/Container
+        SignUp button (which opens the fields below)
+            Username
+            Password
+            athlete name
+            age 
+            submit button
+
+Main page dashboard (once logged in)
+    navBar with log out button (MVP)
+
+    Workouts Feed container
+        Workout card container  
+            Workout Text (fetched)
+            Athlete name (fetched), linked to 3rd page when clicked
+            Date (fetched)
+
+    Post Workout container  
+        Workout details text field
+        post button
+        clear button
+
+Athlete Profile Page (routed to athlete name/username => '/username')
+    navBar up top
+
+    Workouts Feed Container (only workout cards included in state for specific athlete)
+        Workout card container  
+            Workout Text (fetched)
+            Athlete name (fetched), linked to 3rd page when clicked
+            Date (fetched)
+
+    Athlete Profile Card
+        Athlete name (MVP, stretch => image...etc)
+
+        const someComp = lazy(() => <someComp />)
+        container => return (<Suspense><someComp></Suspense>)
+
+
+PostgresQL Database Structure:
+
+Athletes Table
+    _id SERIAL
+    email address
+    Password
+    athlete_name
+    age
+
+Workouts Table
+    _id SERIAL
+    athlete_id (foreign key)
+    workout_text
+    date
+
+for feed, query most recent entries in workoutsTable
+for specific athlete feed, query inner join using athlete_id as foreign key
+
+
+
+main page dashboard -> holds all components
+
+const [workoutState, setWorkoutState ] = useState();
+
+const stateFunc = () => {
+    setWorkoutState(something...)
+}
+
+prop drill stateFunc down into component of post workout
+
+top level component holds the state
+top level component holds a function that sets the state
+that function is drilled down to lower components
+lower components invoke it
+state is passed back up to top component by invoking function down below
+
+
