@@ -35,7 +35,7 @@ const PostWorkoutContainer = ({ getWorkOutsList }) => {
   };
 
   return (
-    <div className="bg-neutral bg-center flex mx-auto items-center shadow-lg mt-56 mx-8 mb-4 max-w-lg">
+    <div className="bg-neutral bg-center flex flex-col flex-start mx-auto items-center shadow-lg mt-55 mx-8 my-5 max-w-lg h-max mb-6 pb-6">
       <div className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
         <h3 className="px-4 pt-3 pb-2 text-gray-800 text-lg">Post Workout</h3>
         <textarea

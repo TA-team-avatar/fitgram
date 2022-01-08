@@ -15,7 +15,7 @@ const LoginSignupPage = (props) => {
   return (
     <div className="h-screen bg-cover bg-[url('https://images.pexels.com/photos/3621168/pexels-photo-3621168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')] ">
       <div className="pt-10 ">
-        <h1 className="text-8xl font-extrabold font-sans text-center text-transparent bg-clip-text bg-gradient-to-br from-primary-400 to-secondary-600">
+        <h1 className="text-8xl font-extrabold font-sans text-center pl-5">
           fit haús
         </h1>
         <div className="flex flex-col justify-center items-center max-w-xl text-2xl mx-auto px-4 py-4 bg-neutral shadow-md rounded-lg my-10">
