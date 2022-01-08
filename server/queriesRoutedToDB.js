@@ -53,7 +53,7 @@ const queriesRouter = {
         `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW(), ${athlete_id});`
       )
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         return next();
       })
       .catch((err) =>
