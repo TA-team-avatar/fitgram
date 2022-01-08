@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Feed from "./Feed";
 import AthleteProfile from "./AthleteProfile";
+import Header from "./Header";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
 
@@ -29,10 +30,18 @@ const AthletePage = ({ athleteId }) => {
   }, []);
 
   return (
-    <div className="Athlete-Page">
-      <Feed workoutsList={workoutsList} />
-      <AthleteProfile athleteId={athleteId} />
-    </div>
+    <React.Fragment>
+      <Header />
+      <div
+        id="Athlete-Page"
+        className="bg-secondary grid grid-cols-1 gap-6 my-6 px-4 md:px-6 lg:px-8"
+      >
+        <div className="bg-neutral grid grid-cols-2 gap-2 my-6 px-4 md:px-6 lg:px-8">
+          <AthleteProfile athleteId={athleteId} />
+        </div>
+        <Feed workoutsList={workoutsList} />
+      </div>
+    </React.Fragment>
   );
 };
 

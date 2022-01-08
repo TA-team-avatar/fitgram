@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/wunderpus-photogenicus-5/scratch-project#readme",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "css-loader": "^6.5.1",
