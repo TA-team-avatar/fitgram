@@ -32,7 +32,7 @@ export default function GoogleOAuthButton() {
       .catch((err) => console.log("error received from fetch post:", err));
 
     //force to redirect
-    history("mainpage");
+    history("dashboard");
   };
 
   return (
