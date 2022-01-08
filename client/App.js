@@ -21,17 +21,16 @@ export default function App() {
   // const [authenticated, setAuthenticated] = useState(false);
   const history = useNavigate();
 
-  const RequireAuth = () => {
+  const RequireAuth = ({ Component }) => {
     if (Cookies.get("athleteId")) {
-      console.log(Cookies.get("athleteId"));
-      return <DashBoardContainer />;
+      return <Component />;
     } else {
       return (
         <div>
           <h1>Please log in to continue</h1>
           <button
             onClick={() => {
-              console.log("fail to-log");
+              console.log("failed to log in");
               return history("");
             }}
           >
@@ -45,12 +44,22 @@ export default function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<LoginSignupPage />}></Route>
+        <Route path="/" element={<LoginSignupPage />} />
+
         <Route
           path="mainpage"
           element={
-            <RequireAuth>
+            <RequireAuth Component={DashBoardContainer}>
               <DashBoardContainer />
+            </RequireAuth>
+          }
+        />
+
+        <Route
+          path="athletepage"
+          element={
+            <RequireAuth Component={AthletePage}>
+              <AthletePage />
             </RequireAuth>
           }
         />

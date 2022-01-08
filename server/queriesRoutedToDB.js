@@ -67,6 +67,7 @@ const queriesRouter = {
   //gets the workouts list from the DB as an array of workout objects
   getWorkoutsByAthlete: (req, res, next) => {
     const athleteId = req.query.id;
+    console.log(athleteId);
 
     if (athleteId === undefined) return next({ log: "no athlete_id found" });
 

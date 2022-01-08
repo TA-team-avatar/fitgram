@@ -5,7 +5,6 @@ import "regenerator-runtime/runtime";
 import Cookies from "js-cookie";
 
 export default function GoogleOAuthButton() {
-  const [userAthleteId, setUserAthleteId] = useState(Cookies.get("athleteId"));
   const history = useNavigate();
 
   const onLoginFailure = (googleResponse) => {
@@ -27,10 +26,8 @@ export default function GoogleOAuthButton() {
     })
       //after cookie with userId is received in response, gets the cookie on the front-end
       //and sets the state with it
-      .then((res) => {
-        // console.log(res);
-        const athleteId = Cookies.get("athleteId");
-        return setUserAthleteId(athleteId);
+      .then(() => {
+        console.log("OAuth verification successful");
       })
       .catch((err) => console.log("error received from fetch post:", err));
 
