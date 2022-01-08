@@ -27,9 +27,14 @@ const AthletePage = (props) => {
   return (
     <React.Fragment>
       <Header />
-      <div className="Athlete-Page">
+      <div
+        id="Athlete-Page"
+        className="bg-secondary grid grid-cols-1 gap-6 my-6 px-4 md:px-6 lg:px-8"
+      >
+        <div className="bg-neutral grid grid-cols-2 gap-2 my-6 px-4 md:px-6 lg:px-8">
+          <AthleteProfile athleteId={athleteId} />
+        </div>
         <Feed workoutsList={workoutsList} />
-        <AthleteProfile athleteId={athleteId} />
       </div>
     </React.Fragment>
   );

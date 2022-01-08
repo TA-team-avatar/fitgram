@@ -15,8 +15,6 @@ const AthleteProfile = ({ athleteId, ...rest }) => {
 
   return (
     <div className="athlete-card">
-      <div>Athlete Id: {athleteId}</div>
-      <div>Athlete Name: {athleteName}</div>
       <button
         type="submit"
         onClick={() => history("../mainpage")}
@@ -24,6 +22,8 @@ const AthleteProfile = ({ athleteId, ...rest }) => {
       >
         Main Page
       </button>
+      <div>Athlete Id: {athleteId}</div>
+      <div>Athlete Name: {athleteName}</div>
     </div>
   );
 };
