@@ -7,6 +7,7 @@ const DashboardContainer = (props) => {
 
   //handle post function takes in nothing
   const getWorkOutsList = () => {
+    console.log("getworkoutlist function is being involke");
     return (
       fetch("/workouts-list")
         .then((res) => res.json())

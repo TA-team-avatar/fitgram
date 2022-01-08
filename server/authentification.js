@@ -37,10 +37,10 @@ const authentification = {
       .query(`SELECT _id FROM athletes WHERE email_address='${email}'`)
       .then((queryData) => {
         console.log("query to select the user from athletes table ran");
-        console.log(queryData);
+        // console.log(queryData);
         //check if an athlete entry came back and if not add the current user to the athlete table
         if (queryData.rows[0] === undefined) {
-          console.log("I am inside the queryData");
+          // console.log("I am inside the queryData");
           //this adds the user to the athlete table as an athlete entry
           pool
             .query(
@@ -75,12 +75,12 @@ const authentification = {
   //and sends that back as state from the server file
   getAthleteId: (req, res, next) => {
     const { email } = res.locals;
-    console.log(email, "email");
+    // console.log(email, "email");
     pool
       .query(`SELECT _id FROM athletes WHERE email_address='${email}';`)
       .then((athleteIdFromDB) => {
         const athlete_id = athleteIdFromDB.rows[0]._id;
-        console.log(athlete_id, "<- this is the athlete_id from query");
+        // console.log(athlete_id, "<- this is the athlete_id from query");
 
         res.locals.athlete_id = athlete_id;
         return next();

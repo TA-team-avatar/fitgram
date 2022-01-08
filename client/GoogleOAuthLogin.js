@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "react-google-login";
 import "regenerator-runtime/runtime";
 import Cookies from "js-cookie";
 
 export default function GoogleOAuthButton() {
+  const history = useNavigate();
+
   const onLoginFailure = (googleResponse) => {
     console.log("Login failed:", googleResponse);
   };
@@ -24,7 +27,7 @@ export default function GoogleOAuthButton() {
       //after cookie with userId is received in response, gets the cookie on the front-end
       //and sets the state with it
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const athleteId = Cookies.get("athleteId");
         return setUserAthleteId(athleteId);
       })
@@ -32,6 +35,9 @@ export default function GoogleOAuthButton() {
       // .then((data) => data.json())
       // .then((id) => {setUserId(id.userId)})
       .catch((err) => console.log("error received from fetch post:", err));
+
+    //force to redirect
+    history("mainpage");
   };
 
   return (
@@ -44,6 +50,7 @@ export default function GoogleOAuthButton() {
         onSuccess={onLoginSuccess}
         onFailure={onLoginFailure}
         cookiePolicy={"single_host_origin"}
+        // redirectUri={"/mainpage"}
       />
     </div>
   );

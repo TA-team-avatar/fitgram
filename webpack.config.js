@@ -44,10 +44,12 @@ module.exports = {
       //directory: path.resolve(__dirname, 'build'),
       publicPath: "/build",
     },
+    historyApiFallback: true,
     proxy: {
       "/workouts-list/**": "http://localhost:3000",
       "/post-workout/**": "http://localhost:3000",
       "/api/google-auth/**": "http://localhost:3000",
+      // "/mainpage": "http://localhost:8080/mainpage",
     },
   },
 };

@@ -37,7 +37,7 @@ app.post(
     res.cookie("athleteId", athlete_id, {
       expires: new Date(Date.now() + 1800000),
     });
-    return res.status(201).send("cookie athlete_id sent");
+    return res.status(201).send("cookie sent");
   }
 );
 
