@@ -6,7 +6,7 @@ export default function Header() {
     return (
       <Toolbar>
         <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-          Cool App Name
+          fit haús
         </Typography>
       </Toolbar>
     );
