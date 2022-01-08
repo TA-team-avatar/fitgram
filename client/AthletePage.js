@@ -3,11 +3,16 @@ import Feed from "./Feed";
 import AthleteProfile from "./AthleteProfile";
 import Header from "./Header";
 import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
 
-const AthletePage = (props) => {
+const AthletePage = ({ athleteId }) => {
   const [workoutsList, setWorkoutsList] = useState([]);
 
-  const athleteId = Cookies.get("athleteId");
+  const params = useParams();
+  // console.log(params, "<- params");
+  if (!athleteId) athleteId = Cookies.get("athleteId");
+  if (params.athleteId) athleteId = params.athleteId;
+  // console.log("athleteId after useParams:", athleteId);
 
   //handle get request to find the workouts for a single athlete (from the cookies athleteId set on login)
   const getWorkOutsList = () => {

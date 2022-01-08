@@ -50,7 +50,8 @@ const queriesRouter = {
     // console.log(athlete_id, workout_content);
     pool
       .query(
-        `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW(), ${athlete_id});`
+        `INSERT INTO workout_card (workout_content, date, athlete_id) VALUES ('${workout_content}', NOW() 
+        as CurrDateTime, ${athlete_id});`
       )
       .then((data) => {
         // console.log(data);

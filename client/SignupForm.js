@@ -6,53 +6,52 @@ const SignupForm = (props) => {
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-		console.log(fullName);
+    console.log(fullName);
     console.log(age);
     console.log(username);
     console.log(password);
-  }
+  };
 
-	return (
-		<div className="signup-wrapper">
-      <h3>Sign Up</h3>
+  return (
+    <div className="my-5">
       <form onSubmit={handleSubmit}>
-				<div>
-          <input 
+        <div>
+          <input
             type="text"
-            onChange={e => setFullName(e.target.value)}
+            onChange={(e) => setFullName(e.target.value)}
             placeholder="Full Name"
           />
-        </div>  
-				<div>
-          <input 
+        </div>
+        <div>
+          <input
             type="text"
-            onChange={e => setAge(e.target.value)}
+            onChange={(e) => setAge(e.target.value)}
             placeholder="Age"
           />
-        </div>  
+        </div>
         <div>
-          <input 
-            type="text" 
-            onChange={e => setUsername(e.target.value)} 
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
           />
         </div>
         <div>
-          <input 
+          <input
             type="password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
-        </div>  
-				
+        </div>
+
         <div>
           <button type="submit">Sign Up</button>
         </div>
       </form>
     </div>
-	);
+  );
 };
 
 export default SignupForm;

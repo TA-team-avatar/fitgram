@@ -4,36 +4,35 @@ const LoginForm = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log(username);
     console.log(password);
-  }
+  };
 
-	return (
-		<div className="login-wrapper">
-      <h3>Log In</h3>
+  return (
+    <div className="my-5">
       <form onSubmit={handleSubmit}>
         <div>
-          <input 
-            type="text" 
-            onChange={e => setUsername(e.target.value)} 
+          <input
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
           />
         </div>
         <div>
-          <input 
+          <input
             type="password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
           />
-        </div>  
+        </div>
         <div>
           <button type="submit">Login</button>
         </div>
       </form>
     </div>
-	);
+  );
 };
 
 export default LoginForm;
