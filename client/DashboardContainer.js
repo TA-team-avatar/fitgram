@@ -24,16 +24,24 @@ const DashboardContainer = (props) => {
   }, []);
 
   return (
-    <div className="dashboard-container">
-      <Feed workoutsList={workoutsList} />
-      <PostWorkoutContainer getWorkOutsList={getWorkOutsList} />
-      <button
-        type="submit"
-        onClick={() => history("../athletepage")}
-        className="bg-primary text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
-      >
-        My Athlete Profile
-      </button>
+    <div id="dashboard-container">
+      <div id="nav-bar" className="bg-red50">
+        <button
+          type="submit"
+          onClick={() => history("../athletepage")}
+          className="bg-primary content-center text-white font-medium py-1 px-4 border  rounded-lg tracking-wide mr-1 hover:bg-gray-100 first-letter  "
+        >
+          Profile
+        </button>
+      </div>
+      <div className="bg-neutral grid grid-cols-2 gap-2 my-6 px-4 md:px-6 lg:px-8 relative">
+        <Feed workoutsList={workoutsList} />
+        <PostWorkoutContainer
+          id="styling-PostWorkoutCentainer"
+          className=""
+          getWorkOutsList={getWorkOutsList}
+        />
+      </div>
     </div>
   );
 };

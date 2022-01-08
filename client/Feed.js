@@ -17,7 +17,10 @@ const Feed = ({ workoutsList }) => {
   });
 
   return (
-    <div id="feed" className="grid grid-cols-1 gap-6 my-6 px-4 md:px-6 lg:px-8">
+    <div
+      id="feed"
+      className="bg-neutral rounded grid  grid-cols-1 gap-6 my-6 px-4 md:px-6 lg:px-8"
+    >
       {workoutCards}
     </div>
   );
