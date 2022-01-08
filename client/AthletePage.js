@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Feed from "./Feed";
 import AthleteProfile from "./AthleteProfile";
+import Header from "./Header";
 import Cookies from "js-cookie";
 
 const AthletePage = (props) => {
@@ -24,10 +25,13 @@ const AthletePage = (props) => {
   }, []);
 
   return (
-    <div className="Athlete-Page">
-      <Feed workoutsList={workoutsList} />
-      <AthleteProfile athleteId={athleteId} />
-    </div>
+    <React.Fragment>
+      <Header />
+      <div className="Athlete-Page">
+        <Feed workoutsList={workoutsList} />
+        <AthleteProfile athleteId={athleteId} />
+      </div>
+    </React.Fragment>
   );
 };
 
