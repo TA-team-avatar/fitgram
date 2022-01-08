@@ -44,12 +44,17 @@ module.exports = {
       //directory: path.resolve(__dirname, 'build'),
       publicPath: "/build",
     },
+    //historyApiFallback allows the react router to render specific pages without going server-side
+    //essentially we can refresh or go forward/back from non-root domain pages and allow the react-router
+    //to render client-side
     historyApiFallback: true,
     proxy: {
       "/workouts-list/**": "http://localhost:3000",
       "/post-workout/**": "http://localhost:3000",
       "/api/google-auth/**": "http://localhost:3000",
       // "/mainpage": "http://localhost:8080/mainpage",
+      "/athlete-workouts/**": "http://localhost:3000",
+      "/athlete-info": "http://localhost:3000",
     },
   },
 };

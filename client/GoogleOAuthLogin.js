@@ -26,14 +26,9 @@ export default function GoogleOAuthButton() {
     })
       //after cookie with userId is received in response, gets the cookie on the front-end
       //and sets the state with it
-      .then((res) => {
-        // console.log(res);
-        const athleteId = Cookies.get("athleteId");
-        return setUserAthleteId(athleteId);
+      .then(() => {
+        console.log("OAuth verification successful");
       })
-      //to send back json userId as state, use below
-      // .then((data) => data.json())
-      // .then((id) => {setUserId(id.userId)})
       .catch((err) => console.log("error received from fetch post:", err));
 
     //force to redirect

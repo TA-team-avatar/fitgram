@@ -21,6 +21,18 @@ app.get("/workouts-list", queriesRouter.getWorkoutsList, (req, res) => {
   return res.status(200).json({ workoutsList });
 });
 
+//handle athlete-workouts list query to get all the workouts for one athlete
+app.get("/athlete-workouts", queriesRouter.getWorkoutsByAthlete, (req, res) => {
+  const { workoutsList } = res.locals;
+  return res.status(200).json({ workoutsList });
+});
+
+//handle request to get the name of the athlete by the Id
+app.get("/athlete-info", queriesRouter.getAthleteInfo, (req, res) => {
+  const { athleteName } = res.locals;
+  return res.status(200).json({ athleteName });
+});
+
 //handle post-workout route to add a workout to workout_card table
 app.post("/post-workout", queriesRouter.postWorkout, (req, res) => {
   return res.status(200).send("workout posted");
