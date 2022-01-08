@@ -21,9 +21,9 @@ export default function App() {
   // const [authenticated, setAuthenticated] = useState(false);
   const history = useNavigate();
 
-  const RequireAuth = ({ Component }) => {
+  const RequireAuth = ({ Component, ...rest }) => {
     if (Cookies.get("athleteId")) {
-      return <Component />;
+      return <Component {...rest} />;
     } else {
       return (
         <div>
@@ -50,16 +50,16 @@ export default function App() {
           path="mainpage"
           element={
             <RequireAuth Component={DashBoardContainer}>
-              <DashBoardContainer />
+              {/* <DashBoardContainer /> */}
             </RequireAuth>
           }
         />
 
         <Route
-          path="athletepage"
+          path="athletepage/:athleteId"
           element={
             <RequireAuth Component={AthletePage}>
-              <AthletePage />
+              {/* <AthletePage /> */}
             </RequireAuth>
           }
         />

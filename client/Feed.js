@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import WorkoutCard from "./WorkoutCard";
+import { useNavigate } from "react-router-dom";
 
 const Feed = ({ workoutsList }) => {
   // populate array with workout card components
   const workoutCards = [];
+  const history = useNavigate();
   workoutsList.forEach((workout, i) => {
     workoutCards.push(
       <WorkoutCard
         workoutContent={workout["workout_content"]}
         date={workout["date"]}
-        athleteId={workout["athlete_id"]}
+        cardAthleteId={workout["athlete_id"]}
         athleteName={workout["athlete_name"]}
         key={workout["_id"]}
+        history={history}
       ></WorkoutCard>
     );
   });
