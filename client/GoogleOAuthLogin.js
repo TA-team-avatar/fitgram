@@ -36,7 +36,7 @@ export default function GoogleOAuthButton() {
   };
 
   return (
-    <div>
+    <div className="my-5">
       <GoogleLogin
         clientId={
           "467096301340-lskbsr95tqn59v25db47f1jsl5raq4g9.apps.googleusercontent.com"
@@ -45,7 +45,7 @@ export default function GoogleOAuthButton() {
         onSuccess={onLoginSuccess}
         onFailure={onLoginFailure}
         cookiePolicy={"single_host_origin"}
-        // redirectUri={"/mainpage"}
+        className="bg-primary text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
       />
     </div>
   );
