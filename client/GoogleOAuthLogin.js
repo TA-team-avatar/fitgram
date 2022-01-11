@@ -39,7 +39,7 @@ export default function GoogleOAuthButton() {
     <div className="my-5">
       <GoogleLogin
         clientId={
-          "467096301340-lskbsr95tqn59v25db47f1jsl5raq4g9.apps.googleusercontent.com"
+          "<CLIENT ID STRING FROM GOOGLE HERE>"
         }
         buttonText="Login with Google"
         onSuccess={onLoginSuccess}
