@@ -26,15 +26,16 @@ export default function App() {
       return <Component {...rest} />;
     } else {
       return (
-        <div>
-          <h1>Please log in to continue</h1>
+        <div className="grid place-content-center">
+          <h1 className="text-3xl font-extrabold font-sans text-center py-10">Please log in to continue</h1>
           <button
             onClick={() => {
               console.log("failed to log in");
               return history("");
             }}
+            className="text-3xl border-2 border-primary-500"
           >
-            Try again
+            Log in
           </button>
         </div>
       );
@@ -47,7 +48,7 @@ export default function App() {
         <Route path="/" element={<LoginSignupPage />} />
 
         <Route
-          path="mainpage"
+          path="dashboard"
           element={
             <RequireAuth Component={DashBoardContainer}>
               {/* <DashBoardContainer /> */}

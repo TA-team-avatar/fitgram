@@ -30,7 +30,8 @@ const DashboardContainer = (props) => {
     <React.Fragment>
       <Header />
       <div id="dashboard-container">
-        <div id="nav-bar" className="bg-red50">
+        <div className="flex my-5">
+          <h3 className="text-3xl text-center pl-5 mx-20">Dashboard</h3>
           <button
             type="submit"
             onClick={() => history(`../athletepage/${athleteId}`)}
@@ -43,7 +44,7 @@ const DashboardContainer = (props) => {
           <Feed workoutsList={workoutsList} />
           <PostWorkoutContainer
             id="styling-PostWorkoutCentainer"
-            className=""
+            className="box-content"
             getWorkOutsList={getWorkOutsList}
           />
         </div>

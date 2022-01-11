@@ -14,17 +14,18 @@ const AthleteProfile = ({ athleteId, ...rest }) => {
   });
 
   return (
-    <div className="athlete-card">
-      <button
-        type="submit"
-        onClick={() => history("../mainpage")}
-        className="bg-primary text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
-      >
-        Main Page
-      </button>
-      <div>Athlete Id: {athleteId}</div>
-      <div>Athlete Name: {athleteName}</div>
-    </div>
+    <React.Fragment>
+      <h3 className="text-3xl text-center pl-5 mx-20">{athleteName} Profile</h3>
+      <div className="athlete-card">
+        <button
+          type="submit"
+          onClick={() => history("../dashboard")}
+          className="bg-primary content-center text-white font-medium py-1 px-4 border  rounded-lg tracking-wide mr-1 hover:bg-gray-100 first-letter  "
+        >
+          Main Page
+        </button>
+      </div>
+    </React.Fragment>
   );
 };
 

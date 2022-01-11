@@ -32,14 +32,14 @@ export default function GoogleOAuthButton() {
       .catch((err) => console.log("error received from fetch post:", err));
 
     //force to redirect
-    history("mainpage");
+    history("dashboard");
   };
 
   return (
     <div className="my-5">
       <GoogleLogin
         clientId={
-          "467096301340-lskbsr95tqn59v25db47f1jsl5raq4g9.apps.googleusercontent.com"
+          "<CLIENT ID STRING FROM GOOGLE HERE>"
         }
         buttonText="Login with Google"
         onSuccess={onLoginSuccess}
