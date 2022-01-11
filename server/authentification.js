@@ -1,6 +1,6 @@
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(
-  "467096301340-lskbsr95tqn59v25db47f1jsl5raq4g9.apps.googleusercontent.com"
+  "<CLIENT ID STRING FROM GOOGLE HERE>"
 );
 require("dotenv").config({ path: "../.env" });
 const { Pool } = require("pg");
