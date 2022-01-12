@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.get('/db-test', async (req, res) => {
   const result = await queriesRouter.query(
-    'SELECT id, user_name, first_name, last_name, email, height, weight, password FROM public."public.users";'
+    'SELECT id, user_name, first_name, last_name, email, height, weight, password FROM users;'
   );
   console.log(result.rows);
   return res.sendStatus(200);
