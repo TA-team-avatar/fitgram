@@ -1,9 +1,15 @@
 require('dotenv').config({ path: '../.env' });
 const { Pool } = require('pg');
 
-const PG_URI = process.env.RDS_URI;
+const databaseParams = {
+  user: process.env.RDS_USERNAME,
+  host: process.env.RDS_HOSTNAME,
+  database: process.env.RDS_DBNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT,
+};
 
-const pool = new Pool(PG_URI);
+const pool = new Pool(databaseParams);
 
 const queriesRouter = {
   query: (text, params, callback) => {
