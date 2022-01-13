@@ -15,14 +15,6 @@ app.use(cors());
  */
 app.use(express.json());
 
-app.get('/db-test', async (req, res) => {
-  const result = await queriesRouter.query(
-    'SELECT id, user_name, first_name, last_name, email, height, weight, password FROM users;'
-  );
-  console.log(result.rows);
-  return res.sendStatus(200);
-});
-
 //handle workouts-list query for workout cards data
 app.get('/workouts-list', queriesRouter.getWorkoutsList, (req, res) => {
   const { workoutsList } = res.locals;
