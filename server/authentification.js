@@ -16,7 +16,7 @@ const authentification = {
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience:
-        "467096301340-lskbsr95tqn59v25db47f1jsl5raq4g9.apps.googleusercontent.com",
+        "<INSERT GOOGLE CLIENT ID HERE>",
     });
     if (!ticket) {
       return next({

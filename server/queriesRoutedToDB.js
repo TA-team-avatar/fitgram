@@ -1,18 +1,15 @@
 require('dotenv').config({ path: '../.env' });
 const { Pool } = require('pg');
 
-const databaseConfig = { connectionString: process.env.DATABASE_URL };
+const databaseParams = {
+  user: process.env.RDS_USERNAME,
+  host: process.env.RDS_HOSTNAME,
+  database: process.env.RDS_DBNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT,
+};
 
-//creating a new pool
-const pool = new Pool(databaseConfig);
-
-// pool.query("SELECT NOW()", (err, res) => {
-//   console.log(`error: ${err}`);
-//   console.log(`response: ${JSON.parse(JSON.stringify(res))}`);
-//   console.log("Starting...");
-//   console.log(err, res);
-//   pool.end();
-// });
+const pool = new Pool(databaseParams);
 
 const queriesRouter = {};
 
