@@ -11,29 +11,6 @@ const databaseParams = {
 
 const pool = new Pool(databaseParams);
 
-const queriesRouter = {};
-
-// get all forums for all users
-queriesRouter.getForumsAllUsers = async (req, res, next) => {
-  const getForumsAllUsersQuery = `SELECT * FROM public.forums ORDER BY date_created`;
-  try {
-    const getAllForums = await db.query(getForumsAllUsersQuery);
-    if (getAllForums) {
-      console.log(`from getForumsAllUsers: `, data);
-      return next();
-    }
-  } catch (err) {
-    return next({
-      log: 'error retrieving all forums from database',
-      message: { err: `error received from getAllForums query: ${err}` },
-    });
-  }
-};
-
-// get all forums for authorized user
-
-// get all routines for authorized user
-
 const queriesRouter = {
   query: (text, params, callback) => {
     console.log('executed query', text);
