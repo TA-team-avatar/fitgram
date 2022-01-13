@@ -1,19 +1,27 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
-const env = require('dotenv').config();
-const PORT = process.env.PORT || 3000;
 const queriesRouter = require('./queriesRoutedToDB');
 const authentification = require('./authentification');
+require('dotenv').config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+const userRouter = require('./routes/users.js');
+const sessionRouter = require('./routes/sessions.js');
+const routineRouter = require('./routes/routines.js');
+const forumRouter = require('./routes/forums.js');
 
 app.use(cors());
-
-/**
- * handle parsing request body
- */
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/user', userRouter);
+app.use('/session', sessionRouter);
+app.use('/routine', routineRouter);
+app.use('/forum', forumRouter);
 
 //handle workouts-list query for workout cards data
 app.get('/workouts-list', queriesRouter.getWorkoutsList, (req, res) => {
