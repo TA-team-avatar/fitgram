@@ -16,7 +16,7 @@ const forumRouter = require('./routes/forums.js');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.bodyParser({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', userRouter);
 app.use('/session', sessionRouter);

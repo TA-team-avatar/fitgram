@@ -29,9 +29,20 @@ routinesController.getRoutines = async (req, res, next) => {
 };
 
 routinesController.deleteRoutine = async (req, res, next) => {
-  // const queryRoutine =
+  const { id } = req.body;
+  const queryRoutine = 'DELETE FROM routines WHERE id = $1';
+  const paramRoutine = [id];
+
+  const queryRoutineWorkout =
+    'DELETE FROM routine_workout WHERE routine_id = $1';
+  const paramRoutineWorkout = [id];
   try {
-    //   const
+    const deleteRoutine = await db.query(queryRoutine, paramRoutine);
+    const deleteRoutineWorkout = await db.query(
+      queryRoutineWorkout,
+      paramRoutineWorkout
+    );
+    return next();
   } catch (err) {
     return next({
       log: `Error with routinesController.deleteRoutine Error: ${err}`,

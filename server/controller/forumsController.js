@@ -5,7 +5,7 @@ const forumsController = {};
 // gets all Forums from all users to render on dashboard component
 forumsController.getForumsAllUsers = async (req, res, next) => {
   const getForumsAllUsersQuery = `SELECT * FROM forums ORDER BY forums.date_created`;
-  const values = req.query;
+  const values = req.query.forums;
   try {
     const getAllForums = await db.query(getForumsAllUsersQuery, values);
     if (getAllForums) {
@@ -21,8 +21,10 @@ forumsController.getForumsAllUsers = async (req, res, next) => {
 };
 
 // gets all forums fora specific authorized user
+// EDITS/ADD needs to retrieve the forums, routines, and workouts
 forumsController.getForumsSingleUser = async (req, res, next) => {
   const getForumsSingleUserQuery = `SELECT * FROM forums WHERE users.id=$1`;
+  const values = [req.body.userid];
   try {
     const getForums = await db.query(getForumsSingleUserQuery);
     if (getForum) {
