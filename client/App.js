@@ -1,70 +1,39 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link,
-  useNavigate,
-  useLocation,
   Navigate,
-  Outlet,
 } from "react-router-dom";
-import Cookies from "js-cookie";
+import DashboardContainer from "./containers/DashboardContainer";
+import ForumContainer from "./containers/ForumContainer";
+import NavContainer from "./containers/NavContainer";
+import ProfileContainer from "./containers/ProfileContainer";
 
-import LoginSignupPage from "./LoginSignupPage";
-import DashBoardContainer from "./DashboardContainer";
-import AthletePage from "./AthletePage";
-
-//All route should establish at the App level
-export default function App() {
-  // const [authenticated, setAuthenticated] = useState(false);
-  const history = useNavigate();
-
-  const RequireAuth = ({ Component, ...rest }) => {
-    if (Cookies.get("athleteId")) {
-      return <Component {...rest} />;
-    } else {
-      return (
-        <div className="grid place-content-center">
-          <h1 className="text-3xl font-extrabold font-sans text-center py-10">Please log in to continue</h1>
-          <button
-            onClick={() => {
-              console.log("failed to log in");
-              return history("");
-            }}
-            className="text-3xl border-2 border-primary-500"
-          >
-            Log in
-          </button>
-        </div>
-      );
-    }
-  };
-
+const App = () => {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<LoginSignupPage />} />
-
-        <Route
-          path="dashboard"
-          element={
-            <RequireAuth Component={DashBoardContainer}>
-              {/* <DashBoardContainer /> */}
-            </RequireAuth>
-          }
-        />
-
-        <Route
-          path="athletepage/:athleteId"
-          element={
-            <RequireAuth Component={AthletePage}>
-              {/* <AthletePage /> */}
-            </RequireAuth>
-          }
-        />
-      </Routes>
-    </div>
+    <Router>
+      <div>
+        <NavContainer />
+        <Routes>
+          <Route exact path="/" element={<DashboardContainer />}></Route>
+          <Route exact path="/forum/:id" element={<ForumContainer />}></Route>
+          <Route
+            exact
+            path="/profile/:id"
+            element={<ProfileContainer />}
+          ></Route>
+          <Route exact path="/login" element={<DashboardContainer />}></Route>
+          <Route exact path="/signup" element={<DashboardContainer />}></Route>
+          <Route
+            exact
+            path="/message/:id"
+            element={<DashboardContainer />}
+          ></Route>
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
+
+export default App;
