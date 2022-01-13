@@ -14,9 +14,7 @@ export const forumSlice = createSlice({
       /**
        * TODO: Make API call to get forum information
        */
-      const res = dummyData.forums.filter(
-        (forum) => forum.id === Number(forumId)
-      )[0];
+      const res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
 
       state.forumData = res;
     },

@@ -7,17 +7,39 @@ dummyData.users = [
     id: 1,
     user_name: "Han",
   },
+  {
+    id: 2,
+    user_name: "James",
+  },
 ];
 dummyData.routines = [
   {
     id: 1,
     owner_user_id: 1,
-    name: "Han's Routine!",
+    name: "Han's Upper Body Routine!",
+    duration: 7,
+  },
+  {
+    id: 12,
+    owner_user_id: 1,
+    name: "Han's Lower Body Routine!",
+    duration: 10,
+  },
+  {
+    id: 13,
+    owner_user_id: 1,
+    name: "Han's Hulkout Routine!",
+    duration: 10,
+  },
+  {
+    id: 4,
+    owner_user_id: 2,
+    name: "James's All Body Routine!!",
     duration: 7,
   },
 ];
 
-dummyData.routine_workout = [
+dummyData.routine_workouts = [
   {
     id: 1,
     routine_id: 1,

@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import RoutineTemplate from "../components/RoutineTemplate";
 import { getUserId } from "../features/userSlice";
 import { getForum } from "../features/forumSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import Button from "../components/Button";
+import AddRoutineModal from "../components/modals/AddRoutineModal";
 
 const ForumContainer = () => {
+  // Hooks
   const { forumId } = useParams();
   const currentUserId = useSelector((state) => state.user.userId);
   const forumData = useSelector((state) => state.forum.forumData);
   const dispatch = useDispatch();
   //const token = sessionStorage.getItem("token");
 
-  // Get current user's id using token
+  // Destructure Forum Data
+  const { date_created, likes, dislikes, name, owner_user_id, routine_id } =
+    forumData;
+
+  // Dispatch actions on mount
   useEffect(() => {
     dispatch(
       getUserId({
@@ -22,33 +28,32 @@ const ForumContainer = () => {
     );
     dispatch(
       getForum({
-        forumId: forumId,
+        forumId: Number(forumId),
       })
     );
   }, []);
 
-  const { date_created, likes, dislikes, name, owner_user_id, routine_id } =
-    forumData;
-
-  /**
-   * TODO: Make server API route returns routine details associated with forum
-   */
-  // const routineData = dummyData.routines.filter(
-  //   (routine) => (routine.id = routine_id)
-  // )[0];
-
   return (
     <>
+      {/* Buttons section */}
       <Link to={`/profile/${owner_user_id}`} className="btn btn-secondary me-3">
         Visit User Profile
       </Link>
-      {owner_user_id === currentUserId ? <Button name="Add Routine" /> : <></>}
+      {owner_user_id === currentUserId && owner_user_id ? (
+        <AddRoutineModal userId={owner_user_id} />
+      ) : (
+        <></>
+      )}
       <hr />
+      {/* Forum header section */}
       <div>Title: {name}</div>
       <span>Date Posted: {date_created}</span>
       <hr />
+      {/* Routine section */}
       <div>Routine</div>
+      {routine_id ? <RoutineTemplate routineId={routine_id} /> : <></>}
       <hr />
+      {/* Likes and dislikes section */}
       <div>Likes: {likes}</div>
       <div>Dislikes: {dislikes}</div>
     </>
