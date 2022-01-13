@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import RoutineTemplate from "../components/RoutineTemplate";
 import { getUserId } from "../features/userSlice";
-import { getForum } from "../features/forumSlice";
+import { getForum, removeRoutineToForum } from "../features/forumSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddRoutineModal from "../components/modals/AddRoutineModal";
 
@@ -52,6 +52,22 @@ const ForumContainer = () => {
       {/* Routine section */}
       <div>Routine</div>
       {routine_id ? <RoutineTemplate /> : <></>}
+      {routine_id ? (
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            dispatch(
+              removeRoutineToForum({
+                forumId: Number(forumId),
+              })
+            );
+          }}
+        >
+          Remove Routine
+        </button>
+      ) : (
+        <></>
+      )}
       <hr />
       {/* Likes and dislikes section */}
       <div>Likes: {likes}</div>

@@ -39,7 +39,6 @@ const RoutineTemplate = () => {
           <span>Weight: {rw.weight}</span>&nbsp;
         </div>
       ))}
-      <hr />
     </>
   );
 };

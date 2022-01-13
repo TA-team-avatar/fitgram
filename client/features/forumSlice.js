@@ -40,9 +40,27 @@ export const forumSlice = createSlice({
       state.forumData = res;
       console.log("Added routine id to target forum");
     },
+    removeRoutineToForum: (state, action) => {
+      const forumId = action.payload.forumId;
+
+      /**
+       * TODO: Make API call to remove routine id to forum
+       */
+      let res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
+
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
+
+      res.routine_id = undefined;
+
+      state.forumData = res;
+      console.log("Removed routine id to target forum");
+    },
   },
 });
 
-export const { getForum, addRoutineToForum } = forumSlice.actions;
+export const { getForum, addRoutineToForum, removeRoutineToForum } =
+  forumSlice.actions;
 
 export default forumSlice.reducer;

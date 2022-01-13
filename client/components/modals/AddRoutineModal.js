@@ -72,15 +72,15 @@ const AddRoutineModal = () => {
           </Button>
           <Button
             variant="primary"
-            onClick={async () => {
+            onClick={() => {
               /**
                * TODO: Add routine id to forum
                */
               const forumId = forumData.id;
-              await dispatch(
+              dispatch(
                 addRoutineToForum({
                   forumId: forumId,
-                  routineId: routine,
+                  routineId: routineId,
                 })
               );
               handleClose();
