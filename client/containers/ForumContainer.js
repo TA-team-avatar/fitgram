@@ -39,8 +39,8 @@ const ForumContainer = () => {
       <Link to={`/profile/${owner_user_id}`} className="btn btn-secondary me-3">
         Visit User Profile
       </Link>
-      {owner_user_id === currentUserId && owner_user_id ? (
-        <AddRoutineModal userId={owner_user_id} />
+      {owner_user_id === currentUserId && owner_user_id && !routine_id ? (
+        <AddRoutineModal />
       ) : (
         <></>
       )}
@@ -51,7 +51,7 @@ const ForumContainer = () => {
       <hr />
       {/* Routine section */}
       <div>Routine</div>
-      {routine_id ? <RoutineTemplate routineId={routine_id} /> : <></>}
+      {routine_id ? <RoutineTemplate /> : <></>}
       <hr />
       {/* Likes and dislikes section */}
       <div>Likes: {likes}</div>

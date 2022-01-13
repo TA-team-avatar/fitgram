@@ -14,13 +14,35 @@ export const forumSlice = createSlice({
       /**
        * TODO: Make API call to get forum information
        */
-      const res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
+      let res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
+
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
 
       state.forumData = res;
+    },
+
+    addRoutineToForum: (state, action) => {
+      const forumId = action.payload.forumId;
+      const routineId = action.payload.routineId;
+      /**
+       * TODO: Make API call to add routine id to forum
+       */
+      let res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
+
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
+
+      res.routine_id = routineId;
+
+      state.forumData = res;
+      console.log("Added routine id to target forum");
     },
   },
 });
 
-export const { getForum } = forumSlice.actions;
+export const { getForum, addRoutineToForum } = forumSlice.actions;
 
 export default forumSlice.reducer;

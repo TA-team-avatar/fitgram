@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
-import classNames from "classnames";
 import { getUserRoutines } from "../../features/routineSlice";
+import { addRoutineToForum } from "../../features/forumSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Select, MenuItem } from "@material-ui/core";
 
-const AddRoutineModal = ({ userId }) => {
-  const [routine, setRoutine] = useState("");
-  const userRoutineData = useSelector((state) => state.routine.userRoutineData);
-  const [isRoutineValid, setIsRoutineValid] = useState(true);
+const AddRoutineModal = () => {
+  const [routineId, setRoutineId] = useState("");
   const [show, setShow] = useState(false);
+  const userRoutineData = useSelector((state) => state.routine.userRoutineData);
+  const forumData = useSelector((state) => state.forum.forumData);
+  const userId = useSelector((state) => state.user.userId);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
@@ -40,18 +41,12 @@ const AddRoutineModal = ({ userId }) => {
               </label>
               <Select
                 onChange={(e) => {
-                  if (!e.target.value) {
-                    setIsRoutineValid(false);
-                  } else {
-                    setIsRoutineValid(true);
-                  }
-                  console.log(e.target.value);
-                  setRoutine(e.target.value);
+                  setRoutineId(e.target.value);
                 }}
                 className="dropdown-menu"
                 color="secondary"
                 variant="outlined"
-                value={routine}
+                value={routineId}
                 displayEmpty
                 required
                 fullWidth
@@ -77,10 +72,17 @@ const AddRoutineModal = ({ userId }) => {
           </Button>
           <Button
             variant="primary"
-            onClick={(e) => {
+            onClick={async () => {
               /**
                * TODO: Add routine id to forum
                */
+              const forumId = forumData.id;
+              await dispatch(
+                addRoutineToForum({
+                  forumId: forumId,
+                  routineId: routine,
+                })
+              );
               handleClose();
             }}
           >

@@ -89,10 +89,19 @@ dummyData.forums = [
     id: 1,
     owner_user_id: 1,
     routine_id: 1,
-    name: "Han's Forum!",
+    name: "Han's Forum1!",
     likes: 5,
     dislikes: 1,
     date_created: "2022-01-01",
+  },
+  {
+    id: 2,
+    owner_user_id: 1,
+    routine_id: 1,
+    name: "Han's Forum2!",
+    likes: 7,
+    dislikes: 0,
+    date_created: "2022-01-02",
   },
 ];
 
