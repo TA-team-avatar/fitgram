@@ -77,8 +77,6 @@ CREATE TABLE public.comments (
   OIDS=FALSE
 );
 
-
-
 CREATE TABLE public.messages (
 	"id" serial,
 	"sender_id" bigint NOT NULL,
@@ -90,7 +88,6 @@ CREATE TABLE public.messages (
 );
 
 
-
 CREATE TABLE public.sessions (
 	"id" serial NOT NULL,
 	"token" TEXT NOT NULL,
@@ -99,9 +96,6 @@ CREATE TABLE public.sessions (
 ) WITH (
   OIDS=FALSE
 );
-
-
-
 
 
 ALTER TABLE public.routines ADD CONSTRAINT "routines_fk0" FOREIGN KEY ("owner_user_id") REFERENCES public.users("id");
