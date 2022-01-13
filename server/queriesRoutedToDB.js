@@ -1,22 +1,19 @@
-require("dotenv").config({ path: "../.env" });
-const { Pool } = require("pg");
+require('dotenv').config({ path: '../.env' });
+const { Pool } = require('pg');
 
-const databaseConfig = { connectionString: process.env.DATABASE_URL };
+const databaseParams = {
+  user: process.env.RDS_USERNAME,
+  host: process.env.RDS_HOSTNAME,
+  database: process.env.RDS_DBNAME,
+  password: process.env.RDS_PASSWORD,
+  port: process.env.RDS_PORT,
+};
 
-//creating a new pool
-const pool = new Pool(databaseConfig);
-
-// pool.query("SELECT NOW()", (err, res) => {
-//   console.log(`error: ${err}`);
-//   console.log(`response: ${JSON.parse(JSON.stringify(res))}`);
-//   console.log("Starting...");
-//   console.log(err, res);
-//   pool.end();
-// });
+const pool = new Pool(databaseParams);
 
 const queriesRouter = {
   query: (text, params, callback) => {
-    console.log("executed query", text);
+    console.log('executed query', text);
     return pool.query(text, params, callback);
   },
 
@@ -31,13 +28,13 @@ const queriesRouter = {
               ORDER BY date DESC;`
       )
       .then((workoutsListData) => {
-        if (!workoutsListData) return next({ log: "no workouts found" });
+        if (!workoutsListData) return next({ log: 'no workouts found' });
         res.locals.workoutsList = workoutsListData.rows;
         return next();
       })
       .catch((err) =>
         next({
-          log: "error retrieving workoutsList from database",
+          log: 'error retrieving workoutsList from database',
           message: { err: `error received from workoutsList query: ${err}` },
         })
       );
@@ -58,7 +55,7 @@ const queriesRouter = {
       })
       .catch((err) =>
         next({
-          log: "error posting workout to workout_card table in database",
+          log: 'error posting workout to workout_card table in database',
           message: { err: `error received from postWorkout query: ${err}` },
         })
       );
@@ -69,7 +66,7 @@ const queriesRouter = {
     const athleteId = req.query.id;
     console.log(athleteId);
 
-    if (athleteId === undefined) return next({ log: "no athlete_id found" });
+    if (athleteId === undefined) return next({ log: 'no athlete_id found' });
 
     pool
       .query(
@@ -83,13 +80,13 @@ const queriesRouter = {
       .then((workoutsListData) => {
         // console.log(workoutsListData);
         if (!workoutsListData.rows[0])
-          return next({ log: "no workouts found for this athlete" });
+          return next({ log: 'no workouts found for this athlete' });
         res.locals.workoutsList = workoutsListData.rows;
         return next();
       })
       .catch((err) =>
         next({
-          log: "error retrieving workoutsList of this athlete from database",
+          log: 'error retrieving workoutsList of this athlete from database',
           message: {
             err: `error received from workoutsList by athlete query: ${err}`,
           },
@@ -101,7 +98,7 @@ const queriesRouter = {
   getAthleteInfo: (req, res, next) => {
     const athleteId = req.query.id;
 
-    if (athleteId === undefined) return next({ log: "no athlete_id found" });
+    if (athleteId === undefined) return next({ log: 'no athlete_id found' });
 
     pool
       .query(
@@ -111,7 +108,7 @@ const queriesRouter = {
       )
       .then((dbResponse) => {
         if (!dbResponse.rows[0]) {
-          return next({ log: "no athlete found with this id" });
+          return next({ log: 'no athlete found with this id' });
         }
         // console.log(dbResponse.rows[0].athlete_name);
         res.locals.athleteName = dbResponse.rows[0].athlete_name;
@@ -119,7 +116,7 @@ const queriesRouter = {
       })
       .catch((err) =>
         next({
-          log: "error retrieving name of this athlete from database",
+          log: 'error retrieving name of this athlete from database',
           message: {
             err: `error received from athlete info query by athlete id: ${err}`,
           },
