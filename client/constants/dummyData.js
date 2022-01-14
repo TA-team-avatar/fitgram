@@ -129,6 +129,24 @@ dummyData.forums = [
     dislikes: 0,
     date_created: "2022-01-02",
   },
+  {
+    id: 3,
+    owner_user_id: 2,
+    routine_id: undefined,
+    name: "James's Forum: UpperBody routine!",
+    likes: 7,
+    dislikes: 0,
+    date_created: "2022-01-02",
+  },
+  {
+    id: 4,
+    owner_user_id: 2,
+    routine_id: undefined,
+    name: "James's Forum: try this out!",
+    likes: 7,
+    dislikes: 0,
+    date_created: "2022-01-02",
+  },
 ];
 
 export default dummyData;
