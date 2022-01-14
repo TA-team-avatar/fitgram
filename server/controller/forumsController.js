@@ -91,10 +91,10 @@ forumsController.createNewForum = async (req, res, next) => {
   INSERT INTO forums (owner_user_id, routine_id, name)
   VALUES ($1, $2, $3)
   `;
+  const values = [req.body.owner_user_id, req.body.routine_id, req.body.name];
 
   console.log('reached createNewForum');
 
-  const values = [req.body.owner_user_id, req.body.routine_id, req.body.name];
   try {
     const createNewForum = await db.query(createNewForumQuery, values);
     if (createNewForum) {
@@ -112,5 +112,26 @@ forumsController.createNewForum = async (req, res, next) => {
 };
 
 // middleware to update a forum - PUT (updating name and routine_id)
+forumsController.updateForum = async (req, res, next) => {
+  const updateForumQuery = `SELECT`;
+  const values = [];
+
+  console.log('reached updateForum');
+
+  try {
+    const updateForum = await db.query(updateForumQuery, values);
+    if (updateForum) {
+      console.log('from updateForum: ', updateForum.rows);
+      return next();
+    }
+  } catch (err) {
+    return next({
+      log: `Error with forumsController.updateForum Error: ${err}`,
+      message: {
+        err: `error received from updateForum: ${err}`,
+      },
+    });
+  }
+};
 
 module.exports = forumsController;
