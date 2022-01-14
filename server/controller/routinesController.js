@@ -43,8 +43,7 @@ routinesController.insertRoutine = async (req, res, next) => {
   RETURNING *';
 
   try {
-    const insertRoutine = await db.query(queryRoutine, paramRoutine);
-    console.log('routine -->', insertRoutine.rows);
+    await db.query(queryRoutine, paramRoutine);
 
     await Promise.all(
       routine_workout.map(async (rw) => {
@@ -55,11 +54,7 @@ routinesController.insertRoutine = async (req, res, next) => {
         params[3] = rw.repetition_motion;
         params[4] = rw.day;
 
-        const insertRoutineWorkout = await db.query(
-          queryRoutineWorkout,
-          params
-        );
-        console.log(insertRoutineWorkout.rows);
+        await db.query(queryRoutineWorkout, params);
         return;
       })
     );
@@ -142,6 +137,23 @@ routinesController.deleteRoutine = async (req, res, next) => {
   } catch (err) {
     return next({
       log: `Error with routinesController.deleteRoutine ${err}`,
+      message: { err: `error from routinesController ${err}` },
+    });
+  }
+};
+
+routinesController.deleteRoutineWorkout = async (req, res, next) => {
+  const { id } = req.body;
+
+  const query = 'DELETE FROM routine_workout WHERE id = $1';
+  const param = [id];
+  try {
+    await db.query(query, param);
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `Error with routinesController.deleteRoutineWorkout ${err}`,
       message: { err: `error from routinesController ${err}` },
     });
   }
