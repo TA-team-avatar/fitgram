@@ -111,10 +111,14 @@ forumsController.createNewForum = async (req, res, next) => {
   }
 };
 
-// middleware to update a forum - PUT (updating name and routine_id)
+// middleware to update a forum - only changes name for now
 forumsController.updateForum = async (req, res, next) => {
-  const updateForumQuery = `SELECT`;
-  const values = [];
+  const updateForumQuery = `
+  UPDATE forums
+  SET name=$1 WHERE id=$2
+  `;
+
+  const values = [req.body.name, req.body.id];
 
   console.log('reached updateForum');
 
