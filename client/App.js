@@ -17,7 +17,11 @@ const App = () => {
         <NavContainer />
         <Routes>
           <Route exact path="/" element={<DashboardContainer />}></Route>
-          <Route exact path="/forum/:id" element={<ForumContainer />}></Route>
+          <Route
+            exact
+            path="/forum/:forumId"
+            element={<ForumContainer />}
+          ></Route>
           <Route
             exact
             path="/profile/:id"
