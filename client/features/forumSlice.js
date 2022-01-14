@@ -100,6 +100,19 @@ export const forumSlice = createSlice({
 
       state.forumList = res;
     },
+    getUserForumData: (state, action) => {
+      const userId = action.payload.userId;
+      /**
+       * TODO: Make API call to get user forumdata
+       */
+
+      let res = dummyData.forums.filter((forum) => forum.id === forumId);
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
+
+      state.forumData = res;
+    },
   },
 });
 
@@ -110,6 +123,7 @@ export const {
   getAllForums,
   createForum,
   deleteForum,
+  getUserForumData,
 } = forumSlice.actions;
 
 export default forumSlice.reducer;
