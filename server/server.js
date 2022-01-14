@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const bodyParser = require('body-parser');
-const queriesRouter = require('./queriesRoutedToDB');
+// const queriesRouter = require('./queriesRoutedToDB');
 const authentification = require('./authentification');
 require('dotenv').config();
 
@@ -22,29 +21,6 @@ app.use('/user', userRouter);
 app.use('/session', sessionRouter);
 app.use('/routine', routineRouter);
 app.use('/forum', forumRouter);
-
-//handle workouts-list query for workout cards data
-app.get('/workouts-list', queriesRouter.getWorkoutsList, (req, res) => {
-  const { workoutsList } = res.locals;
-  return res.status(200).json({ workoutsList });
-});
-
-//handle athlete-workouts list query to get all the workouts for one athlete
-app.get('/athlete-workouts', queriesRouter.getWorkoutsByAthlete, (req, res) => {
-  const { workoutsList } = res.locals;
-  return res.status(200).json({ workoutsList });
-});
-
-//handle request to get the name of the athlete by the Id
-app.get('/athlete-info', queriesRouter.getAthleteInfo, (req, res) => {
-  const { athleteName } = res.locals;
-  return res.status(200).json({ athleteName });
-});
-
-//handle post-workout route to add a workout to workout_card table
-app.post('/post-workout', queriesRouter.postWorkout, (req, res) => {
-  return res.status(200).send('workout posted');
-});
 
 app.post(
   '/api/google-auth',
