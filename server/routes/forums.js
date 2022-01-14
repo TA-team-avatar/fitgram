@@ -11,7 +11,28 @@ const {
   createNewForum,
 } = forumController;
 
-router.get('/', (req, res) => {
+router.get('/:id', getSpecificForum, (req, res) => {
+  console.log('exiting /forum GET SPECIFIC FORUM');
+  return res.sendStatus(200);
+});
+
+router.get('/user/:owner_user_id', getForumsSingleUser, (req, res) => {
+  console.log('exiting /forum GET ALL FORUMS FOR THIS USER');
+  return res.sendStatus(200);
+});
+
+router.get('/', getForumsAllUsers, (req, res) => {
+  console.log('exiting /forum GET ALL FORUMS FROM ALL USERS');
+  return res.sendStatus(200);
+});
+
+router.post('/', createNewForum, (req, res) => {
+  console.log('exiting /forum CREATE FORUM');
+  return res.sendStatus(200);
+});
+
+router.delete('/', deleteSpecificForum, (req, res) => {
+  console.log('exiting /forum DELETE FORUM');
   return res.sendStatus(200);
 });
 

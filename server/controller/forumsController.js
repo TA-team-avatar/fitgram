@@ -4,12 +4,15 @@ const forumsController = {};
 
 // gets all Forums from all users to render on dashboard component
 forumsController.getForumsAllUsers = async (req, res, next) => {
+  console.log('reached getForumsAllUsers');
+
   const getForumsAllUsersQuery = `SELECT * FROM forums ORDER BY forums.date_created`;
-  const values = req.query.forums;
+  // console.log('values: ', values);
   try {
-    const getAllForums = await db.query(getForumsAllUsersQuery, values);
+    const getAllForums = await db.query(getForumsAllUsersQuery);
     if (getAllForums) {
-      console.log(`from getForumsAllUsers: `, getAllForums);
+      console.log(`from getForumsAllUsers: `, getAllForums.rows);
+      res.locals.allForums = getAllForums;
       return next();
     }
   } catch (err) {
@@ -21,14 +24,14 @@ forumsController.getForumsAllUsers = async (req, res, next) => {
 };
 
 // gets all forums fora specific authorized user
-// EDITS/ADD needs to retrieve the forums, routines, and workouts
+// this was built with the assumption that routines & workouts will be in separate request
 forumsController.getForumsSingleUser = async (req, res, next) => {
-  const getForumsSingleUserQuery = `SELECT * FROM forums WHERE users.id=$1`;
-  const values = [req.body.userid];
+  const getForumsSingleUserQuery = `SELECT * FROM forums WHERE owner_user_id=$1`;
+  const values = [req.params.owner_user_id];
   try {
-    const getForums = await db.query(getForumsSingleUserQuery);
-    if (getForum) {
-      console.log(`from getForumsSingleUserQuery: `, getForums);
+    const getForums = await db.query(getForumsSingleUserQuery, values);
+    if (getForums) {
+      console.log(`from getForumsSingleUserQuery: `, getForums.rows);
       return next();
     }
   } catch (err) {
@@ -41,12 +44,15 @@ forumsController.getForumsSingleUser = async (req, res, next) => {
 
 // gets one specific forum for one specific user
 forumsController.getSpecificForum = async (req, res, next) => {
-  const getSpecificForumQuery = `SELECT * FROM forums WHERE users.id=$1 AND forums.id=$2`;
-  const values = [req.query.userid, req.query.forumsid];
+  const getSpecificForumQuery = `SELECT * FROM forums WHERE id=$1`;
+  const values = [req.params.id];
+
+  console.log('reached getSpecificForum');
+
   try {
     const getSpecificForum = await db.query(getSpecificForumQuery, values);
     if (getSpecificForum) {
-      console.log(`from getSpecificForum: `, getSpecificForum);
+      console.log(`from getSpecificForum: `, getSpecificForum.rows);
       return next();
     }
   } catch (err) {
@@ -59,10 +65,13 @@ forumsController.getSpecificForum = async (req, res, next) => {
 
 // deletes one specific forum for authorized user
 forumsController.deleteSpecificForum = async (req, res, next) => {
-  const deleteForumQuery = `DELETE FROM forums WHERE users.id=$1 AND forums.id=$2`;
-  const values = [req.body.userid, req.body.forumsid];
+  const deleteForumQuery = `DELETE FROM forums WHERE owner_user_id=$1 AND id=$2`;
+  const values = [req.body.owner_user_id, req.body.id];
+
+  console.log('reached deleteSpecificForum');
+
   try {
-    const deleteForum = db.query(deleteForumQuery, [values]);
+    const deleteForum = await db.query(deleteForumQuery, values);
 
     if (deleteForum) {
       console.log(`from deleteSpecificForum: `, deleteForum);
@@ -79,19 +88,17 @@ forumsController.deleteSpecificForum = async (req, res, next) => {
 // creates new forum for authorized user
 forumsController.createNewForum = async (req, res, next) => {
   const createNewForumQuery = `
-  INSERT INTO forums (owner_user_id, routine_id, name, date_created)
-  VALUES ($1, $2, $3, $4)
+  INSERT INTO forums (owner_user_id, routine_id, name)
+  VALUES ($1, $2, $3)
   `;
-  const values = [
-    req.body.userid,
-    req.body.routineid,
-    req.body.routineName,
-    req.body.date_created,
-  ];
+
+  console.log('reached createNewForum');
+
+  const values = [req.body.owner_user_id, req.body.routine_id, req.body.name];
   try {
-    const createNewForum = await db.query(createNewForumQuery, [values]);
+    const createNewForum = await db.query(createNewForumQuery, values);
     if (createNewForum) {
-      console.log(`from createNewForum: `, createNewForum);
+      console.log(`from createNewForum: `, createNewForum.rows);
       return next();
     }
   } catch (err) {
@@ -103,5 +110,7 @@ forumsController.createNewForum = async (req, res, next) => {
     });
   }
 };
+
+// middleware to update a forum - PUT (updating name and routine_id)
 
 module.exports = forumsController;
