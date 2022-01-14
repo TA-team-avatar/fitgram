@@ -22,6 +22,8 @@ const ProfileContainer = () => {
     }
   });
 
+  let forumDataArray = Object.entries(forumData);
+
   useEffect(() => {
     dispatch(
       getUserId({
@@ -45,6 +47,14 @@ const ProfileContainer = () => {
         <hr />
         <AddRoutineModal />
         <hr />
+        <>
+          {forumDataArray.map((forum, index) => (
+            <div key={index}>
+              <span>{forum.name}</span>
+              Date Created: <span>{forum.date_created}</span>
+            </div>
+          ))}
+        </>
         <button className='btn btn-secondary me-3'>Messages</button>
       </div>
     </>
