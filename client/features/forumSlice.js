@@ -97,6 +97,11 @@ export const forumSlice = createSlice({
       /**
        * TODO: Make API call to remove forum
        */
+      // if (res) {
+      //   res = JSON.parse(JSON.stringify(res));
+      // }
+
+      // res.forum_id = undefined;
 
       state.forumList = res;
     },
