@@ -29,13 +29,13 @@ routinesController.getRoutines = async (req, res, next) => {
 };
 
 routinesController.insertRoutine = async (req, res, next) => {
-  const { user_id, name, duration, routine_workout } = req.body;
+  const { owner_user_id, name, duration, routine_workout } = req.body;
 
   const queryRoutine =
     'INSERT INTO routines (owner_user_id, name, duration)\
   VALUES ($1, $2, $3)\
   RETURNING id';
-  const paramRoutine = [user_id, name, duration];
+  const paramRoutine = [owner_user_id, name, duration];
 
   const queryRoutineWorkout =
     'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day)\
@@ -69,6 +69,59 @@ routinesController.insertRoutine = async (req, res, next) => {
     return next({
       log: `Error with routinesController.insertRoutine ${err}`,
       message: { err: `error from routinesController ${err}` },
+    });
+  }
+};
+
+routinesController.updateRoutine = async (req, res, next) => {
+  const { id, owner_user_id, name, duration, routine_workout } = req.body;
+
+  const queryUpdateRoutine =
+    'UPDATE routines SET name = $1, duration = $2 WHERE id = $3';
+  const paramsUpdateRoutine = [name, duration, id];
+
+  const queryUpdateRoutineWorkoutID =
+    'INSERT INTO routine_workout (id, routine_id, workout_id, set, repetition_motion, day, weight)\
+   VALUES($1, $2, $3, $4, $5, $6, $7)\
+   ON CONFLICT (id)\
+   DO\
+   UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+
+  const queryUpdateRoutineWorkout =
+    'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day, weight)\
+  VALUES($1, $2, $3, $4, $5, $6)\
+  ON CONFLICT (id)\
+  DO\
+  UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+
+  try {
+    await db.query(queryUpdateRoutine, paramsUpdateRoutine);
+
+    await Promise.all(
+      routine_workout.map(async (rw) => {
+        const params = [];
+        let query = queryUpdateRoutineWorkout;
+        if (rw.id) {
+          params.push(rw.id);
+          query = queryUpdateRoutineWorkoutID;
+        }
+        params.push(id);
+        params.push(rw.workout_id);
+        params.push(rw.set);
+        params.push(rw.repetition_motion);
+        params.push(rw.day);
+        params.push(rw.weight);
+
+        await db.query(query, params);
+        return;
+      })
+    );
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `Error with routinesController.updateRoutine ${err}`,
+      message: { err: `Error with routinesController.updateRoutine ${err}` },
     });
   }
 };

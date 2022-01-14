@@ -1,4 +1,5 @@
 const express = require('express');
+const { updateRoutine } = require('./../controller/routinesController.js');
 const routineController = require('./../controller/routinesController.js');
 
 const router = express.Router();
@@ -10,6 +11,10 @@ router.get('/', getRoutines, (req, res) => {
 });
 
 router.post('/', insertRoutine, (req, res) => {
+  return res.sendStatus(200);
+});
+
+router.put('/', updateRoutine, (req, res) => {
   return res.sendStatus(200);
 });
 
