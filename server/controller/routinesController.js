@@ -69,7 +69,7 @@ routinesController.insertRoutine = async (req, res, next) => {
 };
 
 routinesController.updateRoutine = async (req, res, next) => {
-  const { id, owner_user_id, name, duration, routine_workout } = req.body;
+  const { id, name, duration, routine_workout } = req.body;
 
   const queryUpdateRoutine =
     'UPDATE routines SET name = $1, duration = $2 WHERE id = $3';
