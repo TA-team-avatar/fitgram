@@ -29,7 +29,7 @@ router.put('/user/forum_update', updateForum, (req, res) => {
 
 router.get('/', getForumsAllUsers, (req, res) => {
   console.log('exiting /forum GET ALL FORUMS FROM ALL USERS');
-  return res.sendStatus(200);
+  return res.send(200).json({ forums: res.locals.allForums });
 });
 
 router.post('/', createNewForum, (req, res) => {
