@@ -9,6 +9,7 @@ import DashboardContainer from './containers/DashboardContainer';
 import ForumContainer from './containers/ForumContainer';
 import NavContainer from './containers/NavContainer';
 import ProfileContainer from './containers/ProfileContainer';
+import LoginSignupContainer from './containers/LoginSignupContainer';
 
 const App = () => {
   return (
@@ -27,8 +28,12 @@ const App = () => {
             path='/profile/:userId'
             element={<ProfileContainer />}
           ></Route>
-          <Route exact path='/login' element={<DashboardContainer />}></Route>
-          <Route exact path='/signup' element={<DashboardContainer />}></Route>
+          <Route exact path='/login' element={<LoginSignupContainer />}></Route>
+          <Route
+            exact
+            path='/signup'
+            element={<LoginSignupContainer />}
+          ></Route>
           <Route
             exact
             path='/message/:id'
