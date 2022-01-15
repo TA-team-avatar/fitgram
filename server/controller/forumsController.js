@@ -12,7 +12,7 @@ forumsController.getForumsAllUsers = async (req, res, next) => {
     const getAllForums = await db.query(getForumsAllUsersQuery);
     if (getAllForums) {
       console.log(`from getForumsAllUsers: `, getAllForums.rows);
-      res.locals.allForums = getAllForums;
+      res.locals.allForums = getAllForums.rows;
       return next();
     }
   } catch (err) {
@@ -113,19 +113,29 @@ forumsController.createNewForum = async (req, res, next) => {
 
 // middleware to update a forum - only changes name for now
 forumsController.updateForum = async (req, res, next) => {
-  const updateForumQuery = `
+  const updateForumNameQuery = `
   UPDATE forums
   SET name=$1 WHERE id=$2
   `;
+  const valuesName = [req.body.name, req.body.id];
 
-  const values = [req.body.name, req.body.id];
+  const updateForumRoutineQuery = `
+    UPDATE forums SET routine_id=$1 WHERE id=$2
+  `;
+  const valuesRoutine = [req.body.routine_id, req.body.id];
 
   console.log('reached updateForum');
 
   try {
-    const updateForum = await db.query(updateForumQuery, values);
-    if (updateForum) {
-      console.log('from updateForum: ', updateForum.rows);
+    const updateForumName = await db.query(updateForumNameQuery, valuesName);
+    const updateForumRoutine = await db.query(
+      updateForumRoutineQuery,
+      valuesRoutine
+    );
+
+    if (updateForumName && updateForumRoutine) {
+      console.log('updated forum name: ', updateForumName.rows);
+      console.log('updated forum routine: ', updateForumRoutine.rows);
       return next();
     }
   } catch (err) {

@@ -73,9 +73,6 @@ const AddRoutineModal = () => {
           <Button
             variant="primary"
             onClick={() => {
-              /**
-               * TODO: Add routine id to forum
-               */
               const forumId = forumData.id;
               dispatch(
                 addRoutineToForum({

@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import dummyData from '../constants/dummyData';
+import { createSlice } from "@reduxjs/toolkit";
+import dummyData from "../constants/dummyData";
 
 const initialState = {
   forumData: {},
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const forumSlice = createSlice({
-  name: 'forum',
+  name: "forum",
   initialState,
   reducers: {
     getForum: (state, action) => {
@@ -39,7 +39,7 @@ export const forumSlice = createSlice({
       res.routine_id = routineId;
 
       state.forumData = res;
-      console.log('Added routine id to target forum');
+      console.log("Added routine id to target forum");
     },
     removeRoutineToForum: (state, action) => {
       const forumId = action.payload.forumId;
@@ -56,7 +56,7 @@ export const forumSlice = createSlice({
       res.routine_id = undefined;
 
       state.forumData = res;
-      console.log('Removed routine id to target forum');
+      console.log("Removed routine id to target forum");
     },
     getAllForums: (state) => {
       /**
@@ -84,19 +84,37 @@ export const forumSlice = createSlice({
         name,
         likes: undefined,
         dislikes: undefined,
-        date_created: '2022-01-13',
+        date_created: "2022-01-13",
       });
 
       state.forumList = forums;
     },
     deleteForum: (state, action) => {
       const forumId = action.payload.forumId;
-      console.log(forumId);
-      let res = dummyData.forums.filter((forum) => forum.id !== forumId);
-      console.log(res);
+      //console.log(forumId);
       /**
        * TODO: Make API call to remove forum
        */
+      let res = dummyData.forums.filter((forum) => forum.id !== forumId);
+
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
+      state.forumList = res;
+    },
+    getUserForumData: (state, action) => {
+      const userId = action.payload.userId;
+      // console.log(userId);
+      /**
+       * TODO: Make API call to get user forumdata
+       */
+
+      let res = dummyData.forums.filter(
+        (forum) => forum.owner_user_id === userId
+      );
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
 
       state.forumList = res;
     },
@@ -110,6 +128,7 @@ export const {
   getAllForums,
   createForum,
   deleteForum,
+  getUserForumData,
 } = forumSlice.actions;
 
 export default forumSlice.reducer;
