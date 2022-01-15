@@ -92,11 +92,29 @@ export const forumSlice = createSlice({
     deleteForum: (state, action) => {
       const forumId = action.payload.forumId;
       console.log(forumId);
-      let res = dummyData.forums.filter((forum) => forum.id !== forumId);
-      console.log(res);
       /**
        * TODO: Make API call to remove forum
        */
+      let res = dummyData.forums.filter((forum) => forum.id !== forumId);
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
+      console.log(res);
+      state.forumList = res;
+    },
+    getUserForumData: (state, action) => {
+      const userId = action.payload.userId;
+      // console.log(userId);
+      /**
+       * TODO: Make API call to get user forumdata
+       */
+
+      let res = dummyData.forums.filter(
+        (forum) => forum.owner_user_id === userId
+      );
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
 
       state.forumList = res;
     },
@@ -110,6 +128,7 @@ export const {
   getAllForums,
   createForum,
   deleteForum,
+  getUserForumData,
 } = forumSlice.actions;
 
 export default forumSlice.reducer;
