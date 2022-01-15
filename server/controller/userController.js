@@ -37,7 +37,7 @@ userController.addUser = async (req, res, next) => {
     const hashPW = await hashPassword(password);
     param.push(hashPW);
     const userID = await db.query(query, param);
-    res.locals.id = userID.rows[0];
+    res.locals.id = userID.rows[0].id;
 
     return next();
   } catch (err) {
@@ -105,13 +105,14 @@ userController.updatePassword = async (req, res, next) => {
   const paramsPassword = [id];
 
   const queryChangePassword = 'UPDATE users SET password = $2 WHERE id = $1';
-  const paramsChangePassword = [id, newPassword];
+  const paramsChangePassword = [id];
 
   try {
     const hashedPW = await db.query(queryPassword, paramsPassword);
-    const match = await comparePassword(password, hashedPW);
+    const match = await comparePassword(password, hashedPW.rows[0].password);
 
     if (match) {
+      paramsChangePassword.push(await hashPassword(newPassword));
       await db.query(queryChangePassword, paramsChangePassword);
       res.locals.changedPW = match;
       return next();
