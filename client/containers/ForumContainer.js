@@ -4,14 +4,18 @@ import { Link } from "react-router-dom";
 import RoutineTemplate from "../components/RoutineTemplate";
 import { getUserId } from "../features/userSlice";
 import { getForum, removeRoutineToForum } from "../features/forumSlice";
+import { getForumComments } from "../features/commentSlice";
 import { useSelector, useDispatch } from "react-redux";
 import AddRoutineModal from "../components/modals/AddRoutineModal";
+import CommentBox from "../components/CommentBox";
+import AddCommentModal from "../components/modals/AddCommentModal";
 
 const ForumContainer = () => {
   // Hooks
   const { forumId } = useParams();
   const currentUserId = useSelector((state) => state.user.userId);
   const forumData = useSelector((state) => state.forum.forumData);
+  const commentData = useSelector((state) => state.comment.commentData);
   const dispatch = useDispatch();
   //const token = sessionStorage.getItem("token");
 
@@ -28,6 +32,11 @@ const ForumContainer = () => {
     );
     dispatch(
       getForum({
+        forumId: Number(forumId),
+      })
+    );
+    dispatch(
+      getForumComments({
         forumId: Number(forumId),
       })
     );
@@ -70,8 +79,17 @@ const ForumContainer = () => {
       )}
       <hr />
       {/* Likes and dislikes section */}
-      <div>Likes: {likes}</div>
-      <div>Dislikes: {dislikes}</div>
+      <span>Likes: {likes}</span>&nbsp;
+      <span>Dislikes: {dislikes}</span>
+      <hr />
+      {/* Comment Section */}
+      <h2>Comments</h2>
+      <AddCommentModal forumId={forumId} currentUserId={currentUserId} />
+      <hr />
+      {commentData.map((comment, idx) => (
+        <CommentBox key={idx} props={comment} currentUserId={currentUserId} />
+      ))}
+      <hr />
     </>
   );
 };

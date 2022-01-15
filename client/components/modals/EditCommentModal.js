@@ -1,36 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { createForum } from "../../features/forumSlice";
+import { useDispatch } from "react-redux";
+import { editComments } from "../../features/commentSlice";
 
-const AddForumModal = () => {
-  const [forumName, setForumName] = useState("");
+const EditCommentModal = ({ id, description }) => {
+  const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
-  const userId = useSelector((state) => state.user.userId);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
 
+  // Set default comments
+  useEffect(() => {
+    setComment(description);
+  }, []);
   return (
     <>
       <Button className="btn btn-secondary me-3" onClick={handleShow}>
-        Add Forum
+        Edit Comment
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Forum</Modal.Title>
+          <Modal.Title>Edit Comment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
             <form>
-              <label className="form-label mt-4">
-                Please type in the name of forum
-              </label>
+              <label className="form-label mt-4">Please edit comments</label>
               <input
                 className="form-control"
                 type="text"
+                value={comment}
                 onChange={(e) => {
-                  setForumName(e.target.value);
+                  setComment(e.target.value);
                 }}
               />
             </form>
@@ -43,19 +45,16 @@ const AddForumModal = () => {
           <Button
             variant="primary"
             onClick={() => {
-              /**
-               * TODO: API call to Add forum to forum db
-               */
               dispatch(
-                createForum({
-                  name: forumName,
-                  owner_user_id: userId,
+                editComments({
+                  description: comment,
+                  id: id,
                 })
               );
               handleClose();
             }}
           >
-            Add
+            Edit
           </Button>
         </Modal.Footer>
       </Modal>
@@ -63,4 +62,4 @@ const AddForumModal = () => {
   );
 };
 
-export default AddForumModal;
+export default EditCommentModal;
