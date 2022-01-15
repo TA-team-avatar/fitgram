@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import dummyData from "../constants/dummyData";
+import { createSlice } from '@reduxjs/toolkit';
+import dummyData from '../constants/dummyData';
 
 const initialState = {
   routineData: {},
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const routineSlice = createSlice({
-  name: "routine",
+  name: 'routine',
   initialState,
   reducers: {
     getRoutine: (state, action) => {
@@ -65,10 +65,28 @@ export const routineSlice = createSlice({
 
       state.routineWorkoutData = res;
     },
+    deleteRoutine: (state, action) => {
+      const routineId = action.payload.routineId;
+
+      /**
+       * TODO: Make API call to remove routine
+       */
+
+      let res = dummyData.routines.filter(
+        (routine) => routine.id !== routineId
+      );
+
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
+      console.log('res', res);
+      state.userRoutineData = res;
+      console.log('state', state.userRoutineData);
+    },
   },
 });
 
-export const { getRoutine, getRoutineWorkout, getUserRoutines } =
+export const { getRoutine, getRoutineWorkout, getUserRoutines, deleteRoutine } =
   routineSlice.actions;
 
 export default routineSlice.reducer;
