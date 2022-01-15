@@ -3,6 +3,8 @@ const db = require('../model/dbModel');
 const commentsController = {};
 
 commentsController.getComments = (req, res, next) => {
+  console.log('reached getComments');
+
   return next();
 };
 
