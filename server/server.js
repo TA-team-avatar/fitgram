@@ -12,6 +12,7 @@ const userRouter = require('./routes/users.js');
 const sessionRouter = require('./routes/sessions.js');
 const routineRouter = require('./routes/routines.js');
 const forumRouter = require('./routes/forums.js');
+const commentsRouter = require('./routes/comments.js');
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use('/user', userRouter);
 app.use('/session', sessionRouter);
 app.use('/routine', routineRouter);
 app.use('/forum', forumRouter);
+app.use('/comments', commentsRouter);
 
 app.post(
   '/api/google-auth',
