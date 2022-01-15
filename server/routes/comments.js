@@ -7,7 +7,7 @@ const { getComments, addComment } = commentsController;
 
 router.get('/', getComments, (req, res) => {
   console.log('exiting /comments GET COMMENTS');
-  return sendStatus(200);
+  return staus(200).json({ comments: res.locals.comments });
 });
 
 module.exports = router;
