@@ -1,51 +1,44 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserId, getUserName } from '../features/userSlice';
 import { getUserForumData } from '../features/forumSlice';
 import { getUserRoutines } from '../features/routineSlice';
-import { keys } from 'regenerator-runtime';
 import AddRoutineModal from '../components/modals/AddRoutineModal';
 
 const ProfileContainer = () => {
-  const userData = useSelector((state) => state.userData);
-  const currentUserId = useSelector((state) => state.user.userId);
+  const { userId } = useParams();
+  const userData = useSelector((state) => state.user.userData);
   const routineList = useSelector((state) => state.routine.userRoutineData);
   const forumList = useSelector((state) => state.forum.forumList);
   const dispatch = useDispatch();
 
   const { id, owner_user_id, name, duration, date_created } = routineList;
-  let profileName = userData[0].user_name;
 
   //expected 1007 -userId 1: Han
   let totalLikes = forumList.reduce((acc, item) => acc + item.likes, 0);
 
   useEffect(() => {
     dispatch(
-      getUserId({
-        token: 'fakeToken',
+      getUserName({
+        userId: Number(userId),
       })
     ),
       dispatch(
-        getUserName({
-          userId: currentUserId,
-        })
-      ),
-      dispatch(
         getUserRoutines({
-          userId: currentUserId,
+          userId: userId,
         })
       ),
       dispatch(
         getUserForumData({
-          userId: currentUserId,
+          userId: userId,
         })
       );
-    console.log(userData);
   }, []);
 
   return (
     <>
-      <h1>{profileName} Profile</h1>
+      <h1>{userData.user_name}'s Profile</h1>
       <div>
         <span>Total Likes{totalLikes}</span>
         <hr />

@@ -3,7 +3,7 @@ import dummyData from '../constants/dummyData';
 
 const initialState = {
   userId: 1,
-  userData: [],
+  userData: {},
 };
 
 export const userSlice = createSlice({
@@ -21,11 +21,16 @@ export const userSlice = createSlice({
 
     getUserName: (state, action) => {
       const userId = action.payload.userId;
-      // console.log('line 25', userId);
+      console.log('line 25', userId);
       /**
        * TODO: Make API call to get User Name from the server.
        */
-      let res = dummyData.users.filter((user) => user.id === userId);
+      let res = dummyData.users.filter((user) => user.id === userId)[0];
+
+      if (res) {
+        res = JSON.parse(JSON.stringify(res));
+      }
+      console.log('line 29', res);
 
       state.userData = res;
       console.log('state.userData', state.userData);
