@@ -91,7 +91,7 @@ export const forumSlice = createSlice({
     },
     deleteForum: (state, action) => {
       const forumId = action.payload.forumId;
-      console.log(forumId);
+      //console.log(forumId);
       /**
        * TODO: Make API call to remove forum
        */
@@ -100,7 +100,6 @@ export const forumSlice = createSlice({
       if (res) {
         res = JSON.parse(JSON.stringify(res));
       }
-
       state.forumList = res;
     },
     getUserForumData: (state, action) => {
