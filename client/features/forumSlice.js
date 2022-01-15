@@ -102,16 +102,19 @@ export const forumSlice = createSlice({
     },
     getUserForumData: (state, action) => {
       const userId = action.payload.userId;
+      // console.log(userId);
       /**
        * TODO: Make API call to get user forumdata
        */
 
-      let res = dummyData.forums.filter((forum) => forum.id === forumId);
+      let res = dummyData.forums.filter(
+        (forum) => forum.owner_user_id === userId
+      );
       if (res) {
         res = JSON.parse(JSON.stringify(res));
       }
 
-      state.forumData = res;
+      state.forumList = res;
     },
   },
 });

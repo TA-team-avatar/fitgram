@@ -149,7 +149,7 @@ dummyData.forums = [
   },
   {
     id: 5,
-    owner_user_id: 5,
+    owner_user_id: 2,
     routine_id: undefined,
     name: "James's Forum: This is fun",
     likes: 7,
