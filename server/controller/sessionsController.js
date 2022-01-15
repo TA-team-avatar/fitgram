@@ -34,8 +34,8 @@ sessionsController.checkSession = async (req, res, next) => {
 sessionsController.addSession = async (req, res, next) => {
   console.log('reached addSession middleware');
 
-  res.locals.match = true;
-  res.locals.id = 8;
+  // res.locals.match = true;
+  // res.locals.id = 8;
 
   if (res.locals.match === false) {
     return next();
