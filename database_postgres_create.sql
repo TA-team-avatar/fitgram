@@ -91,7 +91,7 @@ CREATE TABLE public.messages (
 CREATE TABLE public.sessions (
 	"id" serial NOT NULL,
 	"token" TEXT NOT NULL,
-	"user_id" int8 NOT NULL,
+	"IN" int8 NOT NULL,
 	CONSTRAINT "sessions_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

@@ -1,11 +1,9 @@
 const db = require('../model/dbModel');
+const crypto = require('crypto');
 
 const sessionsController = {};
 
-// when FE checks if user exists
-// query to ensur token and user_id match session_id, based on session_id that was sent back
-
-// checks & confirms pre-exisitng token for pre-existing user
+// checks & confirms pre-exisitng user_id & token based on session_id from front end
 sessionsController.checkSession = async (req, res, next) => {
   console.log('reached checkSession middleware');
 
@@ -32,10 +30,46 @@ sessionsController.checkSession = async (req, res, next) => {
   }
 };
 
-// adding token to the DB for new user
-// assume I can access users.id on res.locals
-sessionsController.addSession = (req, res, next) => {
-  return next();
+// adding token to the DB for new user, assumeing we can access user_id on res.locals
+sessionsController.addSession = async (req, res, next) => {
+  console.log('reached addSession middleware');
+
+  res.locals.match = true;
+  res.locals.id = 8;
+
+  if (res.locals.match === false) {
+    return next();
+  } else if (res.locals.id) {
+    const addSessionQuery = `
+        INSERT INTO sessions (user_id, token)
+        VALUES ($1, $2)
+        `;
+    const values = [res.locals.id];
+
+    try {
+      console.log('before crypto');
+
+      const token = await crypto.randomBytes(16).toString('hex');
+
+      values.push(token);
+
+      const addNewUserSession = await db.query(addSessionQuery, values);
+      console.log('from addSession: ', addNewUserSession.rows);
+      return next();
+
+      //   if (addNewUserSession) {
+      //     console.log('from addSession: ', addNewUserSession.rows);
+      //     return next();
+      //   }
+    } catch (err) {
+      return next({
+        log: `Error with sessionsController.addSession Error: ${err}`,
+        message: {
+          err: `error received from addSession query: ${err}`,
+        },
+      });
+    }
+  }
 };
 
 // delete session??? should sessions automatically time out?
