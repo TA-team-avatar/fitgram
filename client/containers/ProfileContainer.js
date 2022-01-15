@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUserId, getUserName } from '../features/userSlice';
-import { getUserForumData } from '../features/forumSlice';
-import { getUserRoutines } from '../features/routineSlice';
-import AddRoutineModal from '../components/modals/AddRoutineModal';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserName } from "../features/userSlice";
+import { getUserForumData } from "../features/forumSlice";
+import { getUserRoutines } from "../features/routineSlice";
+import AddRoutineModal from "../components/modals/AddRoutineModal";
 
 const ProfileContainer = () => {
   const { userId } = useParams();
@@ -15,7 +15,6 @@ const ProfileContainer = () => {
 
   const { id, owner_user_id, name, duration, date_created } = routineList;
 
-  //expected 1007 -userId 1: Han
   let totalLikes = forumList.reduce((acc, item) => acc + item.likes, 0);
 
   useEffect(() => {
@@ -26,12 +25,12 @@ const ProfileContainer = () => {
     ),
       dispatch(
         getUserRoutines({
-          userId: userId,
+          userId: Number(userId),
         })
       ),
       dispatch(
         getUserForumData({
-          userId: userId,
+          userId: Number(userId),
         })
       );
   }, []);
@@ -52,7 +51,7 @@ const ProfileContainer = () => {
             </div>
           ))}
         </>
-        <button className='btn btn-secondary me-3'>Messages</button>
+        <button className="btn btn-secondary me-3">Messages</button>
       </div>
     </>
   );
