@@ -26,12 +26,12 @@ const ProfileContainer = () => {
     ),
       dispatch(
         getUserRoutines({
-          userId: userId,
+          userId: Number(userId),
         })
       ),
       dispatch(
         getUserForumData({
-          userId: userId,
+          userId: Number(userId),
         })
       );
   }, []);
