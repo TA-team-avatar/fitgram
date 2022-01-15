@@ -15,7 +15,7 @@ sessionsController.checkSession = async (req, res, next) => {
   try {
     const checkUserSession = await db.query(checkSessionsQuery, values);
     if (checkUserSession) {
-      console.log('from checkUserSession: ', checkUserSession.rows);
+      // console.log('from checkUserSession: ', checkUserSession.rows);
       res.locals.user_id = checkUserSession.rows.user_id;
       res.locals.token = checkUserSession.rows.token;
       return next();
@@ -47,14 +47,12 @@ sessionsController.addSession = async (req, res, next) => {
     const values = [res.locals.id];
 
     try {
-      console.log('before crypto');
+      res.locals.token = await crypto.randomBytes(16).toString('hex');
 
-      const token = await crypto.randomBytes(16).toString('hex');
-
-      values.push(token);
+      values.push(res.locals.token);
 
       const addNewUserSession = await db.query(addSessionQuery, values);
-      console.log('from addSession: ', addNewUserSession.rows);
+      // console.log('from addSession: ', addNewUserSession.rows);
       return next();
 
       //   if (addNewUserSession) {
