@@ -5,11 +5,11 @@ dummyData.user = 1;
 dummyData.users = [
   {
     id: 1,
-    user_name: 'Han',
+    user_name: "Han",
   },
   {
     id: 2,
-    user_name: 'James',
+    user_name: "James",
   },
 ];
 dummyData.routines = [
@@ -47,7 +47,7 @@ dummyData.routine_workouts = [
     set: 5,
     repetition_motion: 10,
     weight: 150,
-    day: 'Mon',
+    day: "Mon",
   },
   {
     id: 2,
@@ -56,7 +56,7 @@ dummyData.routine_workouts = [
     set: 5,
     repetition_motion: 10,
     weight: 200,
-    day: 'Tue',
+    day: "Tue",
   },
   {
     id: 3,
@@ -65,7 +65,7 @@ dummyData.routine_workouts = [
     set: 5,
     repetition_motion: 10,
     weight: 250,
-    day: 'Wed',
+    day: "Wed",
   },
   {
     id: 4,
@@ -74,7 +74,7 @@ dummyData.routine_workouts = [
     set: 5,
     repetition_motion: 10,
     weight: 250,
-    day: 'Wed',
+    day: "Wed",
   },
   {
     id: 5,
@@ -83,30 +83,30 @@ dummyData.routine_workouts = [
     set: 5,
     repetition_motion: 10,
     weight: 250,
-    day: 'Wed',
+    day: "Wed",
   },
 ];
 
 dummyData.workouts = [
   {
     id: 1,
-    name: 'Bench Press',
+    name: "Bench Press",
   },
   {
     id: 2,
-    name: 'Military Press',
+    name: "Military Press",
   },
   {
     id: 3,
-    name: 'Barbell Row',
+    name: "Barbell Row",
   },
   {
     id: 4,
-    name: 'Squat',
+    name: "Squat",
   },
   {
     id: 5,
-    name: 'Deadlift',
+    name: "Deadlift",
   },
 ];
 
@@ -118,7 +118,7 @@ dummyData.forums = [
     name: "Han's Forum: Upperbody routine!!",
     likes: 1000,
     dislikes: 1,
-    date_created: '2022-01-01',
+    date_created: "2022-01-01",
   },
   {
     id: 2,
@@ -127,7 +127,7 @@ dummyData.forums = [
     name: "Han's Forum: Lowerbody routine!",
     likes: 7,
     dislikes: 0,
-    date_created: '2022-01-02',
+    date_created: "2022-01-02",
   },
   {
     id: 3,
@@ -136,7 +136,7 @@ dummyData.forums = [
     name: "James's Forum: UpperBody routine!",
     likes: 7,
     dislikes: 0,
-    date_created: '2022-01-02',
+    date_created: "2022-01-02",
   },
   {
     id: 4,
@@ -145,7 +145,7 @@ dummyData.forums = [
     name: "James's Forum: try this out!",
     likes: 7,
     dislikes: 0,
-    date_created: '2022-01-02',
+    date_created: "2022-01-02",
   },
   {
     id: 5,
@@ -154,7 +154,34 @@ dummyData.forums = [
     name: "James's Forum: This is fun",
     likes: 7,
     dislikes: 0,
-    date_created: '2022-01-02',
+    date_created: "2022-01-02",
+  },
+];
+
+dummyData.comments = [
+  {
+    id: 1,
+    owner_user_id: 1,
+    forum_id: 1,
+    description: "Amazing routine!",
+    date_created: "2022-01-14",
+    user_name: "Han",
+  },
+  {
+    id: 2,
+    owner_user_id: 2,
+    forum_id: 1,
+    description: "Try this routine!",
+    date_created: "2022-01-14",
+    user_name: "James",
+  },
+  {
+    id: 3,
+    owner_user_id: 1,
+    forum_id: 1,
+    description: "Gained 20 lbs muscle in 3 months!!",
+    date_created: "2022-01-14",
+    user_name: "Han",
   },
 ];
 

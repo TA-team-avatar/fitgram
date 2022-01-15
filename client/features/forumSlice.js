@@ -96,10 +96,10 @@ export const forumSlice = createSlice({
        * TODO: Make API call to remove forum
        */
       let res = dummyData.forums.filter((forum) => forum.id !== forumId);
+
       if (res) {
         res = JSON.parse(JSON.stringify(res));
       }
-      // console.log(res);
       state.forumList = res;
     },
     getUserForumData: (state, action) => {

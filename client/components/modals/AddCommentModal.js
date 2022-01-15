@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { createForum } from "../../features/forumSlice";
+import { createComments } from "../../features/commentSlice";
 
-const AddForumModal = () => {
-  const [forumName, setForumName] = useState("");
+const AddCommentModal = ({ currentUserId, forumId }) => {
+  const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
-  const userId = useSelector((state) => state.user.userId);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const dispatch = useDispatch();
@@ -14,23 +13,21 @@ const AddForumModal = () => {
   return (
     <>
       <Button className="btn btn-secondary me-3" onClick={handleShow}>
-        Add Forum
+        Add Comment
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Forum</Modal.Title>
+          <Modal.Title>Add Comment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
             <form>
-              <label className="form-label mt-4">
-                Please type in the name of forum
-              </label>
+              <label className="form-label mt-4">Please type in comments</label>
               <input
                 className="form-control"
                 type="text"
                 onChange={(e) => {
-                  setForumName(e.target.value);
+                  setComment(e.target.value);
                 }}
               />
             </form>
@@ -43,13 +40,11 @@ const AddForumModal = () => {
           <Button
             variant="primary"
             onClick={() => {
-              /**
-               * TODO: API call to Add forum to forum db
-               */
               dispatch(
-                createForum({
-                  name: forumName,
-                  owner_user_id: userId,
+                createComments({
+                  description: comment,
+                  owner_user_id: currentUserId,
+                  forum_id: forumId,
                 })
               );
               handleClose();
@@ -63,4 +58,4 @@ const AddForumModal = () => {
   );
 };
 
-export default AddForumModal;
+export default AddCommentModal;

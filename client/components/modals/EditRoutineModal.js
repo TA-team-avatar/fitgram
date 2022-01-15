@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { getUserRoutines } from "../../features/routineSlice";
-import { addRoutineToForum } from "../../features/forumSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { Select, MenuItem } from "@material-ui/core";
+import React, { useState, useEffect } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { Select, MenuItem } from '@material-ui/core';
+import { editRoutine, getUserRoutines } from '../../features/routineSlice';
 
-const AddRoutineModal = () => {
-  const [routineId, setRoutineId] = useState("");
-  const [show, setShow] = useState(false);
-  const userRoutineData = useSelector((state) => state.routine.userRoutineData);
-  const forumData = useSelector((state) => state.forum.forumData);
-  const userId = useSelector((state) => state.user.userId);
+const EditRoutineModal = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
+  const [routineId, setRoutineId] = useState('');
+  const userRoutineData = useSelector((state) => state.routine.userRoutineData);
+  const userId = useSelector((state) => state.user.userId);
   const dispatch = useDispatch();
 
-  // Dispatch actions on mount
   useEffect(() => {
     dispatch(
       getUserRoutines({
@@ -26,32 +23,34 @@ const AddRoutineModal = () => {
 
   return (
     <>
-      <Button className="btn btn-secondary me-3" onClick={handleShow}>
-        Add Routine
+      <Button className='btn btn-secondary me-3' onClick={handleShow}>
+        Edit Routine
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Routine</Modal.Title>
+          <Modal.Title>Edit Routine</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
             <form>
-              <label className="form-label mt-4">
+              <label className='form-label mt-4'>
                 Please choose your routine
               </label>
               <Select
                 onChange={(e) => {
                   setRoutineId(e.target.value);
                 }}
-                className="dropdown-menu"
-                color="secondary"
-                variant="outlined"
+                className='dropdown-menu'
+                color='secondary'
+                variant='outlined'
+                options={userRoutineData}
+                placeholder={userRoutineData.name}
                 value={routineId}
                 displayEmpty
                 required
                 fullWidth
               >
-                <MenuItem required value="" disabled>
+                <MenuItem required value='' disabled>
                   Routines
                 </MenuItem>
                 {userRoutineData.map((routine, idx) => (
@@ -60,22 +59,25 @@ const AddRoutineModal = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <div className="invalid-feedback">
+              <div className='invalid-feedback'>
                 You must choose the routine!
               </div>
             </form>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant='secondary' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant="primary"
+            variant='primary'
             onClick={() => {
+              /**
+               * TODO: Add routine id to forum
+               */
               const forumId = forumData.id;
               dispatch(
-                addRoutineToForum({
+                editRoutine({
                   forumId: forumId,
                   routineId: routineId,
                 })
@@ -91,4 +93,4 @@ const AddRoutineModal = () => {
   );
 };
 
-export default AddRoutineModal;
+export default EditRoutineModal;
