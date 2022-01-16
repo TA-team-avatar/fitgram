@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { getRoutine, getRoutineWorkout } from "../features/routineSlice";
+import { getRoutine } from "../features/routineSlice";
+import { getRoutineWorkout } from "../features/workoutSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const RoutineTemplate = () => {
   const routineId = useSelector((state) => state.forum.forumData).routine_id;
   const routineData = useSelector((state) => state.routine.routineData);
   const routineWorkoutData = useSelector(
-    (state) => state.routine.routineWorkoutData
+    (state) => state.workout.routineWorkoutData
   );
 
   const dispatch = useDispatch();

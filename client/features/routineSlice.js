@@ -1,14 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
-import dummyData from '../constants/dummyData';
+import { createSlice } from "@reduxjs/toolkit";
+import dummyData from "../constants/dummyData";
 
 const initialState = {
   routineData: {},
   userRoutineData: [],
   routineWorkoutData: [],
+  userRoutineWorkoutData: {},
 };
 
 export const routineSlice = createSlice({
-  name: 'routine',
+  name: "routine",
   initialState,
   reducers: {
     getRoutine: (state, action) => {
@@ -29,7 +30,6 @@ export const routineSlice = createSlice({
     },
     getUserRoutines: (state, action) => {
       const userId = action.payload.userId;
-
       /**
        * TODO: Make API call to get routine information
        */
@@ -40,53 +40,76 @@ export const routineSlice = createSlice({
       if (res) {
         res = JSON.parse(JSON.stringify(res));
       }
-
       state.userRoutineData = res;
     },
-    getRoutineWorkout: (state, action) => {
-      const routineId = action.payload.routineId;
+    createRoutine: (state, action) => {
+      const { userId, name, duration } = action.payload;
 
       /**
        * TODO:
-       * Make API call to get routine_workout information
-       * Make Server to return join table that include workout name
+       * Make API call to edit routine
        */
 
-      let res = dummyData.routine_workouts.filter((routine_workout) => {
-        routine_workout.workout_name = dummyData.workouts.filter(
-          (workout) => workout.id === routine_workout.workout_id
-        )[0].name;
-        return routine_workout.routine_id === routineId;
+      let routines = JSON.parse(JSON.stringify(dummyData.routines));
+      routines.push({
+        id: 5,
+        name,
+        owner_user_id: userId,
+        duration,
       });
 
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
+      routines = routines.filter((routine) => routine.owner_user_id === userId);
 
-      state.routineWorkoutData = res;
+      state.userRoutineData = routines;
+    },
+    editRoutine: (state, action) => {
+      const { userId, routineId, name, duration } = action.payload;
+
+      /**
+       * TODO:
+       * Make API call to edit routine
+       */
+
+      let routines = JSON.parse(JSON.stringify(dummyData.routines));
+
+      routines = routines.filter((routine) => routine.owner_user_id === userId);
+
+      routines.forEach((routine) => {
+        if (routine.id === routineId) {
+          routine.name = name;
+          routine.duration = duration;
+        }
+      });
+
+      state.userRoutineData = routines;
     },
     deleteRoutine: (state, action) => {
-      const routineId = action.payload.routineId;
+      const { userId, routineId } = action.payload;
 
       /**
        * TODO: Make API call to remove routine
        */
 
       let res = dummyData.routines.filter(
-        (routine) => routine.id !== routineId
+        (routine) =>
+          routine.id !== routineId && routine.owner_user_id === userId
       );
 
       if (res) {
         res = JSON.parse(JSON.stringify(res));
       }
-      console.log('res', res);
+
       state.userRoutineData = res;
-      console.log('state', state.userRoutineData);
     },
   },
 });
 
-export const { getRoutine, getRoutineWorkout, getUserRoutines, deleteRoutine } =
-  routineSlice.actions;
+export const {
+  getRoutine,
+  getUserRoutines,
+  createRoutine,
+  editRoutine,
+  deleteRoutine,
+} = routineSlice.actions;
 
 export default routineSlice.reducer;
