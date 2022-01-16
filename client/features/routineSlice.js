@@ -49,18 +49,12 @@ export const routineSlice = createSlice({
        * TODO:
        * Make API call to edit routine
        */
-
-      let routines = JSON.parse(JSON.stringify(dummyData.routines));
-      routines.push({
+      state.userRoutineData.push({
         id: 5,
         name,
         owner_user_id: userId,
         duration,
       });
-
-      routines = routines.filter((routine) => routine.owner_user_id === userId);
-
-      state.userRoutineData = routines;
     },
     editRoutine: (state, action) => {
       const { userId, routineId, name, duration } = action.payload;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { createRoutine } from "../../features/routineSlice";
+import { getUserRoutineWorkout } from "../../features/workoutSlice";
 import { useDispatch } from "react-redux";
 
 const BuildRoutineModal = ({ userId }) => {
@@ -56,6 +57,8 @@ const BuildRoutineModal = ({ userId }) => {
                   duration,
                 })
               );
+              // Upon creation of routine, update the state of user's routine workout object
+              dispatch(getUserRoutineWorkout({ userId, isAdded: true }));
               handleClose();
             }}
           >

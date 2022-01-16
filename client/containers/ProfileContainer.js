@@ -54,6 +54,8 @@ const ProfileContainer = () => {
     dispatch(getWorkout());
   }, []);
 
+  console.log("routine", routineData);
+  console.log("routineWO", userRoutineWorkout);
   return (
     <>
       <h1>{userData.user_name}'s Profile</h1>
@@ -93,6 +95,12 @@ const ProfileContainer = () => {
                         deleteRoutine({
                           routineId: routine.id,
                           userId: Number(userId),
+                        })
+                      );
+                      // Upon deletion of routine, update the state of user's routine workout object
+                      dispatch(
+                        getUserRoutineWorkout({
+                          userId,
                         })
                       );
                     }}

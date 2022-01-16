@@ -25,7 +25,7 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
           <hr />
           <AddWorkoutModal routineId={routineId} />
           <hr />
-          {workoutData.length > 0 ? (
+          {workoutData?.length > 0 ? (
             workoutData.map((rw, idx) => (
               <div key={idx}>
                 <span>Day: {rw.day}</span>&nbsp;

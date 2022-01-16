@@ -41,6 +41,7 @@ export const workoutSlice = createSlice({
     },
     getUserRoutineWorkout: (state, action) => {
       const userId = action.payload.userId;
+      const isAdded = action.payload.isAdded;
 
       /**
        * TODO:
@@ -65,6 +66,11 @@ export const workoutSlice = createSlice({
         cache[routine.id] = res;
       }
       state.userRoutineWorkoutData = cache;
+
+      //test code
+      if (isAdded) {
+        state.userRoutineWorkoutData[5] = [];
+      }
     },
     deleteWorkout: (state, action) => {
       const { routineId, id } = action.payload;
@@ -103,6 +109,16 @@ export const workoutSlice = createSlice({
         weight,
         day,
       } = action.payload;
+
+      console.log("edit", {
+        routine_id,
+        id,
+        workout_id,
+        set,
+        repetition_motion,
+        weight,
+        day,
+      });
       /**
        * TODO: Make API call to create routine_workout to db
        */
