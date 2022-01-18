@@ -37,40 +37,41 @@ const ProfileContainer = () => {
 
   return (
     <>
-      <h1>{userData.user_name}'s Profile</h1>
       <div>
-        <span>Total Likes {totalLikes}</span>
-        <hr />
-        <AddRoutineModal />
-        <hr />
-        <>
-          {routineData.map((routine, index) => (
-            <div key={index}>
-              <span>{routine.name}</span>
-              Date Created: <span>{routine.date_created}</span>
-              <span>
-                <button
-                  className='btn btn-secondary me-3'
-                  onClick={() => {
-                    dispatch(
-                      deleteRoutine({
-                        routineId: routine.id,
-                      })
-                    );
-                  }}
-                >
-                  Delete Routine
-                </button>
+        <h2 className='container'>{userData.user_name}'s Profile</h2>
+        <div>
+          <span className='text'>Total Likes {totalLikes}</span>
+          <hr />
+          <AddRoutineModal />
+          <hr />
+          <>
+            {routineData.map((routine, index) => (
+              <div key={index}>
+                <span className='text'>{routine.name}</span>
+                Date Created:{' '}
+                <span className='text'>{routine.date_created}</span>
                 <span>
-                  <button className='btn btn-secondary me-3'>
-                    Edit Routine
+                  <button
+                    className='btn-secondary'
+                    onClick={() => {
+                      dispatch(
+                        deleteRoutine({
+                          routineId: routine.id,
+                        })
+                      );
+                    }}
+                  >
+                    Delete Routine
                   </button>
+                  <span>
+                    <button className='btn-secondary'>Edit Routine</button>
+                  </span>
                 </span>
-              </span>
-            </div>
-          ))}
-        </>
-        <button className='btn btn-secondary me-3'>Messages</button>
+              </div>
+            ))}
+          </>
+          <button className='btn-secondary'>Messages</button>
+        </div>
       </div>
     </>
   );

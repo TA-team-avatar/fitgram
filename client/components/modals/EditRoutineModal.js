@@ -23,10 +23,10 @@ const EditRoutineModal = () => {
 
   return (
     <>
-      <Button className='btn btn-secondary me-3' onClick={handleShow}>
+      <Button className='btn-secondary' onClick={handleShow}>
         Edit Routine
       </Button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal className='modal' show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Routine</Modal.Title>
         </Modal.Header>
