@@ -1,10 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import dummyData from '../constants/dummyData';
+import axios from 'axios';
 
 const initialState = {
-  userId: 1,
+  userId: null,
   userData: {},
 };
+
+export const loginUser = createAsyncThunk('user/login', async (user) => {
+  const data = {
+    user_name: user.username,
+    password: user.password,
+  };
+  const userData = await axios.post('/user/login', data);
+  return userData;
+});
 
 export const userSlice = createSlice({
   name: 'user',
@@ -35,24 +45,16 @@ export const userSlice = createSlice({
       state.userData = res;
       // console.log('state.userData', state.userData);
     },
-    login: (state, action) => {
-      const username = action.payload.username;
-      const password = action.payload.password;
-
-      fetch('/user/login', { method: 'post', body: { username, password } })
-        .then((res) => res.json())
-        .then((res) => {
-          state.userId = res.userID;
-          state.token = res.token;
-          sessionStorage.setItem('token', res.token);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+  },
+  extraReducers: {
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.userId = payload.data.userID;
+      state.token = payload.data.token;
+      sessionStorage.setItem('token', state.token);
     },
   },
 });
 
-export const { getUserId, getUserName, login } = userSlice.actions;
+export const { getUserId, getUserName } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { login } from '../features/userSlice';
+import { loginUser } from '../features/userSlice';
 
 const LoginForm = (props) => {
+  const userId = useSelector((state) => state.user).userId;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({ username, password }));
+    dispatch(loginUser({ username, password }));
   };
 
   return (
@@ -36,6 +37,7 @@ const LoginForm = (props) => {
           <button type='submit'>Login</button>
         </div>
       </form>
+      <p className='text-black'>{userId}</p>
     </div>
   );
 };

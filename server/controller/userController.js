@@ -50,6 +50,7 @@ userController.addUser = async (req, res, next) => {
 
 userController.checkUser = async (req, res, next) => {
   const { user_name, password } = req.body;
+  console.log(req.body);
 
   const query =
     'SELECT id, user_name, password\
