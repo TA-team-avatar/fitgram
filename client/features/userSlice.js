@@ -7,7 +7,7 @@ const initialState = {
   userData: {},
 };
 
-export const loginUser = createAsyncThunk('user/login', async (user) => {
+export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
   const data = {
     user_name: user.username,
     password: user.password,
@@ -16,12 +16,12 @@ export const loginUser = createAsyncThunk('user/login', async (user) => {
   return userData;
 });
 
-export const signUpUser = createAsyncThunk('user/signup', async (user) => {
+export const signUpUser = createAsyncThunk('user/signUpUser', async (user) => {
   const userData = await axios.post('/user/signup', user);
   return userData;
 });
 
-export const getUserId = createAsyncThunk('user/id', async (payload) => {
+export const getUserId = createAsyncThunk('user/getUserId', async (payload) => {
   const data = {
     token: payload.token,
   };
@@ -33,7 +33,7 @@ export const getUserId = createAsyncThunk('user/id', async (payload) => {
 });
 
 export const getUserName = createAsyncThunk(
-  'user/username',
+  'user/getUserName',
   async (payload) => {
     const userInfo = await axios.get(`/user/${payload.userId}`);
     return userInfo;
