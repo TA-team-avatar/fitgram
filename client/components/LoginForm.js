@@ -8,12 +8,13 @@ const LoginForm = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const history = useNavigate();
+  // const history = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(loginUser({ username, password }));
-    history('/');
+    // history('/dashboard');
+    window.location.href = '/dashboard';
   };
 
   return (

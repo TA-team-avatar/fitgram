@@ -5,7 +5,7 @@ import { signUpUser } from '../features/userSlice';
 
 const SignupForm = (props) => {
   const dispatch = useDispatch();
-  const history = useNavigate();
+  // const history = useNavigate();
   const [userInfo, setUserInfo] = useState({
     user_name: '',
     first_name: '',
@@ -19,7 +19,8 @@ const SignupForm = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(signUpUser(userInfo));
-    history('/');
+    // history('/dashboard');
+    window.location.href = '/dashboard';
   };
 
   return (
