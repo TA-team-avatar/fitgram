@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../features/userSlice';
 
 const LoginForm = (props) => {
-  const userId = useSelector((state) => state.user).userId;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
