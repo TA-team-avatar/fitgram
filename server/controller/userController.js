@@ -26,6 +26,7 @@ userController.getUserInfo = async (req, res, next) => {
 userController.addUser = async (req, res, next) => {
   const { user_name, first_name, last_name, email, height, weight, password } =
     req.body;
+  console.log(req.body);
 
   const query =
     'INSERT INTO users (user_name, first_name, last_name, email, height, weight, password)\
@@ -50,7 +51,7 @@ userController.addUser = async (req, res, next) => {
 
 userController.checkUser = async (req, res, next) => {
   const { user_name, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   const query =
     'SELECT id, user_name, password\

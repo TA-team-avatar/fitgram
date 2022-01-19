@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import LoginForm from './../components/LoginForm';
 import SignupForm from './../components/SignupForm';
-import GoogleOAuthButton from './../GoogleOAuthLogin';
+// import GoogleOAuthButton from './../GoogleOAuthLogin';
 
 const LoginSignupContainer = (props) => {
   return (
@@ -30,7 +30,7 @@ const LoginSignupContainer = (props) => {
       <div className='flex flex-col justify-center items-center max-w-xl mx-auto px-4 py-4 shadow-md bg-neutral rounded-lg'>
         <LoginForm />
         <SignupForm />
-        <GoogleOAuthButton />
+        {/* <GoogleOAuthButton /> */}
       </div>
       {/* <nav><Link to="/mainpage"> Mainpage </Link></nav> */}
 

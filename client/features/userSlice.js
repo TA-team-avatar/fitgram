@@ -16,6 +16,11 @@ export const loginUser = createAsyncThunk('user/login', async (user) => {
   return userData;
 });
 
+export const signUpUser = createAsyncThunk('user/signup', async (user) => {
+  const userData = await axios.post('/user/signup', user);
+  return userData;
+});
+
 export const getUserId = createAsyncThunk('user/id', async (payload) => {
   const data = {
     token: payload.token,
@@ -63,7 +68,7 @@ export const userSlice = createSlice({
     // },
   },
   extraReducers: {
-    [loginUser.pending]: (state) => {
+    [loginUser.pending]: () => {
       console.log('loginUser api is pending');
     },
     [loginUser.fulfilled]: (state, { payload }) => {
@@ -75,7 +80,7 @@ export const userSlice = createSlice({
       state.userId = null;
       console.log('Something went wrong in loginUser Call');
     },
-    [getUserId.pending]: (state) => {
+    [getUserId.pending]: () => {
       console.log('getUserId api is pending');
     },
     [getUserId.fulfilled]: (state, { payload }) => {
@@ -86,15 +91,26 @@ export const userSlice = createSlice({
       state.userId = null;
       console.log('Something went wrong in getUserId Call');
     },
-    [getUserName.pending]: (state) => {
+    [getUserName.pending]: () => {
       console.log('getUserName api is pending');
     },
     [getUserName.fulfilled]: (state, { payload }) => {
       state.userData = payload.data;
       console.log('getUserName fulfilled');
     },
-    [getUserName.rejected]: (state) => {
+    [getUserName.rejected]: () => {
       console.log('Something went wrong in getUserName Call');
+    },
+    [signUpUser.pending]: () => {
+      console.log('signUpUser api is pending');
+    },
+    [signUpUser.fulfilled]: (state, { payload }) => {
+      state.userId = payload.data.user_id;
+      sessionStorage.setItem('token', payload.data.token);
+      console.log('signUpUser fulfilled');
+    },
+    [signUpUser.rejected]: () => {
+      console.log('Something went wrong in signUpUser Call');
     },
   },
 });
