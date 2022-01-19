@@ -5,7 +5,7 @@ const db = require('../model/dbModel');
 
 const routinesController = {};
 
-routinesController.getRoutines = async (req, res, next) => {
+routinesController.getAllRoutines = async (req, res, next) => {
   const { id } = req.query;
 
   const queryRoutine =
