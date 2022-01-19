@@ -45,6 +45,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     proxy: {
+      '/forum/**': 'http://localhost:3000/',
       '/user': 'http://localhost:3000',
       '/session': 'http://localhost:3000',
     },

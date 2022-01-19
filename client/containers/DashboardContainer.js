@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { getAllForums, deleteForum } from '../features/forumSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-
-import AddForumModal from '../components/modals/AddForumModal';
-import { getUserId } from '../features/userSlice';
+import React, { useEffect } from "react";
+import { getAllForums, deleteForum } from "../features/forumSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import AddForumModal from "../components/modals/AddForumModal";
+import { getUserId } from "../features/userSlice";
 
 const DashboardContainer = () => {
   const forumList = useSelector((state) => state.forum.forumList);
@@ -36,7 +35,7 @@ const DashboardContainer = () => {
           Date Created:
           <span>{forum.date_created}</span>
           <span>
-            {forum.owner_user_id === currentUserId ? (
+            {Number(forum.owner_user_id) === currentUserId ? (
               <button
                 className='btn btn-secondary me-3'
                 onClick={() => {

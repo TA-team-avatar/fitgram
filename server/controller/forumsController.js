@@ -1,10 +1,10 @@
-const db = require('../model/dbModel');
+const db = require("../model/dbModel");
 
 const forumsController = {};
 
 // gets all Forums from all users to render on dashboard component
 forumsController.getForumsAllUsers = async (req, res, next) => {
-  console.log('reached getForumsAllUsers');
+  console.log("reached getForumsAllUsers");
 
   const getForumsAllUsersQuery = `SELECT * FROM forums ORDER BY forums.date_created`;
   // console.log('values: ', values);
@@ -26,12 +26,14 @@ forumsController.getForumsAllUsers = async (req, res, next) => {
 // gets all forums fora specific authorized user
 // this was built with the assumption that routines & workouts will be in separate request
 forumsController.getForumsSingleUser = async (req, res, next) => {
-  const getForumsSingleUserQuery = `SELECT * FROM forums WHERE owner_user_id=$1`;
-  const values = [req.params.owner_user_id];
+  const userId = req.params.owner_user_id;
+  const getForumsSingleUserQuery = `SELECT * FROM forums WHERE owner_user_id=${userId}`;
+
   try {
-    const getForums = await db.query(getForumsSingleUserQuery, values);
+    const getForums = await db.query(getForumsSingleUserQuery);
     if (getForums) {
       console.log(`from getForumsSingleUserQuery: `, getForums.rows);
+      res.locals.userForums = getForums.rows;
       return next();
     }
   } catch (err) {
@@ -47,12 +49,13 @@ forumsController.getSpecificForum = async (req, res, next) => {
   const getSpecificForumQuery = `SELECT * FROM forums WHERE id=$1`;
   const values = [req.params.id];
 
-  console.log('reached getSpecificForum');
+  console.log("reached getSpecificForum");
 
   try {
     const getSpecificForum = await db.query(getSpecificForumQuery, values);
     if (getSpecificForum) {
       console.log(`from getSpecificForum: `, getSpecificForum.rows);
+      res.locals.forum = getSpecificForum.rows[0];
       return next();
     }
   } catch (err) {
@@ -65,13 +68,14 @@ forumsController.getSpecificForum = async (req, res, next) => {
 
 // deletes one specific forum for authorized user
 forumsController.deleteSpecificForum = async (req, res, next) => {
-  const deleteForumQuery = `DELETE FROM forums WHERE owner_user_id=$1 AND id=$2`;
-  const values = [req.body.owner_user_id, req.body.id];
+  const forumId = req.params.id;
 
-  console.log('reached deleteSpecificForum');
+  const deleteForumQuery = `DELETE FROM forums WHERE id=${forumId}`;
+
+  console.log("reached deleteSpecificForum");
 
   try {
-    const deleteForum = await db.query(deleteForumQuery, values);
+    const deleteForum = await db.query(deleteForumQuery);
 
     if (deleteForum) {
       console.log(`from deleteSpecificForum: `, deleteForum);
@@ -88,12 +92,12 @@ forumsController.deleteSpecificForum = async (req, res, next) => {
 // creates new forum for authorized user
 forumsController.createNewForum = async (req, res, next) => {
   const createNewForumQuery = `
-  INSERT INTO forums (owner_user_id, routine_id, name)
-  VALUES ($1, $2, $3)
+  INSERT INTO forums (owner_user_id, name)
+  VALUES ($1, $2)
   `;
-  const values = [req.body.owner_user_id, req.body.routine_id, req.body.name];
+  const values = [req.body.owner_user_id, req.body.name];
 
-  console.log('reached createNewForum');
+  console.log("reached createNewForum");
 
   try {
     const createNewForum = await db.query(createNewForumQuery, values);
@@ -113,31 +117,43 @@ forumsController.createNewForum = async (req, res, next) => {
 
 // middleware to update a forum - only changes name for now
 forumsController.updateForum = async (req, res, next) => {
-  const updateForumNameQuery = `
-  UPDATE forums
-  SET name=$1 WHERE id=$2
-  `;
-  const valuesName = [req.body.name, req.body.id];
+  const forumId = req.params.id;
 
-  const updateForumRoutineQuery = `
-    UPDATE forums SET routine_id=$1 WHERE id=$2
-  `;
-  const valuesRoutine = [req.body.routine_id, req.body.id];
+  const schema = ["routine_id", "name"];
 
-  console.log('reached updateForum');
+  let setValue = schema.reduce((str, field) => {
+    if (field in req.body) {
+      if (field === "routine_id" && req.body[field] === "NULL") {
+        str += field + " = " + req.body[field] + ", ";
+      } else {
+        str += field + " = " + "'" + req.body[field] + "', ";
+      }
 
-  try {
-    const updateForumName = await db.query(updateForumNameQuery, valuesName);
-    const updateForumRoutine = await db.query(
-      updateForumRoutineQuery,
-      valuesRoutine
-    );
-
-    if (updateForumName && updateForumRoutine) {
-      console.log('updated forum name: ', updateForumName.rows);
-      console.log('updated forum routine: ', updateForumRoutine.rows);
-      return next();
+      return str;
+    } else {
+      return str;
     }
+  }, "");
+
+  setValue = setValue.replace(/(,\s$)/g, "");
+  console.log("here", setValue);
+  try {
+    const query = `
+    UPDATE forums
+    SET ${setValue}
+    WHERE id=${forumId}
+    RETURNING id, owner_user_id, routine_id, name, likes, dislikes, date_created
+    `;
+
+    const forum = await db.query(query);
+
+    if (forum.rows.length === 0) {
+      throw new Error(`No forum with id of ${forumId} found!`);
+    }
+
+    res.locals.forum = forum.rows[0];
+
+    return next();
   } catch (err) {
     return next({
       log: `Error with forumsController.updateForum Error: ${err}`,
