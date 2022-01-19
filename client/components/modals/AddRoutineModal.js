@@ -60,9 +60,6 @@ const AddRoutineModal = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <div className="invalid-feedback">
-                You must choose the routine!
-              </div>
             </form>
           </div>
         </Modal.Body>

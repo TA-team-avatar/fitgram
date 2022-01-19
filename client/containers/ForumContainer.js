@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import RoutineTemplate from "../components/RoutineTemplate";
@@ -11,7 +11,6 @@ import CommentBox from "../components/CommentBox";
 import AddCommentModal from "../components/modals/AddCommentModal";
 
 const ForumContainer = () => {
-  // Hooks
   const { forumId } = useParams();
   const currentUserId = useSelector((state) => state.user.userId);
   const forumData = useSelector((state) => state.forum.forumData);
