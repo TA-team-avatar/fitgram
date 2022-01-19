@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserId, getUserName } from "../features/userSlice";
-import { getUserForumData } from "../features/forumSlice";
-import { getUserRoutines, deleteRoutine } from "../features/routineSlice";
-import { getUserRoutineWorkout, getWorkout } from "../features/workoutSlice";
-import BuildRoutineModal from "../components/modals/BuildRoutineModal";
-import EditRoutineModal from "../components/modals/EditRoutineModal";
-import EditWorkoutModal from "../components/modals/EditWorkoutModal";
-import ViewWorkoutModal from "../components/modals/ViewWorkoutModal";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserId, getUserName } from '../features/userSlice';
+import { getUserForumData } from '../features/forumSlice';
+import { getUserRoutines, deleteRoutine } from '../features/routineSlice';
+import { getUserRoutineWorkout, getWorkout } from '../features/workoutSlice';
+import BuildRoutineModal from '../components/modals/BuildRoutineModal';
+import EditRoutineModal from '../components/modals/EditRoutineModal';
+import EditWorkoutModal from '../components/modals/EditWorkoutModal';
+import ViewWorkoutModal from '../components/modals/ViewWorkoutModal';
 
 const ProfileContainer = () => {
   let { userId } = useParams();
@@ -28,7 +28,7 @@ const ProfileContainer = () => {
   useEffect(() => {
     dispatch(
       getUserId({
-        token: "fakeToken",
+        token: 'fakeToken',
       })
     );
     dispatch(
@@ -54,28 +54,11 @@ const ProfileContainer = () => {
     dispatch(getWorkout());
   }, []);
 
-  console.log("routine", routineData);
-  console.log("routineWO", userRoutineWorkout);
+  console.log('routine', routineData);
+  console.log('routineWO', userRoutineWorkout);
   return (
     <>
       <div>
-<<<<<<< HEAD
-        <h2 className='container'>{userData.user_name}'s Profile</h2>
-        <div>
-          <span className='text'>Total Likes {totalLikes}</span>
-          <hr />
-          <AddRoutineModal />
-          <hr />
-          <>
-            {routineData.map((routine, index) => (
-              <div key={index}>
-                <span className='text'>{routine.name}</span>
-                Date Created:{' '}
-                <span className='text'>{routine.date_created}</span>
-                <span>
-                  <button
-                    className='btn-secondary'
-=======
         <span>Total Likes {totalLikes}</span>
         <hr />
         {currentUserId === userId ? (
@@ -105,14 +88,11 @@ const ProfileContainer = () => {
                     duration={routine.duration}
                   />
                   <button
-                    className="btn btn-secondary me-3"
->>>>>>> dev
+                    className='btn btn-secondary me-3'
                     onClick={() => {
                       dispatch(
                         deleteRoutine({
                           routineId: routine.id,
-<<<<<<< HEAD
-=======
                           userId: Number(userId),
                         })
                       );
@@ -120,7 +100,6 @@ const ProfileContainer = () => {
                       dispatch(
                         getUserRoutineWorkout({
                           userId,
->>>>>>> dev
                         })
                       );
                     }}
@@ -131,13 +110,6 @@ const ProfileContainer = () => {
                     <button className='btn-secondary'>Edit Routine</button>
                   </span>
                 </span>
-<<<<<<< HEAD
-              </div>
-            ))}
-          </>
-          <button className='btn-secondary'>Messages</button>
-        </div>
-=======
               ) : (
                 <ViewWorkoutModal
                   workoutData={userRoutineWorkout[routine.id]}
@@ -147,8 +119,7 @@ const ProfileContainer = () => {
             </div>
           ))}
         </>
-        <button className="btn btn-secondary me-3">Messages</button>
->>>>>>> dev
+        <button className='btn btn-secondary me-3'>Messages</button>
       </div>
     </>
   );
