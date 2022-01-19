@@ -19,49 +19,49 @@ const DashboardContainer = () => {
     dispatch(getAllForums());
     dispatch(
       getUserId({
-        token: 'fakeToken',
+        token: sessionStorage.getItem('token'),
       })
     );
   }, []);
 
   return (
     <>
-      <div className='container'>
-        <h2>Welcome to Your Dashboard!</h2>
-        <hr />
-        <AddForumModal />
-        <hr />
-        {forumList.map((forum, idx) => (
-          <div key={idx}>
-            <span className='text'>{forum.name}</span>
-            Date Created:
-            <span className='text'>{forum.date_created}</span>
-            <span>
-              {forum.owner_user_id === currentUserId ? (
-                <button
-                  className='btn-secondary'
-                  onClick={() => {
-                    dispatch(
-                      deleteForum({
-                        forumId: forum.id,
-                      })
-                    );
-                  }}
-                >
-                  Delete Forum
-                </button>
-              ) : (
-                <Link
-                  to={`/profile/${forum.owner_user_id}`}
-                  className='btn-secondary'
-                >
-                  <button>View User Profile</button>
-                </Link>
-              )}
-            </span>
-          </div>
-        ))}
-      </div>
+      <h1>Welcome to Forums!</h1>
+      <hr />
+      <AddForumModal />
+      <hr />
+      {forumList.map((forum, idx) => (
+        <div key={idx}>
+          <span>{forum.name}</span>
+          Date Created:
+          <span>{forum.date_created}</span>
+          <span>
+            {forum.owner_user_id === currentUserId ? (
+              <button
+                className='btn btn-secondary me-3'
+                onClick={() => {
+                  dispatch(
+                    deleteForum({
+                      forumId: forum.id,
+                    })
+                  );
+                }}
+              >
+                Delete Forum
+              </button>
+            ) : (
+              <Link
+                to={`/profile/${forum.owner_user_id}`}
+                className='btn btn-secondary me-3'
+              >
+                <button>View User Profile</button>
+              </Link>
+            )}
+          </span>
+        </div>
+      ))}
+
+      <div></div>
     </>
   );
 };
