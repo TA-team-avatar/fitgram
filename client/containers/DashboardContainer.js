@@ -18,7 +18,7 @@ const DashboardContainer = () => {
     dispatch(getAllForums());
     dispatch(
       getUserId({
-        token: "fakeToken",
+        token: sessionStorage.getItem('token'),
       })
     );
   }, []);
@@ -37,7 +37,7 @@ const DashboardContainer = () => {
           <span>
             {Number(forum.owner_user_id) === currentUserId ? (
               <button
-                className="btn btn-secondary me-3"
+                className='btn btn-secondary me-3'
                 onClick={() => {
                   dispatch(
                     deleteForum({
@@ -51,7 +51,7 @@ const DashboardContainer = () => {
             ) : (
               <Link
                 to={`/profile/${forum.owner_user_id}`}
-                className="btn btn-secondary me-3"
+                className='btn btn-secondary me-3'
               >
                 <button>View User Profile</button>
               </Link>

@@ -8,16 +8,16 @@ sessionsController.checkSession = async (req, res, next) => {
   console.log('reached checkSession middleware');
 
   const checkSessionsQuery = `
-    SELECT user_id, token FROM sessions WHERE sessions.id=$1
+    SELECT user_id, token FROM sessions WHERE token=$1
     `;
-  const values = [req.body.id];
+  const values = [req.body.token];
 
   try {
     const checkUserSession = await db.query(checkSessionsQuery, values);
     if (checkUserSession) {
-      // console.log('from checkUserSession: ', checkUserSession.rows);
-      res.locals.user_id = checkUserSession.rows.user_id;
-      res.locals.token = checkUserSession.rows.token;
+      console.log('from checkUserSession: ', checkUserSession.rows);
+      res.locals.user_id = checkUserSession.rows[0].user_id;
+      res.locals.token = checkUserSession.rows[0].token;
       return next();
     }
   } catch (err) {
