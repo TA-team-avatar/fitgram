@@ -1,43 +1,65 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUserName } from '../features/userSlice';
-import { getUserForumData } from '../features/forumSlice';
-import { getUserRoutines, deleteRoutine } from '../features/routineSlice';
-import AddRoutineModal from '../components/modals/AddRoutineModal';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserId, getUserName } from "../features/userSlice";
+import { getUserForumData } from "../features/forumSlice";
+import { getUserRoutines, deleteRoutine } from "../features/routineSlice";
+import { getUserRoutineWorkout, getWorkout } from "../features/workoutSlice";
+import BuildRoutineModal from "../components/modals/BuildRoutineModal";
+import EditRoutineModal from "../components/modals/EditRoutineModal";
+import EditWorkoutModal from "../components/modals/EditWorkoutModal";
+import ViewWorkoutModal from "../components/modals/ViewWorkoutModal";
 
 const ProfileContainer = () => {
-  const { userId } = useParams();
+  let { userId } = useParams();
+  userId = Number(userId);
   const userData = useSelector((state) => state.user.userData);
+  const currentUserId = useSelector((state) => state.user.userId);
   const routineData = useSelector((state) => state.routine.userRoutineData);
   const forumList = useSelector((state) => state.forum.forumList);
+  const userRoutineWorkout = useSelector(
+    (state) => state.workout.userRoutineWorkoutData
+  );
   const dispatch = useDispatch();
-
-  const { id, owner_user_id, name, duration, date_created } = routineData;
 
   let totalLikes = forumList.reduce((acc, item) => acc + item.likes, 0);
 
+  // Dispatch actions on mount
   useEffect(() => {
     dispatch(
-      getUserName({
-        userId: Number(userId),
+      getUserId({
+        token: "fakeToken",
       })
-    ),
-      dispatch(
-        getUserRoutines({
-          userId: Number(userId),
-        })
-      ),
-      dispatch(
-        getUserForumData({
-          userId: Number(userId),
-        })
-      );
+    );
+    dispatch(
+      getUserName({
+        userId,
+      })
+    );
+    dispatch(
+      getUserRoutines({
+        userId,
+      })
+    );
+    dispatch(
+      getUserForumData({
+        userId,
+      })
+    );
+    dispatch(
+      getUserRoutineWorkout({
+        userId,
+      })
+    );
+    dispatch(getWorkout());
   }, []);
 
+  console.log("routine", routineData);
+  console.log("routineWO", userRoutineWorkout);
   return (
     <>
       <div>
+<<<<<<< HEAD
         <h2 className='container'>{userData.user_name}'s Profile</h2>
         <div>
           <span className='text'>Total Likes {totalLikes}</span>
@@ -53,10 +75,52 @@ const ProfileContainer = () => {
                 <span>
                   <button
                     className='btn-secondary'
+=======
+        <span>Total Likes {totalLikes}</span>
+        <hr />
+        {currentUserId === userId ? (
+          <>
+            <BuildRoutineModal userId={userId} />
+            <hr />
+          </>
+        ) : (
+          <></>
+        )}
+        <>
+          {routineData.map((routine, index) => (
+            <div key={index}>
+              <h3>{routine.name}</h3>
+              <div>Duration: {routine.duration}</div>
+              <div>{routine.date_created}</div>
+              {currentUserId === userId ? (
+                <span>
+                  <EditWorkoutModal
+                    routineId={routine.id}
+                    workoutData={userRoutineWorkout[routine.id]}
+                  />
+                  <EditRoutineModal
+                    userId={userId}
+                    routineId={routine.id}
+                    name={routine.name}
+                    duration={routine.duration}
+                  />
+                  <button
+                    className="btn btn-secondary me-3"
+>>>>>>> dev
                     onClick={() => {
                       dispatch(
                         deleteRoutine({
                           routineId: routine.id,
+<<<<<<< HEAD
+=======
+                          userId: Number(userId),
+                        })
+                      );
+                      // Upon deletion of routine, update the state of user's routine workout object
+                      dispatch(
+                        getUserRoutineWorkout({
+                          userId,
+>>>>>>> dev
                         })
                       );
                     }}
@@ -67,11 +131,24 @@ const ProfileContainer = () => {
                     <button className='btn-secondary'>Edit Routine</button>
                   </span>
                 </span>
+<<<<<<< HEAD
               </div>
             ))}
           </>
           <button className='btn-secondary'>Messages</button>
         </div>
+=======
+              ) : (
+                <ViewWorkoutModal
+                  workoutData={userRoutineWorkout[routine.id]}
+                />
+              )}
+              <hr />
+            </div>
+          ))}
+        </>
+        <button className="btn btn-secondary me-3">Messages</button>
+>>>>>>> dev
       </div>
     </>
   );

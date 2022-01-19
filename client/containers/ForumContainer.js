@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -9,9 +10,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import AddRoutineModal from '../components/modals/AddRoutineModal';
 import CommentBox from '../components/CommentBox';
 import AddCommentModal from '../components/modals/AddCommentModal';
+=======
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import RoutineTemplate from "../components/RoutineTemplate";
+import { getUserId } from "../features/userSlice";
+import { getForum, removeRoutineToForum } from "../features/forumSlice";
+import { getForumComments } from "../features/commentSlice";
+import { useSelector, useDispatch } from "react-redux";
+import AddRoutineModal from "../components/modals/AddRoutineModal";
+import CommentBox from "../components/CommentBox";
+import AddCommentModal from "../components/modals/AddCommentModal";
+>>>>>>> dev
 
 const ForumContainer = () => {
-  // Hooks
   const { forumId } = useParams();
   const currentUserId = useSelector((state) => state.user.userId);
   const forumData = useSelector((state) => state.forum.forumData);
