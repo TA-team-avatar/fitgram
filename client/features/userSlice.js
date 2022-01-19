@@ -5,6 +5,7 @@ import axios from 'axios';
 const initialState = {
   userId: null,
   userData: {},
+  status: null,
 };
 
 export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
@@ -43,78 +44,53 @@ export const getUserName = createAsyncThunk(
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    // getUserId: (state, action) => {
-    //   const token = action.payload.token;
-    //   /**
-    //    * TODO: Make API call to get User ID from the server.
-    //    */
-    //   const res = dummyData.user;
-    //   state.userId = res;
-    // },
-    // getUserName: (state, action) => {
-    //   const userId = action.payload.userId;
-    //   // console.log('line 25', userId);
-    //   /**
-    //    * TODO: Make API call to get User Name from the server.
-    //    */
-    //   let res = dummyData.users.filter((user) => user.id === userId)[0];
-    //   if (res) {
-    //     res = JSON.parse(JSON.stringify(res));
-    //   }
-    //   // console.log('line 29', res);
-    //   state.userData = res;
-    //   // console.log('state.userData', state.userData);
-    // },
-  },
+  reducers: {},
   extraReducers: {
-    [loginUser.pending]: () => {
-      console.log('loginUser api is pending');
+    [loginUser.pending]: (state) => {
+      state.status = 'loginUser api is pending';
     },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.userId = payload.data.userID;
       sessionStorage.setItem('token', payload.data.token);
-      console.log('loginUser fulfilled');
+      state.status = 'loginUser fulfilled';
     },
     [loginUser.rejected]: (state) => {
       state.userId = null;
-      console.log('Something went wrong in loginUser Call');
+      state.status = 'Something went wrong in loginUser Call';
     },
     [getUserId.pending]: () => {
-      console.log('getUserId api is pending');
+      state.status = 'getUserId api is pending';
     },
     [getUserId.fulfilled]: (state, { payload }) => {
       state.userId = payload.data.user_id;
-      console.log('getUserId fulfilled');
+      state.status = 'getUserId fulfilled';
     },
     [getUserId.rejected]: (state) => {
       state.userId = null;
-      console.log('Something went wrong in getUserId Call');
+      state.status = 'Something went wrong in getUserId Call';
     },
     [getUserName.pending]: () => {
-      console.log('getUserName api is pending');
+      state.status = 'getUserName api is pending';
     },
     [getUserName.fulfilled]: (state, { payload }) => {
       state.userData = payload.data;
-      console.log('getUserName fulfilled');
+      state.status = 'getUserName fulfilled';
     },
     [getUserName.rejected]: () => {
-      console.log('Something went wrong in getUserName Call');
+      state.status = 'Something went wrong in getUserName Call';
     },
     [signUpUser.pending]: () => {
-      console.log('signUpUser api is pending');
+      state.status = 'signUpUser api is pending';
     },
     [signUpUser.fulfilled]: (state, { payload }) => {
       state.userId = payload.data.user_id;
       sessionStorage.setItem('token', payload.data.token);
-      console.log('signUpUser fulfilled');
+      state.status = 'signUpUser fulfilled';
     },
     [signUpUser.rejected]: () => {
-      console.log('Something went wrong in signUpUser Call');
+      state.status = 'Something went wrong in signUpUser Call';
     },
   },
 });
-
-// export const { getUserId, getUserName } = userSlice.actions;
 
 export default userSlice.reducer;
