@@ -28,6 +28,8 @@ routinesController.getAllRoutines = async (req, res, next) => {
   }
 };
 
+//build getUserRoutines controller****
+
 routinesController.insertRoutine = async (req, res, next) => {
   const { owner_user_id, name, duration, routine_workout } = req.body;
 

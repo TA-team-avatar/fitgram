@@ -58,7 +58,7 @@ const ProfileContainer = () => {
   console.log('routineWO', userRoutineWorkout);
   return (
     <>
-      <div>
+      <div className='container'>
         <span>Total Likes {totalLikes}</span>
         <hr />
         {currentUserId === userId ? (
@@ -119,7 +119,6 @@ const ProfileContainer = () => {
             </div>
           ))}
         </>
-        <button className='btn btn-secondary me-3'>Messages</button>
       </div>
     </>
   );

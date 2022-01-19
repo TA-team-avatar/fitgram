@@ -3,24 +3,24 @@ import React from 'react';
 const NavContainer = () => {
   return (
     <div>
-      <h1 class='title'>Fitness App </h1>
+      <h1 className='title'>Fitness App </h1>
       <>
-        <nav class='navbar'>
+        <nav className='navbar'>
           <div>
-            <div class='navbar-nav'>
-              <ul class='navbar-nav'>
-                <li class='nav-item'>
-                  <a class='nav-link' href='/profile/:userId'>
+            <div className='navbar-nav'>
+              <ul className='navbar-nav'>
+                <li className='nav-item'>
+                  <a className='nav-link' href='/profile/:userId'>
                     My Profile
                   </a>
                 </li>
-                <li class='nav-item'>
-                  <a class='nav-link' href='/message/:id'>
+                <li className='nav-item'>
+                  <a className='nav-link' href='/message/:id'>
                     Messages
                   </a>
                 </li>
-                <li class='nav-item'>
-                  <a class='nav-link' href='#'>
+                <li className='nav-item'>
+                  <a className='nav-link' href='#'>
                     Logout (link needed)
                   </a>
                 </li>
