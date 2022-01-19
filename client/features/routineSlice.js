@@ -28,29 +28,36 @@ export const getUserRoutines = createAsyncThunk(
 
 export const createRoutine = createAsyncThunk(
   'routine/createRoutine',
-  async () => {
-    const { userId, name, duration } = payload;
-    const res = await axios.post(`/routine/${payload}`);
+  async ({ userId, name, duration }) => {
+    const res = await axios.post(`/routine/`, {
+      userId,
+      name,
+      duration,
+    });
     return res.userRoutineData;
   }
 );
 
-export const editRoutine = createAsyncThunk('routine/editRoutine', async () => {
-  const { userId, name, duration } = payload;
-  const res = await axios.post(`/routine/${payload}`);
-  return res.userRoutineData;
-});
+export const editRoutine = createAsyncThunk(
+  'routine/editRoutine',
+  async ({ userId, name, duration }) => {
+    const res = await axios.post(`/routine`, { userId, name, duration });
+    return res.userRoutineData;
+  }
+);
 
 export const deleteRoutine = createAsyncThunk(
   'routine/deleteRoutine',
-  async () => {
-    const { userId, routineId } = action.payload;
-    const res = await axios.delete(`/routine/${payload}`);
+  async ({ userId, routineId }) => {
+    const res = await axios.delete(`/routine`, { userId, routineId });
     return res.userRoutineData;
   }
 );
 
-export default routineSlice = createSlice({
+export const routineSlice = createSlice({
+  name: 'routine',
+  initialState,
+  reducers: {},
   extraReducers: {
     [deleteRoutine.pending]: (state, action) => {
       state.status = 'loading';
@@ -104,15 +111,9 @@ export default routineSlice = createSlice({
     },
   },
 });
-// export const {
-//   getRoutine,
-//   getUserRoutines,
-//   createRoutine,
-//   editRoutine,
-//   deleteRoutine,
-// } = routineSlice.actions;
+export const {} = routineSlice.actions;
 
-// export default routineSlice.reducer;
+export default routineSlice.reducer;
 
 // export const routineSlice = createSlice({
 //   name: 'routine',
