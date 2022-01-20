@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { getAllForums, deleteForum } from '../features/forumSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-
-import AddForumModal from '../components/modals/AddForumModal';
-import { getUserId } from '../features/userSlice';
+import React, { useEffect } from "react";
+import { getAllForums, deleteForum } from "../features/forumSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import AddForumModal from "../components/modals/AddForumModal";
+import { getUserId } from "../features/userSlice";
 
 const DashboardContainer = () => {
   const forumList = useSelector((state) => state.forum.forumList);
@@ -35,7 +34,6 @@ const DashboardContainer = () => {
           {forumList.map((forum, idx) => (
             <div className='div-span' key={idx}>
               <span className='first-span'>{forum.name}</span>
-
               <span className='second-span'>
                 {' '}
                 Date Created: {forum.date_created}

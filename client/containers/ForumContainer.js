@@ -16,7 +16,6 @@ const ForumContainer = () => {
   const forumData = useSelector((state) => state.forum.forumData);
   const commentData = useSelector((state) => state.comment.commentData);
   const dispatch = useDispatch();
-  //const token = sessionStorage.getItem("token");
 
   // Destructure Forum Data
   const { date_created, likes, dislikes, name, owner_user_id, routine_id } =

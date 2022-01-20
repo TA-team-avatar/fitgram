@@ -7,8 +7,8 @@ userController.getUserInfo = async (req, res, next) => {
   const { id } = req.params;
   const query =
     'SELECT user_name, first_name, last_name, email, height, weight\
-  FROM users\
-  WHERE id = $1';
+    FROM users\
+    WHERE id = $1';
 
   const params = [id];
   try {
@@ -26,12 +26,12 @@ userController.getUserInfo = async (req, res, next) => {
 userController.addUser = async (req, res, next) => {
   const { user_name, first_name, last_name, email, height, weight, password } =
     req.body;
-//   console.log(req.body);
+  //   console.log(req.body);
 
   const query =
     'INSERT INTO users (user_name, first_name, last_name, email, height, weight, password)\
-  VALUES ($1, $2, $3, $4, $5, $6, $7)\
-  RETURNING id;';
+    VALUES ($1, $2, $3, $4, $5, $6, $7)\
+    RETURNING id;';
   const param = [user_name, first_name, last_name, email, height, weight];
 
   try {
@@ -55,8 +55,8 @@ userController.checkUser = async (req, res, next) => {
 
   const query =
     'SELECT id, user_name, password\
-  FROM users\
-  WHERE user_name = $1';
+    FROM users\
+    WHERE user_name = $1';
   const params = [user_name];
 
   try {

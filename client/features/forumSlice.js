@@ -1,134 +1,151 @@
-import { createSlice } from '@reduxjs/toolkit';
-import dummyData from '../constants/dummyData';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import dummyData from "../constants/dummyData";
+
+export const getAllForums = createAsyncThunk("forum/getAllForums", async () => {
+  const res = await axios.get("/forum");
+  return res.data.forums;
+});
+
+export const getForum = createAsyncThunk(
+  "forum/getForum",
+  async ({ forumId }) => {
+    const res = await axios.get(`/forum/${forumId}`);
+    return res.data.forum;
+  }
+);
+
+export const addRoutineToForum = createAsyncThunk(
+  "forum/addRoutineToForum",
+  async ({ forumId, routineId }) => {
+    const res = await axios.put(`/forum/${forumId}`, {
+      routine_id: routineId,
+    });
+    return res.data.forum;
+  }
+);
+
+export const removeRoutineToForum = createAsyncThunk(
+  "forum/removeRoutineToForum",
+  async ({ forumId }) => {
+    const res = await axios.put(`/forum/${forumId}`, {
+      routine_id: "NULL",
+    });
+    return res.data.forum;
+  }
+);
+
+export const createForum = createAsyncThunk(
+  "forum/createForum",
+  async ({ name, owner_user_id }) => {
+    const res = await axios.post(`/forum`, {
+      owner_user_id,
+      name,
+    });
+    return res.data.forums;
+  }
+);
+
+export const deleteForum = createAsyncThunk(
+  "forum/deleteForum",
+  async ({ forumId }) => {
+    const res = await axios.delete(`/forum/${forumId}`);
+    return res.data.forums;
+  }
+);
+
+export const getUserForumData = createAsyncThunk(
+  "forum/getUserForumData",
+  async ({ userId }) => {
+    const res = await axios.get(`/forum/user/${userId}`);
+    return res.data.forums;
+  }
+);
 
 const initialState = {
   forumData: {},
   forumList: [],
+  status: null,
 };
 
 export const forumSlice = createSlice({
   name: 'forum',
   initialState,
-  reducers: {
-    getForum: (state, action) => {
-      const forumId = action.payload.forumId;
-      /**
-       * TODO: Make API call to get forum information
-       */
-      let res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
-
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-
-      state.forumData = res;
+  reducers: {},
+  extraReducers: {
+    [getAllForums.pending]: (state, action) => {
+      state.status = "loading";
     },
-
-    addRoutineToForum: (state, action) => {
-      const forumId = action.payload.forumId;
-      const routineId = action.payload.routineId;
-      /**
-       * TODO: Make API call to add routine id to forum
-       */
-      let res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
-
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-
-      res.routine_id = routineId;
-
-      state.forumData = res;
-      console.log('Added routine id to target forum');
+    [getAllForums.fulfilled]: (state, { payload }) => {
+      state.forumList = payload;
+      state.status = "success";
     },
-    removeRoutineToForum: (state, action) => {
-      const forumId = action.payload.forumId;
-
-      /**
-       * TODO: Make API call to remove routine id to forum
-       */
-      let res = dummyData.forums.filter((forum) => forum.id === forumId)[0];
-
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-
-      res.routine_id = undefined;
-
-      state.forumData = res;
-      console.log('Removed routine id to target forum');
+    [getAllForums.rejected]: (state, action) => {
+      state.status = "failed";
     },
-    getAllForums: (state) => {
-      /**
-       * TODO: Make API call to get all forum information
-       */
-      let res = dummyData.forums;
-
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-
-      state.forumList = res;
+    [getForum.pending]: (state, action) => {
+      state.status = "loading";
     },
-    createForum: (state, action) => {
-      const { name, owner_user_id } = action.payload;
-      /**
-       * TODO: Make API call to add forum to db
-       */
-
-      const forums = JSON.parse(JSON.stringify(dummyData.forums));
-      forums.push({
-        id: 5,
-        owner_user_id,
-        routine_id: undefined,
-        name,
-        likes: undefined,
-        dislikes: undefined,
-        date_created: '2022-01-13',
-      });
-
-      state.forumList = forums;
+    [getForum.fulfilled]: (state, { payload }) => {
+      state.forumData = payload;
+      state.status = "success";
     },
-    deleteForum: (state, action) => {
-      const forumId = action.payload.forumId;
-      //console.log(forumId);
-      /**
-       * TODO: Make API call to remove forum
-       */
-      let res = dummyData.forums.filter((forum) => forum.id !== forumId);
-
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-      state.forumList = res;
+    [getForum.rejected]: (state, action) => {
+      state.status = "failed";
     },
-    getUserForumData: (state, action) => {
-      const userId = action.payload.userId;
-      // console.log(userId);
-      /**
-       * TODO: Make API call to get user forumdata
-       */
-
-      let res = dummyData.forums.filter(
-        (forum) => forum.owner_user_id === userId
-      );
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-
-      state.forumList = res;
+    [addRoutineToForum.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [addRoutineToForum.fulfilled]: (state, { payload }) => {
+      state.forumData = payload;
+      state.status = "success";
+    },
+    [addRoutineToForum.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [removeRoutineToForum.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [removeRoutineToForum.fulfilled]: (state, { payload }) => {
+      state.forumData = payload;
+      state.status = "success";
+    },
+    [removeRoutineToForum.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [createForum.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [createForum.fulfilled]: (state, { payload }) => {
+      state.forumList = payload;
+      state.status = "success";
+    },
+    [createForum.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [deleteForum.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [deleteForum.fulfilled]: (state, { payload }) => {
+      state.forumList = payload;
+      state.status = "success";
+    },
+    [deleteForum.rejected]: (state, action) => {
+      state.status = "failed";
+    },
+    [getUserForumData.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [getUserForumData.fulfilled]: (state, { payload }) => {
+      state.forumList = payload;
+      state.status = "success";
+    },
+    [getUserForumData.rejected]: (state, action) => {
+      state.status = "failed";
     },
   },
 });
 
-export const {
-  getForum,
-  addRoutineToForum,
-  removeRoutineToForum,
-  getAllForums,
-  createForum,
-  deleteForum,
-  getUserForumData,
-} = forumSlice.actions;
+export const {} = forumSlice.actions;
 
 export default forumSlice.reducer;

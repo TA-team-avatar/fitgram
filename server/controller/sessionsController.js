@@ -7,9 +7,8 @@ const sessionsController = {};
 sessionsController.checkSession = async (req, res, next) => {
   console.log('reached checkSession middleware');
 
-  const checkSessionsQuery = `
-    SELECT user_id, token FROM sessions WHERE token=$1
-    `;
+  const checkSessionsQuery =
+    'SELECT user_id, token FROM sessions WHERE token=$1';
   const values = [req.body.token];
 
   try {
@@ -40,10 +39,11 @@ sessionsController.addSession = async (req, res, next) => {
   if (res.locals.match === false) {
     return next();
   } else if (res.locals.id) {
-    const addSessionQuery = `
-        INSERT INTO sessions (user_id, token)
-        VALUES ($1, $2)
-        `;
+    const addSessionQuery =
+      '\
+      INSERT INTO sessions (user_id, token)\
+      VALUES ($1, $2)\
+      ';
     const values = [res.locals.id];
 
     try {
