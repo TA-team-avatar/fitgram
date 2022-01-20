@@ -3,25 +3,29 @@ import React from 'react';
 const NavContainer = () => {
   return (
     <div>
-      <h1 className='title'>Fitness App </h1>
       <>
-        <nav className='navbar'>
-          <div>
+        <nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
+          <div class='container-fluid'>
+            <a class='navbar-brand'>Fitness App</a>
             <div className='navbar-nav'>
-              <ul className='navbar-nav'>
-                <li className='nav-item'>
-                  <a className='nav-link' href='/profile/:userId'>
-                    My Profile
+              <ul class='nav nav-tabs'>
+                <li class='nav-item'>
+                  <a
+                    class='nav-link'
+                    data-bs-toggle='tab'
+                    href='/profile/:userId'
+                  >
+                    Profile
                   </a>
                 </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='/message/:id'>
+                <li class='nav-item'>
+                  <a class='nav-link' data-bs-toggle='tab' href='/message/:id'>
                     Messages
                   </a>
                 </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='#'>
-                    Logout (link needed)
+                <li class='nav-item'>
+                  <a class='nav-link' data-bs-toggle='tab' href='#'>
+                    Logout(link)
                   </a>
                 </li>
               </ul>

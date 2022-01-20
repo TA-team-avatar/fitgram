@@ -13,8 +13,7 @@ import ProfileContainer from './containers/ProfileContainer';
 import LoginSignupContainer from './containers/LoginSignupContainer';
 
 const App = () => {
-  const token = 'string';
-  sessionStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   return (
     <Router>
       {token ? (

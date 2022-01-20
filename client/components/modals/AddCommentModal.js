@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { createComments } from "../../features/commentSlice";
+import React, { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { createComments } from '../../features/commentSlice';
 
 const AddCommentModal = ({ currentUserId, forumId }) => {
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -12,7 +12,7 @@ const AddCommentModal = ({ currentUserId, forumId }) => {
 
   return (
     <>
-      <Button className="btn btn-secondary me-3" onClick={handleShow}>
+      <Button className='btn btn-secondary me-3' onClick={handleShow}>
         Add Comment
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -22,10 +22,10 @@ const AddCommentModal = ({ currentUserId, forumId }) => {
         <Modal.Body>
           <div>
             <form>
-              <label className="form-label mt-4">Please type in comments</label>
+              <label className='form-label mt-4'>Please type in comments</label>
               <input
-                className="form-control"
-                type="text"
+                className='form-control'
+                type='text'
                 onChange={(e) => {
                   setComment(e.target.value);
                 }}
@@ -34,11 +34,11 @@ const AddCommentModal = ({ currentUserId, forumId }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant='secondary' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant="primary"
+            variant='primary'
             onClick={() => {
               dispatch(
                 createComments({
