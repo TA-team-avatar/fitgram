@@ -12,7 +12,8 @@ import SignupForm from './../components/SignupForm';
 
 const LoginSignupContainer = (props) => {
   return (
-    <div className="h-screen bg-cover bg-[url('https://images.pexels.com/photos/3621168/pexels-photo-3621168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')] ">
+    // <div className="h-screen bg-cover bg-[url('https://images.pexels.com/photos/3621168/pexels-photo-3621168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')] ">
+    <div>
       <div className='pt-10 '>
         <h1 className='text-8xl font-extrabold font-sans text-center pl-5'>
           fit haús

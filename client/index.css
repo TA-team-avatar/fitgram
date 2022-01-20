@@ -5,7 +5,7 @@
 :root {
   --bs-green: #2aa198;
   --bs-teal: #20c997;
-  --bs-cyan: #268bd2;
+  /* --bs-cyan: #268bd2; */
   --bs-white: #fff;
   --bs-gray: #839496;
   --bs-gray-dark: #073642;
@@ -18,13 +18,13 @@
   --bs-gray-700: #495057;
   --bs-gray-800: #073642;
   --bs-gray-900: #002b36;
-  --bs-primary: #b58900;
+
   --bs-secondary: #839496;
   --bs-success: #2aa198;
 
   --bs-light: #fdf6e3;
   --bs-dark: #073642;
-  --bs-primary-rgb: 181, 137, 0;
+
   --bs-secondary-rgb: 131, 148, 150;
   --bs-success-rgb: 42, 161, 152;
 
@@ -67,6 +67,8 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  /* background-image: url(gymImage.jpeg);
+  background-size: none; */
 }
 
 *,

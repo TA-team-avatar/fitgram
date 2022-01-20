@@ -6,7 +6,7 @@ const NavContainer = () => {
       <>
         <nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
           <div class='container-fluid'>
-            <a class='navbar-brand'>Fitness App</a>
+            <a class='navbar-brand'>fit haús</a>
             <div className='navbar-nav'>
               <ul class='nav nav-tabs'>
                 <li class='nav-item'>
