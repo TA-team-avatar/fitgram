@@ -23,6 +23,22 @@ const getRoutineWorkout = createAsyncThunk(
   }
 );
 
+const createWorkout = createAsyncThunk(
+  'workout/createWorkout',
+  async ({ routine_id, workout_id, set, repetition_motion, weight, day }) => {
+    const body = {
+      routine_id,
+      workout_id,
+      set,
+      repetition_motion,
+      weight,
+      day,
+    };
+    const createWorkout = await axios.post('/routine/workout', body);
+    return createWorkout;
+  }
+);
+
 export const workoutSlice = createSlice({
   name: 'workout',
   initialState,
@@ -99,22 +115,22 @@ export const workoutSlice = createSlice({
       ].filter((data) => data.id !== id);
     },
 
-    createWorkout: (state, action) => {
-      const { routine_id, workout_id, set, repetition_motion, weight, day } =
-        action.payload;
-      /**
-       * TODO: Make API call to create routine_workout to db
-       */
-      state.userRoutineWorkoutData[routine_id].push({
-        id: 6,
-        routine_id,
-        workout_id,
-        set,
-        repetition_motion,
-        weight,
-        day,
-      });
-    },
+    // createWorkout: (state, action) => {
+    //   const { routine_id, workout_id, set, repetition_motion, weight, day } =
+    //     action.payload;
+    //   /**
+    //    * TODO: Make API call to create routine_workout to db
+    //    */
+    //   state.userRoutineWorkoutData[routine_id].push({
+    //     id: 6,
+    //     routine_id,
+    //     workout_id,
+    //     set,
+    //     repetition_motion,
+    //     weight,
+    //     day,
+    //   });
+    // },
     editWorkout: (state, action) => {
       const {
         routine_id,
@@ -169,6 +185,24 @@ export const workoutSlice = createSlice({
     },
     [getRoutineWorkout.rejected]: (state) => {
       state.status = 'Something went wrong in getRoutineWorkout Call';
+    },
+    [createWorkout.pending]: (state) => {
+      state.status = 'createWorkout api is pending';
+    },
+    [createWorkout.fulfilled]: (state, { payload }) => {
+      state.userRoutineWorkoutData[payload.routine_id].push({
+        id: payload.id,
+        routine_id: payload.routine_id,
+        workout_id: payload.workout_id,
+        set: payload.set,
+        repetition_motion: payload.repetition_motion,
+        weight: payload.weight,
+        day: payload.day,
+      });
+      state.status = 'createWorkout fulfilled';
+    },
+    [createWorkout.rejected]: (state) => {
+      state.status = 'Something went wrong in createWorkout Call';
     },
   },
 });
