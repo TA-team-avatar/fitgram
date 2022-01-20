@@ -110,7 +110,7 @@ routinesController.getRoutineWorkout = async (req, res, next) => {
   try {
     const data = await db.query(query, params);
     console.log(data);
-    res.locals.rw = data.rows[0];
+    res.locals.rw = data.rows;
 
     return next();
   } catch (err) {
