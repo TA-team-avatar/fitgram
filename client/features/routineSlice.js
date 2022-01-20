@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import dummyData from "../constants/dummyData";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import dummyData from '../constants/dummyData';
 
 const initialState = {
   routineData: {},
@@ -10,16 +10,16 @@ const initialState = {
   status: null,
 };
 
-export const getAllRoutines = createAsyncThunk(
-  "routine/getAllRoutines",
+export const getRoutines = createAsyncThunk(
+  'routine/getAllRoutines',
   async () => {
     const res = await axios.get(`/routine/${routineId}`);
-    return res.data.routine;
+    return res.data.routines;
   }
 );
 
 export const getUserRoutines = createAsyncThunk(
-  "routine/getUserRoutines",
+  'routine/getUserRoutines',
   async ({ userId }) => {
     const res = await axios.get(`/routine/${userId}`);
     return res.userRoutineData;
@@ -27,9 +27,9 @@ export const getUserRoutines = createAsyncThunk(
 );
 
 export const createRoutine = createAsyncThunk(
-  "routine/createRoutine",
+  'routine/createRoutine',
   async ({ userId, name, duration }) => {
-    const res = await axios.post(`/routine/`, {
+    const res = await axios.post(`/routine`, {
       userId,
       name,
       duration,
@@ -38,76 +38,81 @@ export const createRoutine = createAsyncThunk(
   }
 );
 
-export const editRoutine = createAsyncThunk(
-  "routine/editRoutine",
-  async ({ userId, name, duration }) => {
-    const res = await axios.post(`/routine`, { userId, name, duration });
+export const updateRoutine = createAsyncThunk(
+  'routine/editRoutine',
+  async ({ routineId, userId, name, duration }) => {
+    const res = await axios.put(`/routine/${routineId}`, { userId, name, duration });
     return res.userRoutineData;
   }
 );
 
 export const deleteRoutine = createAsyncThunk(
-  "routine/deleteRoutine",
+  'routine/deleteRoutine',
   async ({ userId, routineId }) => {
     const res = await axios.delete(`/routine`, { userId, routineId });
     return res.userRoutineData;
   }
 );
 
+// export const deleteRoutineWorkout = createAsyncThunk(
+//   'routine/deleteRoutineWorkout',
+//   async({})
+// );
+
 export const routineSlice = createSlice({
-  name: "routine",
+  name: 'routine',
   initialState,
   reducers: {},
   extraReducers: {
     [deleteRoutine.pending]: (state, action) => {
-      state.status = "loading";
+      state.status = 'loading';
     },
     [deleteRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData = payload;
-      state.status = "success";
+      state.status = 'success';
     },
     [deleteRoutine.rejected]: (state, action) => {
-      state.status = "failed";
+      state.status = 'failed';
     },
-    [editRoutine.pending]: (state, action) => {
-      state.status = "loading";
+    [updateRoutine.pending]: (state, action) => {
+      state.status = 'loading';
     },
-    [editRoutine.fulfilled]: (state, { payload }) => {
+    [updateRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData = payload;
-      state.status = "success";
+      state.status = 'success';
     },
-    [editRoutine.rejected]: (state, action) => {
-      state.status = "failed";
+    [updateRoutine.rejected]: (state, action) => {
+      state.status = 'failed';
     },
     [createRoutine.pending]: (state, action) => {
-      state.status = "loading";
+      state.status = 'loading';
     },
     [createRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData = payload;
-      state.status = "success";
+      state.status = 'success';
     },
     [createRoutine.rejected]: (state, action) => {
-      state.status = "failed";
+      state.status = 'failed';
     },
     [getUserRoutines.pending]: (state, action) => {
-      state.status = "loading";
+      state.status = 'loading';
     },
     [getUserRoutines.fulfilled]: (state, { payload }) => {
       state.userRoutineData = payload;
-      state.status = "success";
+      state.status = 'success';
     },
     [getUserRoutines.rejected]: (state, action) => {
-      state.status = "failed";
+      state.status = 'failed';
     },
-    [getAllRoutines.pending]: (state, action) => {
-      state.status = "loading";
+    [getRoutines.pending]: (state, action) => {
+      state.status = 'loading';
     },
-    [getAllRoutines.fulfilled]: (state, { payload }) => {
+    [getRoutines.fulfilled]: (state, { payload }) => {
       state.data.routine = payload; //note where this data goes different than others
-      state.status = "success";
+      state.status = 'success';
     },
-    [getAllRoutines.rejected]: (state, action) => {
-      state.status = "failed";
+    [getRoutines.rejected]: (state, action) => {
+      state.status = 'failed';
     },
   },
 });
