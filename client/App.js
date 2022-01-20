@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,7 +27,7 @@ const App = () => {
             ></Route>
             <Route
               exact
-              path='/forum/:forumId'
+              path='/forum_page/:forumId'
               element={<ForumContainer />}
             ></Route>
             <Route
