@@ -5,8 +5,11 @@ const {
   getRoutines,
   insertRoutine,
   deleteRoutine,
+  getRoutineWorkout,
+  insertRoutineWorkout,
+  updateRoutineWorkout,
+  deleteRoutineWorkout,
 } = require('./../controller/routinesController.js');
-const routineController = require('./../controller/routinesController.js');
 
 const router = express.Router();
 
@@ -18,15 +21,26 @@ router.post('/', insertRoutine, (req, res) => {
   return res.sendStatus(200);
 });
 
-router.put('/', updateRoutine, (req, res) => {
+router.put('/:id', updateRoutine, (req, res) => {
   return res.sendStatus(200);
 });
 
-router.delete('/workout', deleteRoutineWorkout, (req, res) => {
+router.delete('/', deleteRoutine, (req, res) => {
   return res.sendStatus(204);
 });
 
-router.delete('/', deleteRoutine, (req, res) => {
+router.get('/workout/:id', getRoutineWorkout, (req, res) => {
+  return res.status(200).json({ routineWorkouts: res.locals.rw });
+});
+
+router.post('/workout', insertRoutineWorkout, (req, res) => {
+  return res.sendStatus(200);
+});
+
+router.put('/workout/:id', updateRoutineWorkout, (req, res) => {
+  return res.sendStatus(200);
+});
+router.delete('/workout', deleteRoutineWorkout, (req, res) => {
   return res.sendStatus(204);
 });
 
