@@ -29,7 +29,7 @@ router.delete('/', deleteRoutine, (req, res) => {
 });
 
 router.get('/workout/:id', getRoutineWorkout, (req, res) => {
-  return res.status(200).json(res.locals.rw);
+  return res.status(200).json({ routineWorkouts: res.locals.rw });
 });
 
 router.post('/workout', insertRoutineWorkout, (req, res) => {
