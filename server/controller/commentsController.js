@@ -8,11 +8,12 @@ const commentsController = {};
 commentsController.getComments = async (req, res, next) => {
   console.log('reached getComments');
 
-  const getCommentsQuery = `
-  SELECT * FROM comments
-  LEFT JOIN users ON users.id=comments.owner_user_id
-  WHERE comments.forum_id=$1;
-  `;
+  const getCommentsQuery =
+    '\
+    SELECT * FROM comments\
+    LEFT JOIN users ON users.id=comments.owner_user_id\
+    WHERE comments.forum_id=$1;\
+    ';
   const values = [req.params.forum_id];
 
   try {
@@ -33,10 +34,11 @@ commentsController.getComments = async (req, res, next) => {
 commentsController.addComment = async (req, res, next) => {
   console.log('reached addComment');
 
-  const addCommentQuery = `
-    INSERT INTO comments (owner_user_id, forum_id, description)
-    VALUES ($1, $2, $3)
-    `;
+  const addCommentQuery =
+    '\
+    INSERT INTO comments (owner_user_id, forum_id, description)\
+    VALUES ($1, $2, $3)\
+    ';
   const values = [
     req.body.owner_user_id,
     req.body.forum_id,
@@ -60,10 +62,11 @@ commentsController.addComment = async (req, res, next) => {
 commentsController.deleteComment = async (req, res, next) => {
   console.log('reached deleteComment');
 
-  const deleteCommentQuery = `
-    DELETE FROM comments
-    WHERE owner_user_id=$1 AND id=$2
-    `;
+  const deleteCommentQuery =
+    '\
+    DELETE FROM comments\
+    WHERE owner_user_id=$1 AND id=$2\
+    ';
   const values = [req.body.owner_user_id, req.body.id];
 
   try {
@@ -83,10 +86,11 @@ commentsController.deleteComment = async (req, res, next) => {
 commentsController.editComment = async (req, res, next) => {
   console.log('reached editComment');
 
-  const editCommentQuery = `
-  UPDATE comments
-  SET description=$1 WHERE id=$2
-  `;
+  const editCommentQuery =
+    '\
+    UPDATE comments\
+    SET description=$1 WHERE id=$2\
+    ';
   const values = [req.body.description, req.body.id];
 
   try {

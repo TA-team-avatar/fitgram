@@ -10,9 +10,9 @@ routinesController.getRoutines = async (req, res, next) => {
 
   const queryRoutine =
     'SELECT r.*, rw.* FROM routines r \
-  LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
-  LEFT JOIN workouts w ON w.id = rw.workout_id \
-  WHERE r.owner_user_id = $1';
+    LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
+    LEFT JOIN workouts w ON w.id = rw.workout_id \
+    WHERE r.owner_user_id = $1';
 
   const paramRoutine = [id];
   try {
@@ -33,14 +33,14 @@ routinesController.insertRoutine = async (req, res, next) => {
 
   const queryRoutine =
     'INSERT INTO routines (owner_user_id, name, duration)\
-  VALUES ($1, $2, $3)\
-  RETURNING id';
+    VALUES ($1, $2, $3)\
+    RETURNING id';
   const paramRoutine = [owner_user_id, name, duration];
 
   const queryRoutineWorkout =
     'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day)\
-  VALUES ($1, $2, $3, $4, $5)\
-  RETURNING *';
+    VALUES ($1, $2, $3, $4, $5)\
+    RETURNING *';
 
   try {
     await db.query(queryRoutine, paramRoutine);
@@ -77,17 +77,17 @@ routinesController.updateRoutine = async (req, res, next) => {
 
   const queryUpdateRoutineWorkoutID =
     'INSERT INTO routine_workout (id, routine_id, workout_id, set, repetition_motion, day, weight)\
-   VALUES($1, $2, $3, $4, $5, $6, $7)\
-   ON CONFLICT (id)\
-   DO\
-   UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+    VALUES($1, $2, $3, $4, $5, $6, $7)\
+    ON CONFLICT (id)\
+    DO\
+    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
 
   const queryUpdateRoutineWorkout =
     'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day, weight)\
-  VALUES($1, $2, $3, $4, $5, $6)\
-  ON CONFLICT (id)\
-  DO\
-  UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+    VALUES($1, $2, $3, $4, $5, $6)\
+    ON CONFLICT (id)\
+    DO\
+    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
 
   try {
     await db.query(queryUpdateRoutine, paramsUpdateRoutine);
