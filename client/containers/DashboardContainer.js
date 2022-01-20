@@ -18,7 +18,7 @@ const DashboardContainer = () => {
     dispatch(getAllForums());
     dispatch(
       getUserId({
-        token: sessionStorage.getItem('token'),
+        token: sessionStorage.getItem("token"),
       })
     );
   }, []);
@@ -30,18 +30,18 @@ const DashboardContainer = () => {
         <hr />
         <AddForumModal />
         <hr />
-        <div className='span-containers'>
+        <div className="span-containers">
           {forumList.map((forum, idx) => (
-            <div className='div-span' key={idx}>
-              <span className='first-span'>{forum.name}</span>
-              <span className='second-span'>
-                {' '}
+            <div className="div-span" key={idx}>
+              <span className="first-span">{forum.name}</span>
+              <span className="second-span">
+                {" "}
                 Date Created: {forum.date_created}
               </span>
               <span>
                 {forum.owner_user_id === currentUserId ? (
                   <button
-                    className=' btn-success'
+                    className=" btn-success"
                     onClick={() => {
                       dispatch(
                         deleteForum({
@@ -55,7 +55,7 @@ const DashboardContainer = () => {
                 ) : (
                   <Link
                     to={`/profile/${forum.owner_user_id}`}
-                    className=' btn-success'
+                    className=" btn-success"
                   >
                     <button>View User Profile</button>
                   </Link>

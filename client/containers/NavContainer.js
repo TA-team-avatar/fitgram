@@ -1,6 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getUserId } from '../features/userSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const NavContainer = () => {
+  // const currentUserId = useSelector((state) => state.user.userId);
+  // const dispatch = useDispatch();
+
+  // // Dispatch actions on mount
+  // useEffect(() => {
+  //   dispatch(
+  //     getUserId({
+  //       token: sessionStorage.getItem("token"),
+  //     })
+  //   );
+  // }, []);
+
   return (
     <div>
       <>

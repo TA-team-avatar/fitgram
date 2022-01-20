@@ -20,7 +20,7 @@ export const getRoutines = createAsyncThunk(
 
 export const getUserRoutines = createAsyncThunk(
   'routine/getUserRoutines',
-  async () => {
+  async ({ userId }) => {
     const res = await axios.get(`/routine/${userId}`);
     return res.userRoutineData;
   }
@@ -38,7 +38,7 @@ export const createRoutine = createAsyncThunk(
   }
 );
 
-export const updateRoutine = createAsyncThunk(
+export const editRoutine = createAsyncThunk(
   'routine/editRoutine',
   async ({ userId, name, duration }) => {
     const res = await axios.put(`/routine`, { userId, name, duration });
@@ -74,14 +74,14 @@ export const routineSlice = createSlice({
     [deleteRoutine.rejected]: (state, action) => {
       state.status = 'failed';
     },
-    [updateRoutine.pending]: (state, action) => {
+    [editRoutine.pending]: (state, action) => {
       state.status = 'loading';
     },
     [updateRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData = payload;
       state.status = 'success';
     },
-    [updateRoutine.rejected]: (state, action) => {
+    [editRoutine.rejected]: (state, action) => {
       state.status = 'failed';
     },
     [createRoutine.pending]: (state, action) => {
@@ -104,14 +104,14 @@ export const routineSlice = createSlice({
     [getUserRoutines.rejected]: (state, action) => {
       state.status = 'failed';
     },
-    [getRoutines.pending]: (state, action) => {
+    [getAllRoutines.pending]: (state, action) => {
       state.status = 'loading';
     },
     [getRoutines.fulfilled]: (state, { payload }) => {
       state.data.routine = payload; //note where this data goes different than others
       state.status = 'success';
     },
-    [getRoutines.rejected]: (state, action) => {
+    [getAllRoutines.rejected]: (state, action) => {
       state.status = 'failed';
     },
   },

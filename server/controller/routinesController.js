@@ -28,8 +28,8 @@ routinesController.getRoutines = async (req, res, next) => {
   }
 };
 
-routinesController.createRoutine = async (req, res, next) => {
-  const { owner_user_id, name, duration, routine_workout } = req.body;
+routinesController.insertRoutine = async (req, res, next) => {
+  const { owner_user_id, name, duration } = req.body;
 
   const queryRoutine =
     'INSERT INTO routines (owner_user_id, name, duration)\
@@ -37,27 +37,8 @@ routinesController.createRoutine = async (req, res, next) => {
     RETURNING id';
   const paramRoutine = [owner_user_id, name, duration];
 
-  const queryRoutineWorkout =
-    'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day)\
-    VALUES ($1, $2, $3, $4, $5)\
-    RETURNING *';
-
   try {
     await db.query(queryRoutine, paramRoutine);
-
-    await Promise.all(
-      routine_workout.map(async (rw) => {
-        const params = [];
-        params[0] = insertRoutine.rows[0].id;
-        params[1] = rw.workout_id;
-        params[2] = rw.set;
-        params[3] = rw.repetition_motion;
-        params[4] = rw.day;
-
-        await db.query(queryRoutineWorkout, params);
-        return;
-      })
-    );
 
     return next();
   } catch (err) {
@@ -69,48 +50,26 @@ routinesController.createRoutine = async (req, res, next) => {
 };
 
 routinesController.updateRoutine = async (req, res, next) => {
-  const { id, name, duration, routine_workout } = req.body;
+  const { id } = req.params;
+  // name, duration
+  const schema = ['name', 'duration'];
 
-  const queryUpdateRoutine =
-    'UPDATE routines SET name = $1, duration = $2 WHERE id = $3';
-  const paramsUpdateRoutine = [name, duration, id];
+  let setQuery = schema.reduce((str, field) => {
+    if (field in req.body) {
+      str += field + ' = ' + "'" + req.body[field] + "', ";
 
-  const queryUpdateRoutineWorkoutID =
-    'INSERT INTO routine_workout (id, routine_id, workout_id, set, repetition_motion, day, weight)\
-    VALUES($1, $2, $3, $4, $5, $6, $7)\
-    ON CONFLICT (id)\
-    DO\
-    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+      return str;
+    } else {
+      return str;
+    }
+  }, '');
 
-  const queryUpdateRoutineWorkout =
-    'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day, weight)\
-    VALUES($1, $2, $3, $4, $5, $6)\
-    ON CONFLICT (id)\
-    DO\
-    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+  setQuery = setQuery.replace(/(,\s$)/g, '');
+
+  setQuery = 'UPDATE routines SET ' + setQuery + ' WHERE id = ' + id + ';';
 
   try {
-    await db.query(queryUpdateRoutine, paramsUpdateRoutine);
-
-    await Promise.all(
-      routine_workout.map(async (rw) => {
-        const params = [];
-        let query = queryUpdateRoutineWorkout;
-        if (rw.id) {
-          params.push(rw.id);
-          query = queryUpdateRoutineWorkoutID;
-        }
-        params.push(id);
-        params.push(rw.workout_id);
-        params.push(rw.set);
-        params.push(rw.repetition_motion);
-        params.push(rw.day);
-        params.push(rw.weight);
-
-        await db.query(query, params);
-        return;
-      })
-    );
+    await db.query(setQuery);
 
     return next();
   } catch (err) {
@@ -142,6 +101,94 @@ routinesController.deleteRoutine = async (req, res, next) => {
   }
 };
 
+routinesController.getRoutineWorkout = async (req, res, next) => {
+  const { id } = req.params;
+
+  const query = 'SELECT * FROM routine_workout WHERE routine_id = $1';
+  const params = [id];
+
+  try {
+    const data = await db.query(query, params);
+    console.log(data);
+    res.locals.rw = data.rows;
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `Error with routinesController.getRoutineWorkout ${err}`,
+      message: { err: `error from routinesController ${err}` },
+    });
+  }
+};
+
+routinesController.insertRoutineWorkout = async (req, res, next) => {
+  const { routine_id, workout_id, set, repetition_motion, day, weight } =
+    req.body;
+
+  const queryRoutineWorkout =
+    'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day, weight)\
+      VALUES ($1, $2, $3, $4, $5, $6)\
+      RETURNING *';
+  const paramRoutineWorkout = [
+    routine_id,
+    workout_id,
+    set,
+    repetition_motion,
+    day,
+    weight,
+  ];
+
+  try {
+    await db.query(queryRoutineWorkout, paramRoutineWorkout);
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `Error with routinesController.insertRoutineWorkout ${err}`,
+      message: { err: `error from routinesController ${err}` },
+    });
+  }
+};
+routinesController.updateRoutineWorkout = async (req, res, next) => {
+  const { id } = req.params;
+  const schema = [
+    'routine_id',
+    'workout_id',
+    'set',
+    'repetition_motion',
+    'day',
+    'weight',
+  ];
+
+  let setQuery = schema.reduce((str, field) => {
+    if (field in req.body) {
+      if (field === 'workout_id' && req.body[field] === 'NULL') {
+        str += field + ' = ' + req.body[field] + ', ';
+      } else {
+        str += field + ' = ' + "'" + req.body[field] + "', ";
+      }
+
+      return str;
+    } else {
+      return str;
+    }
+  }, '');
+
+  setQuery = setQuery.replace(/(,\s$)/g, '');
+  setQuery =
+    'UPDATE routine_workout SET ' + setQuery + ' WHERE id = ' + id + ';';
+
+  try {
+    await db.query(setQuery);
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `Error with routinesController.updateRoutineWorkout ${err}`,
+      message: { err: `Error with routinesController ${err}` },
+    });
+  }
+};
 routinesController.deleteRoutineWorkout = async (req, res, next) => {
   const { id } = req.body;
 
