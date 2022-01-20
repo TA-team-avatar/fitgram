@@ -8,12 +8,12 @@ const initialState = {
   workoutData: [],
 };
 
-const getWorkout = createAsyncThunk('workout/getWorkout', async () => {
+export const getWorkout = createAsyncThunk('workout/getWorkout', async () => {
   const workouts = await axios.get('/workout');
   return workouts;
 });
 
-const getRoutineWorkout = createAsyncThunk(
+export const getRoutineWorkout = createAsyncThunk(
   'workout/getRoutineWorkout',
   async (data) => {
     const routineWorkout = await axios.get(
@@ -23,7 +23,7 @@ const getRoutineWorkout = createAsyncThunk(
   }
 );
 
-const createWorkout = createAsyncThunk(
+export const createWorkout = createAsyncThunk(
   'workout/createWorkout',
   async ({ routine_id, workout_id, set, repetition_motion, weight, day }) => {
     const body = {
@@ -36,6 +36,33 @@ const createWorkout = createAsyncThunk(
     };
     const createWorkout = await axios.post('/routine/workout', body);
     return createWorkout;
+  }
+);
+
+export const getUserRoutineWorkout = createAsyncThunk(
+  'workout/getUserRoutineWorkout',
+  async (payload) => {
+    const userRW = axios.get(`/routine/workout/user/${payload.userId}`);
+    return userRW;
+  }
+);
+
+export const deleteWorkout = createAsyncThunk(
+  'workout/deleteWorkout',
+  async (payload) => {
+    const data = axios.delete('/routine/workout', {
+      id: payload.id,
+      routine_id: payload.routineId,
+    });
+    return data;
+  }
+);
+
+export const editWorkout = createAsyncThunk(
+  'workout/editWorkout',
+  async (paylaod) => {
+    const data = axios.put(`/routine/workout/${payload.id}`);
+    return data;
   }
 );
 
@@ -71,49 +98,49 @@ export const workoutSlice = createSlice({
 
     //   state.routineWorkoutData = res;
     // },
-    getUserRoutineWorkout: (state, action) => {
-      const userId = action.payload.userId;
-      const isAdded = action.payload.isAdded;
+    // getUserRoutineWorkout: (state, action) => {
+    //   const userId = action.payload.userId;
+    //   const isAdded = action.payload.isAdded;
 
-      /**
-       * TODO:
-       * Make API call to get all user routine_workout information
-       * Make Server to return join table that include workout name
-       */
-      let cache = {};
-      const routines = dummyData.routines.filter(
-        (routine) => routine.owner_user_id === userId
-      );
+    //   /**
+    //    * TODO:
+    //    * Make API call to get all user routine_workout information
+    //    * Make Server to return join table that include workout name
+    //    */
+    //   let cache = {};
+    //   const routines = dummyData.routines.filter(
+    //     (routine) => routine.owner_user_id === userId
+    //   );
 
-      for (let routine of routines) {
-        let res = dummyData.routine_workouts.filter((routine_workout) => {
-          routine_workout.workout_name = dummyData.workouts.filter(
-            (workout) => workout.id === routine_workout.workout_id
-          )[0].name;
-          return routine_workout.routine_id === routine.id;
-        });
-        if (res) {
-          res = JSON.parse(JSON.stringify(res));
-        }
-        cache[routine.id] = res;
-      }
-      state.userRoutineWorkoutData = cache;
+    //   for (let routine of routines) {
+    //     let res = dummyData.routine_workouts.filter((routine_workout) => {
+    //       routine_workout.workout_name = dummyData.workouts.filter(
+    //         (workout) => workout.id === routine_workout.workout_id
+    //       )[0].name;
+    //       return routine_workout.routine_id === routine.id;
+    //     });
+    //     if (res) {
+    //       res = JSON.parse(JSON.stringify(res));
+    //     }
+    //     cache[routine.id] = res;
+    //   }
+    //   state.userRoutineWorkoutData = cache;
 
-      //test code
-      if (isAdded) {
-        state.userRoutineWorkoutData[5] = [];
-      }
-    },
-    deleteWorkout: (state, action) => {
-      const { routineId, id } = action.payload;
-      /**
-       * TODO: Make API call to delete routine_workout to db
-       */
+    //   //test code
+    //   if (isAdded) {
+    //     state.userRoutineWorkoutData[5] = [];
+    //   }
+    // },
+    // deleteWorkout: (state, action) => {
+    //   const { routineId, id } = action.payload;
+    //   /**
+    //    * TODO: Make API call to delete routine_workout to db
+    //    */
 
-      state.userRoutineWorkoutData[routineId] = state.userRoutineWorkoutData[
-        routineId
-      ].filter((data) => data.id !== id);
-    },
+    //   state.userRoutineWorkoutData[routineId] = state.userRoutineWorkoutData[
+    //     routineId
+    //   ].filter((data) => data.id !== id);
+    // },
 
     // createWorkout: (state, action) => {
     //   const { routine_id, workout_id, set, repetition_motion, weight, day } =
@@ -204,15 +231,38 @@ export const workoutSlice = createSlice({
     [createWorkout.rejected]: (state) => {
       state.status = 'Something went wrong in createWorkout Call';
     },
+    [getUserRoutineWorkout.pending]: (state) => {
+      state.status = 'getUserRoutineWorkout api is pending';
+    },
+    [getUserRoutineWorkout.fulfilled]: (state, { payload }) => {
+      state.userRoutineWorkoutData = payload.data.userRW;
+      state.status = 'getUserRoutineWorkout fulfilled';
+    },
+    [getUserRoutineWorkout.rejected]: (state) => {
+      state.status = 'Something went wrong in getUserRoutineWorkout Call';
+    },
+    [deleteWorkout.pending]: (state) => {
+      state.status = 'deleteWorkout api is pending';
+    },
+    [deleteWorkout.fulfilled]: (state, { payload }) => {
+      state.userRoutineWorkoutData[payload.routine_id] =
+        state.userRoutineWorkoutData[payload.routine_id].filter(
+          (data) => data.id !== payload.id
+        );
+      state.status = 'deleteWorkout fulfilled';
+    },
+    [deleteWorkout.rejected]: (state) => {
+      state.status = 'Something went wrong in deleteWorkout Call';
+    },
   },
 });
 
 export const {
-  getWorkout,
-  getRoutineWorkout,
-  getUserRoutineWorkout,
-  deleteWorkout,
-  createWorkout,
+  // getWorkout,
+  // getRoutineWorkout,
+  // getUserRoutineWorkout,
+  // deleteWorkout,
+  // createWorkout,
   editWorkout,
 } = workoutSlice.actions;
 
