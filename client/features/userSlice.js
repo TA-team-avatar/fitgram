@@ -81,7 +81,7 @@ export const userSlice = createSlice({
       state.userId = null;
       state.status = 'Something went wrong in loginUser Call';
     },
-    [getUserId.pending]: () => {
+    [getUserId.pending]: (state) => {
       state.status = 'getUserId api is pending';
     },
     [getUserId.fulfilled]: (state, { payload }) => {
@@ -92,17 +92,17 @@ export const userSlice = createSlice({
       state.userId = null;
       state.status = 'Something went wrong in getUserId Call';
     },
-    [getUserName.pending]: () => {
+    [getUserName.pending]: (state) => {
       state.status = 'getUserName api is pending';
     },
     [getUserName.fulfilled]: (state, { payload }) => {
       state.userData = payload.data;
       state.status = 'getUserName fulfilled';
     },
-    [getUserName.rejected]: () => {
+    [getUserName.rejected]: (state) => {
       state.status = 'Something went wrong in getUserName Call';
     },
-    [signUpUser.pending]: () => {
+    [signUpUser.pending]: (state) => {
       state.status = 'signUpUser api is pending';
     },
     [signUpUser.fulfilled]: (state, { payload }) => {
@@ -110,7 +110,7 @@ export const userSlice = createSlice({
       sessionStorage.setItem('token', payload.data.token);
       state.status = 'signUpUser fulfilled';
     },
-    [signUpUser.rejected]: () => {
+    [signUpUser.rejected]: (state) => {
       state.status = 'Something went wrong in signUpUser Call';
     },
   },
