@@ -5,7 +5,7 @@ const db = require('../model/dbModel');
 
 const routinesController = {};
 
-routinesController.getAllRoutines = async (req, res, next) => {
+routinesController.getRoutines = async (req, res, next) => {
   const { id } = req.query;
 
   const queryRoutine =
@@ -28,14 +28,14 @@ routinesController.getAllRoutines = async (req, res, next) => {
   }
 };
 
-routinesController.insertRoutine = async (req, res, next) => {
-  const { owner_user_id, name, duration } = req.body;
+routinesController.createRoutine = async (req, res, next) => {
+  const { userId, name, duration } = req.body;
 
   const queryRoutine =
     'INSERT INTO routines (owner_user_id, name, duration)\
     VALUES ($1, $2, $3)\
     RETURNING id;';
-  const paramRoutine = [owner_user_id, name, duration];
+  const paramRoutine = [userId, name, duration];
 
   try {
     await db.query(queryRoutine, paramRoutine);
@@ -50,7 +50,7 @@ routinesController.insertRoutine = async (req, res, next) => {
 };
 
 routinesController.updateRoutine = async (req, res, next) => {
-  const { id } = req.params;
+  const { routineId } = req.params;
   // name, duration
   const schema = ['name', 'duration'];
 
@@ -66,7 +66,8 @@ routinesController.updateRoutine = async (req, res, next) => {
 
   setQuery = setQuery.replace(/(,\s$)/g, '');
 
-  setQuery = 'UPDATE routines SET ' + setQuery + ' WHERE id = ' + id + ';';
+  setQuery =
+    'UPDATE routines SET ' + setQuery + ' WHERE id = ' + routineId + ';';
 
   try {
     await db.query(setQuery);
@@ -81,13 +82,13 @@ routinesController.updateRoutine = async (req, res, next) => {
 };
 
 routinesController.deleteRoutine = async (req, res, next) => {
-  const { id } = req.body;
+  const { routineId } = req.body;
   const queryRoutine = 'DELETE FROM routines WHERE id = $1';
-  const paramRoutine = [id];
+  const paramRoutine = [routineId];
 
   const queryRoutineWorkout =
     'DELETE FROM routine_workout WHERE routine_id = $1';
-  const paramRoutineWorkout = [id];
+  const paramRoutineWorkout = [routineId];
   try {
     await db.query(queryRoutine, paramRoutine);
     await db.query(queryRoutineWorkout, paramRoutineWorkout);
