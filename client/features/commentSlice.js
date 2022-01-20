@@ -57,7 +57,42 @@ export const commentSlice = createSlice({
     [getForumComments.rejected]: (state, action) => {
       state.status = 'failed';
     },
-    
+
+
+    [deleteComments.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [deleteComments.fulfilled]: (state, action) => {
+      state.commentList = payload;
+      state.status = 'success'
+    },
+    [deleteComments.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
+
+
+    [editComments.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [editComments.fulfilled]: (state, action) => {
+      state.commentData = payload;
+      state.status = 'success'
+    },
+    [editComments.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
+
+
+    [createComments.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [createComments.fulfilled]: (state, action) => {
+      state.commentList = payload;
+      state.status = 'success'
+    },
+    [createComments.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
   },
 });
 
