@@ -97,6 +97,7 @@ commentsController.editComment = async (req, res, next) => {
     const editComment = await db.query(editCommentQuery, values);
     if (editComment) {
       console.log('from editComment: ', editComment.rows);
+      res.locals.comment = editComment.rows;
       return next();
     }
   } catch (err) {

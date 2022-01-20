@@ -1,96 +1,63 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
 import dummyData from '../constants/dummyData';
 
 const initialState = {
-  commentData: [],
+  commentData: {},
+  commentList: [],
   status: null;
 };
+
+export const getForumComments = createAsyncThunk(
+  'comments/getForumComments',
+  async ({ forumId }) => {
+    const res = await axios.get(`/comments/${forumId}`)
+    return res.data.comments;
+  }
+);
+
+export const deleteComments = createAsyncThunk(
+  'comments/deleteComments',
+  async ({ owner_user_id, id }) => {
+    const res = await axios.delete('/comments', {owner_user_id, id});
+    return res.data.comments;
+  }
+);
+
+export const editComments = createAsyncThunk(
+  'comments/editComments',
+  async ({ description, id }) => {
+    const res = await axios.put('/comments', {description, id})
+    return res.data.comment;
+  }
+)
+
+export const createComments = createAsyncThunk(
+  'comments/createComments',
+  async ({owner_user_id, forum_id, description}) => {
+    const res = await axios.post('/comments', {
+      owner_user_id, forum_id, description
+    });
+    return res.data.comment;
+  }
+) 
 
 export const commentSlice = createSlice({
   name: 'comment',
   initialState,
-  reducers: {
-    // getForumComments: (state, action) => {
-    //   const forumId = action.payload.forumId;
-
-    //   /**
-    //    * TODO: Make API call to get forum comment information
-    //    */
-    //   let res = dummyData.comments.filter(
-    //     (comment) => comment.forum_id === forumId
-    //   );
-
-    //   if (res) {
-    //     res = JSON.parse(JSON.stringify(res));
-    //   }
-
-    //   state.commentData = res;
-    // },
-    // createComments: (state, action) => {
-    //   const { description, owner_user_id, forum_id } = action.payload;
-    //   /**
-    //    * TODO: Make API call to add comments to db
-    //    */
-
-    //   const comments = JSON.parse(JSON.stringify(dummyData.comments));
-    //   comments.push({
-    //     id: 4,
-    //     description,
-    //     owner_user_id,
-    //     forum_id,
-    //     date_created: '2022-01-15',
-    //     user_name: 'Han',
-    //   });
-    //   state.commentData = comments;
-    // },
-    // deleteComments: (state, action) => {
-    //   const { id } = action.payload;
-    //   /**
-    //    * TODO: Make API call to delete comments to db
-    //    */
-
-    //   let res = dummyData.comments.filter((comment) => comment.id !== id);
-
-    //   if (res) {
-    //     res = JSON.parse(JSON.stringify(res));
-    //   }
-
-    //   state.commentData = res;
-    // },
-    // editComments: (state, action) => {
-    //   const { id, description } = action.payload;
-    //   /**
-    //    * TODO: Make API call to delete comments to db
-    //    */
-
-    //   const comments = JSON.parse(JSON.stringify(dummyData.comments));
-    //   console.log('Hi');
-    //   comments.forEach((comment) => {
-    //     if (comment.id === id) {
-    //       comment.description = description;
-    //     }
-    //   });
-
-    //   state.commentData = comments;
-    // },
-  },
-});
-
-export const {
-  getForumComments,
-  createComments,
-  deleteComments,
-  editComments,
-} = commentSlice.actions;
-
-export const forumSlice = createSlice({
-  name: 'forum',
-  initialState,
   reducers: {},
   extraReducers: {
-    [getAllForums.pending]: (state, action) => {
-      state.status = "loading";
-    }
+    [getForumComments.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [getForumComments.fulfilled]: (state, action) => {
+      state.commentList = payload;
+      state.status = 'success'
+    },
+    [getForumComments.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
+    
   },
 });
 
