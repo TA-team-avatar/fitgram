@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import dummyData from "../constants/dummyData";
 
 export const getAllForums = createAsyncThunk("forum/getAllForums", async () => {
   const res = await axios.get("/forum");
@@ -69,7 +68,7 @@ const initialState = {
 };
 
 export const forumSlice = createSlice({
-  name: 'forum',
+  name: "forum",
   initialState,
   reducers: {},
   extraReducers: {

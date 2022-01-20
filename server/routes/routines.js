@@ -2,31 +2,44 @@ const express = require('express');
 const {
   updateRoutine,
   deleteRoutineWorkout,
-  getAllRoutines,
-  insertRoutine,
+  getRoutines,
+  createRoutine,
   deleteRoutine,
+  getRoutineWorkout,
+  insertRoutineWorkout,
+  updateRoutineWorkout,
 } = require('./../controller/routinesController.js');
-const routineController = require('./../controller/routinesController.js');
 
 const router = express.Router();
 
-router.get('/', getAllRoutines, (req, res) => {
+router.get('/', getRoutines, (req, res) => {
   return res.status(200).json({ routines: res.locals.routines });
 });
 
-router.post('/', insertRoutine, (req, res) => {
+router.post('/', createRoutine, (req, res) => {
   return res.sendStatus(200);
 });
 
-router.put('/', updateRoutine, (req, res) => {
+router.put('/:id', updateRoutine, (req, res) => {
   return res.sendStatus(200);
-});
-
-router.delete('/workout', deleteRoutineWorkout, (req, res) => {
-  return res.sendStatus(204);
 });
 
 router.delete('/', deleteRoutine, (req, res) => {
+  return res.sendStatus(204);
+});
+
+router.get('/workout/:id', getRoutineWorkout, (req, res) => {
+  return res.status(200).json({ routineWorkouts: res.locals.rw });
+});
+
+router.post('/workout', insertRoutineWorkout, (req, res) => {
+  return res.sendStatus(200);
+});
+
+router.put('/workout/:id', updateRoutineWorkout, (req, res) => {
+  return res.sendStatus(200);
+});
+router.delete('/workout', deleteRoutineWorkout, (req, res) => {
   return res.sendStatus(204);
 });
 
