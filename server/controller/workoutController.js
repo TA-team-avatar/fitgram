@@ -1,11 +1,11 @@
-const db = require("../model/dbModel");
+const db = require('../model/dbModel');
 
 const workoutController = {};
 
 workoutController.getWorkout = async (req, res, next) => {
-  const query = "\
+  const query = '\
     SELECT * FROM workouts\
-    ";
+    ';
 
   try {
     const workouts = await db.query(query);
