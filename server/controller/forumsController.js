@@ -134,7 +134,6 @@ forumsController.updateForum = async (req, res, next) => {
       } else {
         str += field + " = " + "'" + req.body[field] + "', ";
       }
-
       return str;
     } else {
       return str;
@@ -142,17 +141,18 @@ forumsController.updateForum = async (req, res, next) => {
   }, "");
 
   setValue = setValue.replace(/(,\s$)/g, "");
-  console.log("here", setValue);
-  try {
-    const query = `
-      UPDATE forums
-      SET $1
-      WHERE id=$2
-      RETURNING id, owner_user_id, routine_id, name, likes, dislikes, date_created
-      `;
-    const params = [setValue, forumId];
 
-    const forum = await db.query(query, params);
+  setValue =
+    "UPDATE forums SET " +
+    setValue +
+    " " +
+    "WHERE id=" +
+    forumId +
+    " " +
+    "RETURNING id, owner_user_id, routine_id, name, likes, dislikes, date_created";
+
+  try {
+    const forum = await db.query(setValue);
 
     if (forum.rows.length === 0) {
       throw new Error(`No forum with id of ${forumId} found!`);
