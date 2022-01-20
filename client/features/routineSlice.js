@@ -10,7 +10,7 @@ const initialState = {
   status: null,
 };
 
-export const getAllRoutines = createAsyncThunk(
+export const getRoutines = createAsyncThunk(
   'routine/getAllRoutines',
   async () => {
     const res = await axios.get(`/routine/${routineId}`);
@@ -38,10 +38,10 @@ export const createRoutine = createAsyncThunk(
   }
 );
 
-export const editRoutine = createAsyncThunk(
+export const updateRoutine = createAsyncThunk(
   'routine/editRoutine',
   async ({ userId, name, duration }) => {
-    const res = await axios.post(`/routine`, { userId, name, duration });
+    const res = await axios.put(`/routine`, { userId, name, duration });
     return res.userRoutineData;
   }
 );
@@ -53,6 +53,11 @@ export const deleteRoutine = createAsyncThunk(
     return res.userRoutineData;
   }
 );
+
+// export const deleteRoutineWorkout = createAsyncThunk(
+//   'routine/deleteRoutineWorkout',
+//   async({})
+// );
 
 export const routineSlice = createSlice({
   name: 'routine',
@@ -69,14 +74,14 @@ export const routineSlice = createSlice({
     [deleteRoutine.rejected]: (state, action) => {
       state.status = 'failed';
     },
-    [editRoutine.pending]: (state, action) => {
+    [updateRoutine.pending]: (state, action) => {
       state.status = 'loading';
     },
-    [editRoutine.fulfilled]: (state, { payload }) => {
+    [updateRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData = payload;
       state.status = 'success';
     },
-    [editRoutine.rejected]: (state, action) => {
+    [updateRoutine.rejected]: (state, action) => {
       state.status = 'failed';
     },
     [createRoutine.pending]: (state, action) => {
@@ -99,14 +104,14 @@ export const routineSlice = createSlice({
     [getUserRoutines.rejected]: (state, action) => {
       state.status = 'failed';
     },
-    [getAllRoutines.pending]: (state, action) => {
+    [getRoutines.pending]: (state, action) => {
       state.status = 'loading';
     },
-    [getAllRoutines.fulfilled]: (state, { payload }) => {
+    [getRoutines.fulfilled]: (state, { payload }) => {
       state.data.routine = payload; //note where this data goes different than others
       state.status = 'success';
     },
-    [getAllRoutines.rejected]: (state, action) => {
+    [getRoutines.rejected]: (state, action) => {
       state.status = 'failed';
     },
   },

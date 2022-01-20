@@ -5,7 +5,7 @@ const db = require('../model/dbModel');
 
 const routinesController = {};
 
-routinesController.getAllRoutines = async (req, res, next) => {
+routinesController.getRoutines = async (req, res, next) => {
   const { id } = req.query;
 
   const queryRoutine =
@@ -28,9 +28,7 @@ routinesController.getAllRoutines = async (req, res, next) => {
   }
 };
 
-//build getUserRoutines controller****
-
-routinesController.insertRoutine = async (req, res, next) => {
+routinesController.createRoutine = async (req, res, next) => {
   const { owner_user_id, name, duration, routine_workout } = req.body;
 
   const queryRoutine =

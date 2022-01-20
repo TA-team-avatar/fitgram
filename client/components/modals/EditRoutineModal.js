@@ -58,7 +58,7 @@ const EditRoutineModal = ({ userId, routineId, name, duration }) => {
             variant='primary'
             onClick={() => {
               dispatch(
-                editRoutine({
+                updateRoutine({
                   userId,
                   routineId,
                   name: routineName,

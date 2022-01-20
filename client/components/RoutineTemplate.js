@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getAllRoutines } from '../features/routineSlice';
+import { getRoutines } from '../features/routineSlice';
 import { getRoutineWorkout } from '../features/workoutSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,7 +15,7 @@ const RoutineTemplate = () => {
   // Dispatch actions on mount
   useEffect(() => {
     dispatch(
-      getAllRoutines({
+      getRoutines({
         routineId: routineId,
       })
     );
