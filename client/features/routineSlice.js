@@ -14,7 +14,7 @@ export const getRoutines = createAsyncThunk(
   'routine/getAllRoutines',
   async () => {
     const res = await axios.get(`/routine/${routineId}`);
-    return res.data.routine;
+    return res.data.routines;
   }
 );
 
@@ -29,7 +29,7 @@ export const getUserRoutines = createAsyncThunk(
 export const createRoutine = createAsyncThunk(
   'routine/createRoutine',
   async ({ userId, name, duration }) => {
-    const res = await axios.post(`/routine/`, {
+    const res = await axios.post(`/routine`, {
       userId,
       name,
       duration,

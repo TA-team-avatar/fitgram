@@ -3,12 +3,11 @@ const {
   updateRoutine,
   deleteRoutineWorkout,
   getRoutines,
-  insertRoutine,
+  createRoutine,
   deleteRoutine,
   getRoutineWorkout,
   insertRoutineWorkout,
   updateRoutineWorkout,
-  deleteRoutineWorkout,
 } = require('./../controller/routinesController.js');
 
 const router = express.Router();
@@ -17,7 +16,7 @@ router.get('/', getRoutines, (req, res) => {
   return res.status(200).json({ routines: res.locals.routines });
 });
 
-router.post('/', insertRoutine, (req, res) => {
+router.post('/', createRoutine, (req, res) => {
   return res.sendStatus(200);
 });
 
