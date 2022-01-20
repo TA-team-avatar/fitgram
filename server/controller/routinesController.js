@@ -1,4 +1,4 @@
-const db = require('../model/dbModel');
+const db = require("../model/dbModel");
 
 // controllers for getting routines and individual workouts
 // get all
@@ -9,10 +9,10 @@ routinesController.getAllRoutines = async (req, res, next) => {
   const { id } = req.query;
 
   const queryRoutine =
-    'SELECT r.*, rw.* FROM routines r \
+    "SELECT r.*, rw.* FROM routines r \
     LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
     LEFT JOIN workouts w ON w.id = rw.workout_id \
-    WHERE r.owner_user_id = $1';
+    WHERE r.owner_user_id = $1";
 
   const paramRoutine = [id];
   try {
@@ -34,15 +34,15 @@ routinesController.insertRoutine = async (req, res, next) => {
   const { owner_user_id, name, duration, routine_workout } = req.body;
 
   const queryRoutine =
-    'INSERT INTO routines (owner_user_id, name, duration)\
+    "INSERT INTO routines (owner_user_id, name, duration)\
     VALUES ($1, $2, $3)\
-    RETURNING id';
+    RETURNING id";
   const paramRoutine = [owner_user_id, name, duration];
 
   const queryRoutineWorkout =
-    'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day)\
+    "INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day)\
     VALUES ($1, $2, $3, $4, $5)\
-    RETURNING *';
+    RETURNING *";
 
   try {
     await db.query(queryRoutine, paramRoutine);
@@ -74,22 +74,22 @@ routinesController.updateRoutine = async (req, res, next) => {
   const { id, name, duration, routine_workout } = req.body;
 
   const queryUpdateRoutine =
-    'UPDATE routines SET name = $1, duration = $2 WHERE id = $3';
+    "UPDATE routines SET name = $1, duration = $2 WHERE id = $3";
   const paramsUpdateRoutine = [name, duration, id];
 
   const queryUpdateRoutineWorkoutID =
-    'INSERT INTO routine_workout (id, routine_id, workout_id, set, repetition_motion, day, weight)\
+    "INSERT INTO routine_workout (id, routine_id, workout_id, set, repetition_motion, day, weight)\
     VALUES($1, $2, $3, $4, $5, $6, $7)\
     ON CONFLICT (id)\
     DO\
-    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;";
 
   const queryUpdateRoutineWorkout =
-    'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day, weight)\
+    "INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day, weight)\
     VALUES($1, $2, $3, $4, $5, $6)\
     ON CONFLICT (id)\
     DO\
-    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;';
+    UPDATE SET routine_id=EXCLUDED.routine_id, workout_id=EXCLUDED.workout_id, set=EXCLUDED.set, repetition_motion=EXCLUDED.repetition_motion, day=EXCLUDED.day, weight=EXCLUDED.weight;";
 
   try {
     await db.query(queryUpdateRoutine, paramsUpdateRoutine);
@@ -125,11 +125,11 @@ routinesController.updateRoutine = async (req, res, next) => {
 
 routinesController.deleteRoutine = async (req, res, next) => {
   const { id } = req.body;
-  const queryRoutine = 'DELETE FROM routines WHERE id = $1';
+  const queryRoutine = "DELETE FROM routines WHERE id = $1";
   const paramRoutine = [id];
 
   const queryRoutineWorkout =
-    'DELETE FROM routine_workout WHERE routine_id = $1';
+    "DELETE FROM routine_workout WHERE routine_id = $1";
   const paramRoutineWorkout = [id];
   try {
     await db.query(queryRoutine, paramRoutine);
@@ -147,7 +147,7 @@ routinesController.deleteRoutine = async (req, res, next) => {
 routinesController.deleteRoutineWorkout = async (req, res, next) => {
   const { id } = req.body;
 
-  const query = 'DELETE FROM routine_workout WHERE id = $1';
+  const query = "DELETE FROM routine_workout WHERE id = $1";
   const param = [id];
   try {
     await db.query(query, param);
