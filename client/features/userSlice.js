@@ -82,7 +82,11 @@ export const userSlice = createSlice({
       state.status = "Something went wrong in loginUser Call";
     },
     [getUserId.pending]: (state) => {
+<<<<<<< HEAD
       state.status = "getUserId api is pending";
+=======
+      state.status = 'getUserId api is pending';
+>>>>>>> dev
     },
     [getUserId.fulfilled]: (state, { payload }) => {
       state.userId = payload.data.user_id;
@@ -93,17 +97,28 @@ export const userSlice = createSlice({
       state.status = "Something went wrong in getUserId Call";
     },
     [getUserName.pending]: (state) => {
+<<<<<<< HEAD
       state.status = "getUserName api is pending";
+=======
+      state.status = 'getUserName api is pending';
+>>>>>>> dev
     },
     [getUserName.fulfilled]: (state, { payload }) => {
       state.userData = payload.data;
       state.status = "getUserName fulfilled";
     },
     [getUserName.rejected]: (state) => {
+<<<<<<< HEAD
       state.status = "Something went wrong in getUserName Call";
     },
     [signUpUser.pending]: (state) => {
       state.status = "signUpUser api is pending";
+=======
+      state.status = 'Something went wrong in getUserName Call';
+    },
+    [signUpUser.pending]: (state) => {
+      state.status = 'signUpUser api is pending';
+>>>>>>> dev
     },
     [signUpUser.fulfilled]: (state, { payload }) => {
       state.userId = payload.data.user_id;
@@ -111,7 +126,11 @@ export const userSlice = createSlice({
       state.status = "signUpUser fulfilled";
     },
     [signUpUser.rejected]: (state) => {
+<<<<<<< HEAD
       state.status = "Something went wrong in signUpUser Call";
+=======
+      state.status = 'Something went wrong in signUpUser Call';
+>>>>>>> dev
     },
   },
 });
