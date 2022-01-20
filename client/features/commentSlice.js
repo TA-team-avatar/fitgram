@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
-import dummyData from "../constants/dummyData";
+import { createSlice } from '@reduxjs/toolkit';
+import dummyData from '../constants/dummyData';
 
 const initialState = {
   commentData: [],
 };
 
 export const commentSlice = createSlice({
-  name: "comment",
+  name: 'comment',
   initialState,
   reducers: {
     getForumComments: (state, action) => {
@@ -37,8 +37,8 @@ export const commentSlice = createSlice({
         description,
         owner_user_id,
         forum_id,
-        date_created: "2022-01-15",
-        user_name: "Han",
+        date_created: '2022-01-15',
+        user_name: 'Han',
       });
       state.commentData = comments;
     },
@@ -63,7 +63,7 @@ export const commentSlice = createSlice({
        */
 
       const comments = JSON.parse(JSON.stringify(dummyData.comments));
-      console.log("Hi");
+      console.log('Hi');
       comments.forEach((comment) => {
         if (comment.id === id) {
           comment.description = description;

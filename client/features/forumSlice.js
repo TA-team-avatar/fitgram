@@ -69,7 +69,7 @@ const initialState = {
 };
 
 export const forumSlice = createSlice({
-  name: "forum",
+  name: 'forum',
   initialState,
   reducers: {},
   extraReducers: {

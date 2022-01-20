@@ -25,42 +25,46 @@ const DashboardContainer = () => {
 
   return (
     <>
-      <h1>Welcome to Forums!</h1>
-      <hr />
-      <AddForumModal />
-      <hr />
-      {forumList.map((forum, idx) => (
-        <div key={idx}>
-          <span>{forum.name}</span>
-          Date Created:
-          <span>{forum.date_created}</span>
-          <span>
-            {Number(forum.owner_user_id) === currentUserId ? (
-              <button
-                className='btn btn-secondary me-3'
-                onClick={() => {
-                  dispatch(
-                    deleteForum({
-                      forumId: forum.id,
-                    })
-                  );
-                }}
-              >
-                Delete Forum
-              </button>
-            ) : (
-              <Link
-                to={`/profile/${forum.owner_user_id}`}
-                className='btn btn-secondary me-3'
-              >
-                <button>View User Profile</button>
-              </Link>
-            )}
-          </span>
+      <div>
+        <h1>Welcome to Your Dashboard</h1>
+        <hr />
+        <AddForumModal />
+        <hr />
+        <div className='span-containers'>
+          {forumList.map((forum, idx) => (
+            <div className='div-span' key={idx}>
+              <span className='first-span'>{forum.name}</span>
+              <span className='second-span'>
+                {' '}
+                Date Created: {forum.date_created}
+              </span>
+              <span>
+                {forum.owner_user_id === currentUserId ? (
+                  <button
+                    className=' btn-success'
+                    onClick={() => {
+                      dispatch(
+                        deleteForum({
+                          forumId: forum.id,
+                        })
+                      );
+                    }}
+                  >
+                    Delete Forum
+                  </button>
+                ) : (
+                  <Link
+                    to={`/profile/${forum.owner_user_id}`}
+                    className=' btn-success'
+                  >
+                    <button>View User Profile</button>
+                  </Link>
+                )}
+              </span>
+            </div>
+          ))}
         </div>
-      ))}
-
-      <div></div>
+      </div>
     </>
   );
 };

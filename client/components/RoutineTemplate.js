@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { getRoutine } from "../features/routineSlice";
-import { getRoutineWorkout } from "../features/workoutSlice";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { getAllRoutines } from '../features/routineSlice';
+import { getRoutineWorkout } from '../features/workoutSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const RoutineTemplate = () => {
   const routineId = useSelector((state) => state.forum.forumData).routine_id;
@@ -15,7 +15,7 @@ const RoutineTemplate = () => {
   // Dispatch actions on mount
   useEffect(() => {
     dispatch(
-      getRoutine({
+      getAllRoutines({
         routineId: routineId,
       })
     );

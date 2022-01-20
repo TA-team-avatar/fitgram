@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import RoutineTemplate from "../components/RoutineTemplate";
-import { getUserId } from "../features/userSlice";
-import { getForum, removeRoutineToForum } from "../features/forumSlice";
-import { getForumComments } from "../features/commentSlice";
-import { useSelector, useDispatch } from "react-redux";
-import AddRoutineModal from "../components/modals/AddRoutineModal";
-import CommentBox from "../components/CommentBox";
-import AddCommentModal from "../components/modals/AddCommentModal";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import RoutineTemplate from '../components/RoutineTemplate';
+import { getUserId } from '../features/userSlice';
+import { getForum, removeRoutineToForum } from '../features/forumSlice';
+import { getForumComments } from '../features/commentSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import AddRoutineModal from '../components/modals/AddRoutineModal';
+import CommentBox from '../components/CommentBox';
+import AddCommentModal from '../components/modals/AddCommentModal';
 
 const ForumContainer = () => {
   const { forumId } = useParams();
@@ -25,7 +25,7 @@ const ForumContainer = () => {
   useEffect(() => {
     dispatch(
       getUserId({
-        token: "fakeToken",
+        token: 'fakeToken',
       })
     );
     dispatch(
@@ -42,52 +42,55 @@ const ForumContainer = () => {
 
   return (
     <>
-      {/* Buttons section */}
-      <Link to={`/profile/${owner_user_id}`} className="btn btn-secondary me-3">
-        Visit User Profile
-      </Link>
-      {owner_user_id === currentUserId && owner_user_id && !routine_id ? (
-        <AddRoutineModal />
-      ) : (
-        <></>
-      )}
-      <hr />
-      {/* Forum header section */}
-      <div>Title: {name}</div>
-      <span>Date Posted: {date_created}</span>
-      <hr />
-      {/* Routine section */}
-      <div>Routine</div>
-      {routine_id ? <RoutineTemplate /> : <></>}
-      {routine_id ? (
-        <button
-          className="btn btn-primary"
-          onClick={() => {
-            dispatch(
-              removeRoutineToForum({
-                forumId: Number(forumId),
-              })
-            );
-          }}
-        >
-          Remove Routine
-        </button>
-      ) : (
-        <></>
-      )}
-      <hr />
-      {/* Likes and dislikes section */}
-      <span>Likes: {likes}</span>&nbsp;
-      <span>Dislikes: {dislikes}</span>
-      <hr />
-      {/* Comment Section */}
-      <h2>Comments</h2>
-      <AddCommentModal forumId={forumId} currentUserId={currentUserId} />
-      <hr />
-      {commentData.map((comment, idx) => (
-        <CommentBox key={idx} props={comment} currentUserId={currentUserId} />
-      ))}
-      <hr />
+      <div>
+        <h2 className='container'>Forums</h2>
+        {/* Buttons section */}
+        <Link to={`/profile/${owner_user_id}`} className='btn-secondary'>
+          Visit User Profile
+        </Link>
+        {owner_user_id === currentUserId && owner_user_id && !routine_id ? (
+          <AddRoutineModal />
+        ) : (
+          <></>
+        )}
+        <hr />
+        {/* Forum header section */}
+        <div>Title: {name}</div>
+        <span className='text'>Date Posted: {date_created}</span>
+        <hr />
+        {/* Routine section */}
+        <div>Routine</div>
+        {routine_id ? <RoutineTemplate /> : <></>}
+        {routine_id ? (
+          <button
+            className='btn-secondary'
+            onClick={() => {
+              dispatch(
+                removeRoutineToForum({
+                  forumId: Number(forumId),
+                })
+              );
+            }}
+          >
+            Remove Routine
+          </button>
+        ) : (
+          <></>
+        )}
+        <hr />
+        {/* Likes and dislikes section */}
+        <span className='text'>Likes: {likes}</span>&nbsp;
+        <span className='text'>Dislikes: {dislikes}</span>
+        <hr />
+        {/* Comment Section */}
+        <h2>Comments</h2>
+        <AddCommentModal forumId={forumId} currentUserId={currentUserId} />
+        <hr />
+        {commentData.map((comment, idx) => (
+          <CommentBox key={idx} props={comment} currentUserId={currentUserId} />
+        ))}
+        <hr />
+      </div>
     </>
   );
 };

@@ -2,7 +2,7 @@ const express = require('express');
 const {
   updateRoutine,
   deleteRoutineWorkout,
-  getRoutines,
+  getAllRoutines,
   insertRoutine,
   deleteRoutine,
 } = require('./../controller/routinesController.js');
@@ -10,7 +10,7 @@ const routineController = require('./../controller/routinesController.js');
 
 const router = express.Router();
 
-router.get('/', getRoutines, (req, res) => {
+router.get('/', getAllRoutines, (req, res) => {
   return res.status(200).json({ routines: res.locals.routines });
 });
 

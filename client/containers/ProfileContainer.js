@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserId, getUserName } from "../features/userSlice";
-import { getUserForumData } from "../features/forumSlice";
-import { getUserRoutines, deleteRoutine } from "../features/routineSlice";
-import { getUserRoutineWorkout, getWorkout } from "../features/workoutSlice";
-import BuildRoutineModal from "../components/modals/BuildRoutineModal";
-import EditRoutineModal from "../components/modals/EditRoutineModal";
-import EditWorkoutModal from "../components/modals/EditWorkoutModal";
-import ViewWorkoutModal from "../components/modals/ViewWorkoutModal";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserId, getUserName } from '../features/userSlice';
+import { getUserForumData } from '../features/forumSlice';
+import { getUserRoutines, deleteRoutine } from '../features/routineSlice';
+import { getUserRoutineWorkout, getWorkout } from '../features/workoutSlice';
+import BuildRoutineModal from '../components/modals/BuildRoutineModal';
+import EditRoutineModal from '../components/modals/EditRoutineModal';
+import EditWorkoutModal from '../components/modals/EditWorkoutModal';
+import ViewWorkoutModal from '../components/modals/ViewWorkoutModal';
 
 const ProfileContainer = () => {
   let { userId } = useParams();
@@ -28,7 +28,7 @@ const ProfileContainer = () => {
   useEffect(() => {
     dispatch(
       getUserId({
-        token: "fakeToken",
+        token: 'fakeToken',
       })
     );
     dispatch(
@@ -54,12 +54,11 @@ const ProfileContainer = () => {
     dispatch(getWorkout());
   }, []);
 
-  console.log("routine", routineData);
-  console.log("routineWO", userRoutineWorkout);
+  console.log('routine', routineData);
+  console.log('routineWO', userRoutineWorkout);
   return (
     <>
-      <h1>{userData.user_name}'s Profile</h1>
-      <div>
+      <div className='container'>
         <span>Total Likes {totalLikes}</span>
         <hr />
         {currentUserId === userId ? (
@@ -89,7 +88,7 @@ const ProfileContainer = () => {
                     duration={routine.duration}
                   />
                   <button
-                    className="btn btn-secondary me-3"
+                    className='btn btn-secondary me-3'
                     onClick={() => {
                       dispatch(
                         deleteRoutine({
@@ -107,6 +106,9 @@ const ProfileContainer = () => {
                   >
                     Delete Routine
                   </button>
+                  <span>
+                    <button className='btn-secondary'>Edit Routine</button>
+                  </span>
                 </span>
               ) : (
                 <ViewWorkoutModal
@@ -117,7 +119,6 @@ const ProfileContainer = () => {
             </div>
           ))}
         </>
-        <button className="btn btn-secondary me-3">Messages</button>
       </div>
     </>
   );

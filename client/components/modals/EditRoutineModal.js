@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { editRoutine } from "../../features/routineSlice";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { editRoutine } from '../../features/routineSlice';
+import { useDispatch } from 'react-redux';
 
 const EditRoutineModal = ({ userId, routineId, name, duration }) => {
-  const [routineName, setRoutineName] = useState("");
-  const [routineDuration, setRoutineDuration] = useState("");
+  const [routineName, setRoutineName] = useState('');
+  const [routineDuration, setRoutineDuration] = useState('');
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,7 +19,7 @@ const EditRoutineModal = ({ userId, routineId, name, duration }) => {
 
   return (
     <>
-      <Button className="btn btn-secondary me-3" onClick={handleShow}>
+      <Button className='btn btn-secondary me-3' onClick={handleShow}>
         Edit Routine
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -29,19 +29,19 @@ const EditRoutineModal = ({ userId, routineId, name, duration }) => {
         <Modal.Body>
           <div>
             <form>
-              <label className="form-label mt-4">Please type in name</label>
+              <label className='form-label mt-4'>Please type in name</label>
               <input
-                className="form-control"
-                type="text"
+                className='form-control'
+                type='text'
                 value={routineName}
                 onChange={(e) => {
                   setRoutineName(e.target.value);
                 }}
               />
-              <label className="form-label mt-4">Routine Duration</label>
+              <label className='form-label mt-4'>Routine Duration</label>
               <input
-                className="form-control"
-                type="text"
+                className='form-control'
+                type='text'
                 value={routineDuration}
                 onChange={(e) => {
                   setRoutineDuration(e.target.value);
@@ -51,11 +51,11 @@ const EditRoutineModal = ({ userId, routineId, name, duration }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant='secondary' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant="primary"
+            variant='primary'
             onClick={() => {
               dispatch(
                 editRoutine({
