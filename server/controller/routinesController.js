@@ -104,7 +104,7 @@ routinesController.deleteRoutine = async (req, res, next) => {
 routinesController.getRoutineWorkout = async (req, res, next) => {
   const { id } = req.params;
 
-  const query = 'SELECT * FROM routine_workout WHERE id = $1';
+  const query = 'SELECT * FROM routine_workout WHERE routine_id = $1';
   const params = [id];
 
   try {
