@@ -22,7 +22,6 @@ export const getUserRoutines = createAsyncThunk(
   "routine/getUserRoutines",
   async ({ userId }) => {
     const res = await axios.get(`/routine/${userId}`);
-    console.log(res);
     return res.userRoutineData;
   }
 );

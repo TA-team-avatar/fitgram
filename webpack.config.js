@@ -49,6 +49,7 @@ module.exports = {
       "/user/**": "http://localhost:3000",
       "/session/**": "http://localhost:3000",
       "/routine/**": "http://localhost:3000",
+      "/workout/**": "http://localhost:3000",
     },
   },
 };
