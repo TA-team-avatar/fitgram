@@ -16,7 +16,7 @@ const EditCommentModal = ({ id, description }) => {
   }, []);
   return (
     <>
-      <Button className='btn-secondary' onClick={handleShow}>
+      <Button className='btn-dark-modal' onClick={handleShow}>
         Edit Comment
       </Button>
       <Modal className='modal' show={show} onHide={handleClose}>
@@ -39,11 +39,11 @@ const EditCommentModal = ({ id, description }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant='primary'
+            className='btn-success'
             onClick={() => {
               dispatch(
                 editComments({

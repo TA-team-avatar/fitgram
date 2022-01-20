@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { deleteWorkout } from "../../features/workoutSlice";
-import AddWorkoutModal from "./AddWorkoutModal";
-import EditWorkoutDetailsModal from "./EditWorkoutDetailsModal";
+import React, { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { deleteWorkout } from '../../features/workoutSlice';
+import AddWorkoutModal from './AddWorkoutModal';
+import EditWorkoutDetailsModal from './EditWorkoutDetailsModal';
 
 const EditWorkoutModal = ({ routineId, workoutData }) => {
   const [show, setShow] = useState(false);
@@ -13,7 +13,7 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
 
   return (
     <>
-      <Button className="btn btn-secondary me-3" onClick={handleShow}>
+      <Button className='btn-dark-modal' onClick={handleShow}>
         Edit Workout
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -38,7 +38,7 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
                   workoutData={rw}
                 />
                 <button
-                  className="btn btn-secondary"
+                  className='btn-success'
                   onClick={() => {
                     dispatch(
                       deleteWorkout({
@@ -57,7 +57,7 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
         </Modal.Footer>

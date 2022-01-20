@@ -33,6 +33,12 @@ const NavContainer = () => {
                   </a>
                 </li>
                 <li class='nav-item'>
+                  <a class='nav-link' data-bs-toggle='tab' href='/dashboard'>
+                    Dashboard
+                  </a>
+                </li>
+
+                <li class='nav-item'>
                   <a class='nav-link' data-bs-toggle='tab' href='/message/:id'>
                     Messages
                   </a>
