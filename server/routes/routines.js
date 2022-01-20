@@ -42,7 +42,7 @@ router.post('/workout', insertRoutineWorkout, (req, res) => {
 });
 
 router.put('/workout/:id', updateRoutineWorkout, (req, res) => {
-  return res.sendStatus(200);
+  return res.status(200).json(res.locals.updateWorkout);
 });
 router.delete('/workout', deleteRoutineWorkout, (req, res) => {
   return res

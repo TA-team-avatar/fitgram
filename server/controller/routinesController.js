@@ -209,11 +209,15 @@ routinesController.updateRoutineWorkout = async (req, res, next) => {
 
   setQuery = setQuery.replace(/(,\s$)/g, '');
   setQuery =
-    'UPDATE routine_workout SET ' + setQuery + ' WHERE id = ' + id + ';';
+    'UPDATE routine_workout SET ' +
+    setQuery +
+    ' WHERE id = ' +
+    id +
+    ' RETURNING *;';
 
   try {
-    await db.query(setQuery);
-
+    const updateWorkout = await db.query(setQuery);
+    res.locals.updateWorkout = updateWorkout;
     return next();
   } catch (err) {
     return next({

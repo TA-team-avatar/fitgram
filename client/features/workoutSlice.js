@@ -60,8 +60,24 @@ export const deleteWorkout = createAsyncThunk(
 
 export const editWorkout = createAsyncThunk(
   'workout/editWorkout',
-  async (paylaod) => {
-    const data = axios.put(`/routine/workout/${payload.id}`);
+  async ({
+    id,
+    routine_id,
+    workout_id,
+    set,
+    repetition_motion,
+    weight,
+    day,
+  }) => {
+    const body = {
+      routine_id,
+      workout_id,
+      set,
+      repetition_motion,
+      weight,
+      day,
+    };
+    const data = axios.put(`/routine/workout/${id}`, body);
     return data;
   }
 );
@@ -79,7 +95,6 @@ export const workoutSlice = createSlice({
     // },
     // getRoutineWorkout: (state, action) => {
     //   const routineId = action.payload.routineId;
-
     //   /**
     //    * TODO:
     //    * Make API call to get routine_workout information
@@ -91,17 +106,14 @@ export const workoutSlice = createSlice({
     //     )[0].name;
     //     return routine_workout.routine_id === routineId;
     //   });
-
     //   if (res) {
     //     res = JSON.parse(JSON.stringify(res));
     //   }
-
     //   state.routineWorkoutData = res;
     // },
     // getUserRoutineWorkout: (state, action) => {
     //   const userId = action.payload.userId;
     //   const isAdded = action.payload.isAdded;
-
     //   /**
     //    * TODO:
     //    * Make API call to get all user routine_workout information
@@ -111,7 +123,6 @@ export const workoutSlice = createSlice({
     //   const routines = dummyData.routines.filter(
     //     (routine) => routine.owner_user_id === userId
     //   );
-
     //   for (let routine of routines) {
     //     let res = dummyData.routine_workouts.filter((routine_workout) => {
     //       routine_workout.workout_name = dummyData.workouts.filter(
@@ -125,7 +136,6 @@ export const workoutSlice = createSlice({
     //     cache[routine.id] = res;
     //   }
     //   state.userRoutineWorkoutData = cache;
-
     //   //test code
     //   if (isAdded) {
     //     state.userRoutineWorkoutData[5] = [];
@@ -136,12 +146,10 @@ export const workoutSlice = createSlice({
     //   /**
     //    * TODO: Make API call to delete routine_workout to db
     //    */
-
     //   state.userRoutineWorkoutData[routineId] = state.userRoutineWorkoutData[
     //     routineId
     //   ].filter((data) => data.id !== id);
     // },
-
     // createWorkout: (state, action) => {
     //   const { routine_id, workout_id, set, repetition_motion, weight, day } =
     //     action.payload;
@@ -158,39 +166,38 @@ export const workoutSlice = createSlice({
     //     day,
     //   });
     // },
-    editWorkout: (state, action) => {
-      const {
-        routine_id,
-        id,
-        workout_id,
-        set,
-        repetition_motion,
-        weight,
-        day,
-      } = action.payload;
-
-      console.log('edit', {
-        routine_id,
-        id,
-        workout_id,
-        set,
-        repetition_motion,
-        weight,
-        day,
-      });
-      /**
-       * TODO: Make API call to create routine_workout to db
-       */
-      state.userRoutineWorkoutData[routine_id].forEach((workout) => {
-        if (workout.id === id) {
-          workout.workout_id = workout_id;
-          workout.set = set;
-          workout.repetition_motion = repetition_motion;
-          workout.weight = weight;
-          workout.day = day;
-        }
-      });
-    },
+    // editWorkout: (state, action) => {
+    //   const {
+    //     routine_id,
+    //     id,
+    //     workout_id,
+    //     set,
+    //     repetition_motion,
+    //     weight,
+    //     day,
+    //   } = action.payload;
+    //   console.log('edit', {
+    //     routine_id,
+    //     id,
+    //     workout_id,
+    //     set,
+    //     repetition_motion,
+    //     weight,
+    //     day,
+    //   });
+    //   /**
+    //    * TODO: Make API call to create routine_workout to db
+    //    */
+    //   state.userRoutineWorkoutData[routine_id].forEach((workout) => {
+    //     if (workout.id === id) {
+    //       workout.workout_id = workout_id;
+    //       workout.set = set;
+    //       workout.repetition_motion = repetition_motion;
+    //       workout.weight = weight;
+    //       workout.day = day;
+    //     }
+    //   });
+    // },
   },
   extraReducers: {
     [getWorkout.pending]: (state) => {
@@ -217,14 +224,14 @@ export const workoutSlice = createSlice({
       state.status = 'createWorkout api is pending';
     },
     [createWorkout.fulfilled]: (state, { payload }) => {
-      state.userRoutineWorkoutData[payload.routine_id].push({
-        id: payload.id,
-        routine_id: payload.routine_id,
-        workout_id: payload.workout_id,
-        set: payload.set,
-        repetition_motion: payload.repetition_motion,
-        weight: payload.weight,
-        day: payload.day,
+      state.userRoutineWorkoutData[payload.data.routine_id].push({
+        id: payload.data.id,
+        routine_id: payload.data.routine_id,
+        workout_id: payload.data.workout_id,
+        set: payload.data.set,
+        repetition_motion: payload.data.repetition_motion,
+        weight: payload.data.weight,
+        day: payload.data.day,
       });
       state.status = 'createWorkout fulfilled';
     },
@@ -245,25 +252,38 @@ export const workoutSlice = createSlice({
       state.status = 'deleteWorkout api is pending';
     },
     [deleteWorkout.fulfilled]: (state, { payload }) => {
-      state.userRoutineWorkoutData[payload.routine_id] =
-        state.userRoutineWorkoutData[payload.routine_id].filter(
-          (data) => data.id !== payload.id
+      state.userRoutineWorkoutData[payload.data.routine_id] =
+        state.userRoutineWorkoutData[payload.data.routine_id].filter(
+          (data) => data.id !== payload.data.id
         );
       state.status = 'deleteWorkout fulfilled';
     },
     [deleteWorkout.rejected]: (state) => {
       state.status = 'Something went wrong in deleteWorkout Call';
     },
+    [editWorkout.pending]: (state) => {
+      state.status = 'editWorkout api is pending';
+    },
+    [editWorkout.fulfilled]: (state, { payload }) => {
+      state.userRoutineWorkoutData[payload.data.routine_id].forEach(
+        (workout) => {
+          if (workout.id === payload.data.id) {
+            workout.workout_id = payload.data.workout_id;
+            workout.set = payload.data.set;
+            workout.repetition_motion = payload.data.repetition_motion;
+            workout.weight = payload.data.weight;
+            workout.day = payload.data.day;
+          }
+        }
+      );
+      state.status = 'editWorkout fulfilled';
+    },
+    [editWorkout.rejected]: (state) => {
+      state.status = 'Something went wrong in editWorkout Call';
+    },
   },
 });
 
-export const {
-  // getWorkout,
-  // getRoutineWorkout,
-  // getUserRoutineWorkout,
-  // deleteWorkout,
-  // createWorkout,
-  editWorkout,
-} = workoutSlice.actions;
+export const {} = workoutSlice.actions;
 
 export default workoutSlice.reducer;
