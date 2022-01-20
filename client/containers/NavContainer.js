@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { getUserId } from "../features/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const NavContainer = () => {
+  // const currentUserId = useSelector((state) => state.user.userId);
+  // const dispatch = useDispatch();
+
+  // // Dispatch actions on mount
+  // useEffect(() => {
+  //   dispatch(
+  //     getUserId({
+  //       token: sessionStorage.getItem("token"),
+  //     })
+  //   );
+  // }, []);
+
   return (
     <div>
       <>
-        <nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
-          <div class='container-fluid'>
-            <a class='navbar-brand'>Fitness App</a>
-            <div className='navbar-nav'>
-              <ul class='nav nav-tabs'>
-                <li class='nav-item'>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand">Fitness App</a>
+            <div className="navbar-nav">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
                   <a
-                    class='nav-link'
-                    data-bs-toggle='tab'
-                    href='/profile/:userId'
+                    class="nav-link"
+                    data-bs-toggle="tab"
+                    href="/profile/:userId"
                   >
                     Profile
                   </a>
                 </li>
-                <li class='nav-item'>
-                  <a class='nav-link' data-bs-toggle='tab' href='/message/:id'>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="/message/:id">
                     Messages
                   </a>
                 </li>
-                <li class='nav-item'>
-                  <a class='nav-link' data-bs-toggle='tab' href='#'>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="tab" href="#">
                     Logout(link)
                   </a>
                 </li>
