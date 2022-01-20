@@ -11,6 +11,7 @@ const initialState = {
 export const getForumComments = createAsyncThunk(
   'comments/getForumComments',
   async ({ forumId }) => {
+    console.log('entered createAsyncThunk getForumComments');
     const res = await axios.get(`/comments/${forumId}`);
     return res.data.comments;
   }
@@ -52,7 +53,8 @@ export const commentSlice = createSlice({
     [getForumComments.pending]: (state, action) => {
       state.status = 'loading';
     },
-    [getForumComments.fulfilled]: (state, action) => {
+    [getForumComments.fulfilled]: (state, { payload }) => {
+      console.log('getForumComments success case');
       state.commentList = payload;
       state.status = 'success';
     },
@@ -63,7 +65,7 @@ export const commentSlice = createSlice({
     [deleteComments.pending]: (state, action) => {
       state.status = 'loading';
     },
-    [deleteComments.fulfilled]: (state, action) => {
+    [deleteComments.fulfilled]: (state, { payload }) => {
       state.commentList = payload;
       state.status = 'success';
     },
@@ -74,7 +76,7 @@ export const commentSlice = createSlice({
     [editComments.pending]: (state, action) => {
       state.status = 'loading';
     },
-    [editComments.fulfilled]: (state, action) => {
+    [editComments.fulfilled]: (state, { payload }) => {
       state.commentData = payload;
       state.status = 'success';
     },
@@ -85,7 +87,7 @@ export const commentSlice = createSlice({
     [createComments.pending]: (state, action) => {
       state.status = 'loading';
     },
-    [createComments.fulfilled]: (state, action) => {
+    [createComments.fulfilled]: (state, { payload }) => {
       state.commentList = payload;
       state.status = 'success';
     },
@@ -95,6 +97,6 @@ export const commentSlice = createSlice({
   },
 });
 
-export const {} = commentSlice.action;
+export const {} = commentSlice.actions;
 
 export default commentSlice.reducer;
