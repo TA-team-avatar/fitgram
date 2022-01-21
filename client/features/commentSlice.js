@@ -1,85 +1,102 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import dummyData from '../constants/dummyData';
 
 const initialState = {
-  commentData: [],
+  commentData: {},
+  commentList: [],
+  status: null,
 };
+
+export const getForumComments = createAsyncThunk(
+  'comments/getForumComments',
+  async ({ forumId }) => {
+    console.log('entered createAsyncThunk getForumComments');
+    const res = await axios.get(`/comments/${forumId}`);
+    return res.data.comments;
+  }
+);
+
+export const deleteComments = createAsyncThunk(
+  'comments/deleteComments',
+  async ({ owner_user_id, id }) => {
+    const res = await axios.delete('/comments', { owner_user_id, id });
+    return res.data.comments;
+  }
+);
+
+export const editComments = createAsyncThunk(
+  'comments/editComments',
+  async ({ description, id }) => {
+    const res = await axios.put('/comments', { description, id });
+    return res.data.comment;
+  }
+);
+
+export const createComments = createAsyncThunk(
+  'comments/createComments',
+  async ({ owner_user_id, forum_id, description }) => {
+    const res = await axios.post('/comments', {
+      owner_user_id,
+      forum_id,
+      description,
+    });
+    return res.data.comment;
+  }
+);
 
 export const commentSlice = createSlice({
   name: 'comment',
   initialState,
-  reducers: {
-    getForumComments: (state, action) => {
-      const forumId = action.payload.forumId;
-
-      /**
-       * TODO: Make API call to get forum comment information
-       */
-      let res = dummyData.comments.filter(
-        (comment) => comment.forum_id === forumId
-      );
-
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-
-      state.commentData = res;
+  reducers: {},
+  extraReducers: {
+    [getForumComments.pending]: (state, action) => {
+      state.status = 'loading';
     },
-    createComments: (state, action) => {
-      const { description, owner_user_id, forum_id } = action.payload;
-      /**
-       * TODO: Make API call to add comments to db
-       */
-
-      const comments = JSON.parse(JSON.stringify(dummyData.comments));
-      comments.push({
-        id: 4,
-        description,
-        owner_user_id,
-        forum_id,
-        date_created: '2022-01-15',
-        user_name: 'Han',
-      });
-      state.commentData = comments;
+    [getForumComments.fulfilled]: (state, { payload }) => {
+      console.log('getForumComments success case');
+      state.commentList = payload;
+      state.status = 'success';
     },
-    deleteComments: (state, action) => {
-      const { id } = action.payload;
-      /**
-       * TODO: Make API call to delete comments to db
-       */
-
-      let res = dummyData.comments.filter((comment) => comment.id !== id);
-
-      if (res) {
-        res = JSON.parse(JSON.stringify(res));
-      }
-
-      state.commentData = res;
+    [getForumComments.rejected]: (state, action) => {
+      state.status = 'failed';
     },
-    editComments: (state, action) => {
-      const { id, description } = action.payload;
-      /**
-       * TODO: Make API call to delete comments to db
-       */
 
-      const comments = JSON.parse(JSON.stringify(dummyData.comments));
-      console.log('Hi');
-      comments.forEach((comment) => {
-        if (comment.id === id) {
-          comment.description = description;
-        }
-      });
+    [deleteComments.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [deleteComments.fulfilled]: (state, { payload }) => {
+      state.commentList = payload;
+      state.status = 'success';
+    },
+    [deleteComments.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
 
-      state.commentData = comments;
+    [editComments.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [editComments.fulfilled]: (state, { payload }) => {
+      state.commentData = payload;
+      state.status = 'success';
+    },
+    [editComments.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
+
+    [createComments.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [createComments.fulfilled]: (state, { payload }) => {
+      state.commentList = payload;
+      state.status = 'success';
+    },
+    [createComments.rejected]: (state, action) => {
+      state.status = 'failed';
     },
   },
 });
 
-export const {
-  getForumComments,
-  createComments,
-  deleteComments,
-  editComments,
-} = commentSlice.actions;
+export const {} = commentSlice.actions;
 
 export default commentSlice.reducer;
