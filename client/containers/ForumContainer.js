@@ -62,7 +62,7 @@ const ForumContainer = () => {
         {/* Forum header section */}
         <div className='span-containers-forum'>
           <div>Title: {name}</div>
-          <span className='text'>Date Posted: {date_created}</span>
+          <span className='second-span'>Date Posted: {date_created}</span>
           <hr />
           {/* Routine section */}
           <div>Routine</div>
@@ -90,11 +90,12 @@ const ForumContainer = () => {
         <span className='span-likes'>Dislikes: {dislikes}</span>
         <hr />
         {/* Comment Section */}
-        <div className='comments'>
+        <div>
+          <AddCommentModal forumId={forumId} currentUserId={currentUserId} />
           <h2 className='comments-heading'>Comments</h2>
+
           <div className='comments-bottom'>
-            <AddCommentModal forumId={forumId} currentUserId={currentUserId} />
-            <hr />
+            <hr class='comments' />
             {commentData.map((comment, idx) => (
               <CommentBox
                 key={idx}

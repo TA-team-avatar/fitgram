@@ -12,7 +12,7 @@ const AddCommentModal = ({ currentUserId, forumId }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      <Button className='btn-dark-modal-comments' onClick={handleShow}>
         Add Comment
       </Button>
       <Modal show={show} onHide={handleClose}>
