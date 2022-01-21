@@ -10,16 +10,16 @@ const initialState = {
 
 export const getWorkout = createAsyncThunk('workout/getWorkout', async () => {
   const workouts = await axios.get('/workout');
-  return workouts;
+  return workouts.data;
 });
 
 export const getRoutineWorkout = createAsyncThunk(
   'workout/getRoutineWorkout',
   async (data) => {
     const routineWorkout = await axios.get(
-      `/routine/workout/${data.routineid}`
+      `/routine/workout/${data.routineId}`
     );
-    return routineWorkout;
+    return routineWorkout.data;
   }
 );
 
@@ -35,7 +35,7 @@ export const createWorkout = createAsyncThunk(
       day,
     };
     const createWorkout = await axios.post('/routine/workout', body);
-    return createWorkout;
+    return createWorkout.data;
   }
 );
 
@@ -43,18 +43,18 @@ export const getUserRoutineWorkout = createAsyncThunk(
   'workout/getUserRoutineWorkout',
   async (payload) => {
     const userRW = axios.get(`/routine/workout/user/${payload.userId}`);
-    return userRW;
+    return userRW.data;
   }
 );
 
 export const deleteWorkout = createAsyncThunk(
   'workout/deleteWorkout',
   async (payload) => {
-    const data = axios.delete('/routine/workout', {
+    const res = axios.delete('/routine/workout', {
       id: payload.id,
       routine_id: payload.routineId,
     });
-    return data;
+    return res.data;
   }
 );
 
@@ -77,8 +77,8 @@ export const editWorkout = createAsyncThunk(
       weight,
       day,
     };
-    const data = axios.put(`/routine/workout/${id}`, body);
-    return data;
+    const res = axios.put(`/routine/workout/${id}`, body);
+    return res.data;
   }
 );
 
@@ -204,7 +204,7 @@ export const workoutSlice = createSlice({
       state.status = 'getWorkout api is pending';
     },
     [getWorkout.fulfilled]: (state, { payload }) => {
-      state.workoutData = [...payload.data.workouts];
+      state.workoutData = [...payload.workouts];
       state.status = 'getWorkout fulfilled';
     },
     [getWorkout.rejected]: (state) => {
@@ -214,7 +214,7 @@ export const workoutSlice = createSlice({
       state.status = 'getRoutineWorkout api is pending';
     },
     [getRoutineWorkout.fulfilled]: (state, { payload }) => {
-      state.routineWorkoutData = [...payload.data.routineWorkouts];
+      state.routineWorkoutData = [...payload.routineWorkouts];
       state.status = 'getRoutineWorkout fulfilled';
     },
     [getRoutineWorkout.rejected]: (state) => {
@@ -224,14 +224,14 @@ export const workoutSlice = createSlice({
       state.status = 'createWorkout api is pending';
     },
     [createWorkout.fulfilled]: (state, { payload }) => {
-      state.userRoutineWorkoutData[payload.data.routine_id].push({
-        id: payload.data.id,
-        routine_id: payload.data.routine_id,
-        workout_id: payload.data.workout_id,
-        set: payload.data.set,
-        repetition_motion: payload.data.repetition_motion,
-        weight: payload.data.weight,
-        day: payload.data.day,
+      state.userRoutineWorkoutData[payload.routine_id].push({
+        id: payload.id,
+        routine_id: payload.routine_id,
+        workout_id: payload.workout_id,
+        set: payload.set,
+        repetition_motion: payload.repetition_motion,
+        weight: payload.weight,
+        day: payload.day,
       });
       state.status = 'createWorkout fulfilled';
     },
@@ -242,7 +242,7 @@ export const workoutSlice = createSlice({
       state.status = 'getUserRoutineWorkout api is pending';
     },
     [getUserRoutineWorkout.fulfilled]: (state, { payload }) => {
-      state.userRoutineWorkoutData = payload.data.userRW;
+      state.userRoutineWorkoutData = payload.userRW;
       state.status = 'getUserRoutineWorkout fulfilled';
     },
     [getUserRoutineWorkout.rejected]: (state) => {
@@ -252,9 +252,9 @@ export const workoutSlice = createSlice({
       state.status = 'deleteWorkout api is pending';
     },
     [deleteWorkout.fulfilled]: (state, { payload }) => {
-      state.userRoutineWorkoutData[payload.data.routine_id] =
-        state.userRoutineWorkoutData[payload.data.routine_id].filter(
-          (data) => data.id !== payload.data.id
+      state.userRoutineWorkoutData[payload.routine_id] =
+        state.userRoutineWorkoutData[payload.routine_id].filter(
+          (data) => data.id !== payload.id
         );
       state.status = 'deleteWorkout fulfilled';
     },
@@ -265,17 +265,15 @@ export const workoutSlice = createSlice({
       state.status = 'editWorkout api is pending';
     },
     [editWorkout.fulfilled]: (state, { payload }) => {
-      state.userRoutineWorkoutData[payload.data.routine_id].forEach(
-        (workout) => {
-          if (workout.id === payload.data.id) {
-            workout.workout_id = payload.data.workout_id;
-            workout.set = payload.data.set;
-            workout.repetition_motion = payload.data.repetition_motion;
-            workout.weight = payload.data.weight;
-            workout.day = payload.data.day;
-          }
+      state.userRoutineWorkoutData[payload.routine_id].forEach((workout) => {
+        if (workout.id === payload.id) {
+          workout.workout_id = payload.workout_id;
+          workout.set = payload.set;
+          workout.repetition_motion = payload.repetition_motion;
+          workout.weight = payload.weight;
+          workout.day = payload.day;
         }
-      );
+      });
       state.status = 'editWorkout fulfilled';
     },
     [editWorkout.rejected]: (state) => {

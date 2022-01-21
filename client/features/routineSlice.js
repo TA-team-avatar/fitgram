@@ -113,7 +113,7 @@ export const routineSlice = createSlice({
       state.status = 'loading';
     },
     [getRoutines.fulfilled]: (state, { payload }) => {
-      state.data.routine = payload; //note where this data goes different than others
+      state.routineData = payload; //note where this data goes different than others
       state.status = 'success';
     },
     [getRoutines.rejected]: (state, action) => {

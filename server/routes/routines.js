@@ -14,7 +14,7 @@ const {
 
 const router = express.Router();
 
-router.get('/:id', getRoutine, (req, res) => {
+router.get('/:routineId', getRoutine, (req, res) => {
   return res.status(200).json({ routine: res.locals.routine });
 });
 

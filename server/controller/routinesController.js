@@ -9,7 +9,7 @@ routinesController.getRoutine = async (req, res, next) => {
   const { routineId } = req.params;
 
   const query =
-    'SELECT r.*, rw.*, w.* FROM routines r \
+    'SELECT r.*, rw.id routine_workout_id,rw.workout_id, rw.set, rw.repetition_motion, rw.day, rw.weight, w.name workout_name, w.description FROM routines r \
     LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
     LEFT JOIN workouts w ON w.id = rw.workout_id \
     WHERE r.id = $1;';
@@ -31,7 +31,7 @@ routinesController.getUserRoutines = async (req, res, next) => {
   const { id } = req.params;
 
   const queryRoutine =
-    'SELECT r.*, rw.*, w.* FROM routines r \
+    'SELECT r.*, rw.id routine_workout_id,rw.workout_id, rw.set, rw.repetition_motion, rw.day, rw.weight, w.name workout_name, w.description FROM routines r \
     LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
     LEFT JOIN workouts w ON w.id = rw.workout_id \
     WHERE r.owner_user_id = $1;';
