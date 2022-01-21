@@ -45,6 +45,11 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    logout: (state, action) => {
+      state.userId = null;
+      state.userData = {};
+      sessionStorage.clear();
+    },
     // getUserId: (state, action) => {
     //   const token = action.payload.token;
     //   /**
@@ -115,5 +120,6 @@ export const userSlice = createSlice({
     },
   },
 });
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;
