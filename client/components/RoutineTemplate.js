@@ -28,18 +28,22 @@ const RoutineTemplate = () => {
 
   return (
     <>
-      <div>Routine Name: {routineData?.name}</div>
-      <div>Routine Duration: {routineData?.duration}</div>
-      <hr />
-      {routineWorkoutData.map((rw, idx) => (
-        <div key={idx}>
-          <span>Day: {rw.day}</span>&nbsp;
-          <span>Workout: {rw.workout_name}</span>&nbsp;
-          <span>Set: {rw.set}</span>&nbsp;
-          <span>RM: {rw.repetition_motion}</span>&nbsp;
-          <span>Weight: {rw.weight}</span>&nbsp;
+      <div className='containers'>
+        <div className='div-span'>Routine Name: {routineData?.name}</div>
+        <div className='first-span'>
+          Routine Duration: {routineData?.duration}
         </div>
-      ))}
+        <hr />
+        {routineWorkoutData.map((rw, idx) => (
+          <div key={idx}>
+            <span>Day: {rw.day}</span>&nbsp;
+            <span>Workout: {rw.workout_name}</span>&nbsp;
+            <span>Set: {rw.set}</span>&nbsp;
+            <span>RM: {rw.repetition_motion}</span>&nbsp;
+            <span>Weight: {rw.weight}</span>&nbsp;
+          </div>
+        ))}
+      </div>
     </>
   );
 };

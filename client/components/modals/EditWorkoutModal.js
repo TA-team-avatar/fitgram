@@ -13,7 +13,8 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      {/* <Button className='btn-dark-modal-edit-workout' onClick={handleShow}> */}
+      <Button className='btn btn-success' onClick={handleShow}>
         Edit Workout
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -38,12 +39,12 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
                   workoutData={rw}
                 />
                 <button
-                  className='btn-success'
+                  className='btn btn-success'
                   onClick={() => {
                     dispatch(
                       deleteWorkout({
                         routineId,
-                        id: rw.id,
+                        id: rw.routine_workout_id,
                       })
                     );
                   }}

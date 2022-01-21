@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserId, getUserName } from "../features/userSlice";
-import { getUserForumData } from "../features/forumSlice";
-import { getUserRoutines, deleteRoutine } from "../features/routineSlice";
-import { getUserRoutineWorkout, getWorkout } from "../features/workoutSlice";
-import BuildRoutineModal from "../components/modals/BuildRoutineModal";
-import EditRoutineModal from "../components/modals/EditRoutineModal";
-import EditWorkoutModal from "../components/modals/EditWorkoutModal";
-import ViewWorkoutModal from "../components/modals/ViewWorkoutModal";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserId, getUserName } from '../features/userSlice';
+import { getUserForumData } from '../features/forumSlice';
+import { getUserRoutines, deleteRoutine } from '../features/routineSlice';
+import { getUserRoutineWorkout, getWorkout } from '../features/workoutSlice';
+import BuildRoutineModal from '../components/modals/BuildRoutineModal';
+import EditRoutineModal from '../components/modals/EditRoutineModal';
+import EditWorkoutModal from '../components/modals/EditWorkoutModal';
+import ViewWorkoutModal from '../components/modals/ViewWorkoutModal';
 
 const ProfileContainer = () => {
   let { userId } = useParams();
@@ -25,10 +25,10 @@ const ProfileContainer = () => {
   let totalLikes = forumList.reduce((acc, item) => acc + item.likes, 0);
 
   // Dispatch actions on mount
-  useEffect(() => {
+  useEffect(async () => {
     dispatch(
       getUserId({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem('token'),
       })
     );
     dispatch(
@@ -41,6 +41,7 @@ const ProfileContainer = () => {
         userId,
       })
     );
+
     dispatch(
       getUserForumData({
         userId,
@@ -54,13 +55,15 @@ const ProfileContainer = () => {
     dispatch(getWorkout());
   }, []);
 
-  console.log("routine", routineData);
-  console.log("routineWO", userRoutineWorkout);
+  console.log('routine', routineData);
+  console.log('routineWO', userRoutineWorkout);
+
   return (
     <>
-      <div className="container">
-        <span>Total Likes {totalLikes}</span>
-        <hr />
+      <div>
+        <h1>{userData.user_name}</h1>
+        <div></div>
+        <h3>Total Likes {totalLikes}</h3>
         {currentUserId === userId ? (
           <>
             <BuildRoutineModal userId={userId} />
@@ -88,16 +91,16 @@ const ProfileContainer = () => {
                     duration={routine.duration}
                   />
                   <button
-                    className="btn btn-secondary me-3"
-                    onClick={() => {
-                      dispatch(
+                    className='btn btn-success'
+                    onClick={async () => {
+                      await dispatch(
                         deleteRoutine({
                           routineId: routine.id,
                           userId: Number(userId),
                         })
                       );
                       // Upon deletion of routine, update the state of user's routine workout object
-                      dispatch(
+                      await dispatch(
                         getUserRoutineWorkout({
                           userId,
                         })
@@ -106,9 +109,9 @@ const ProfileContainer = () => {
                   >
                     Delete Routine
                   </button>
-                  <span>
-                    <button className="btn-secondary">Edit Routine</button>
-                  </span>
+                  {/* <span>
+                    <button className='btn-success'>Edit Routine</button>
+                  </span> */}
                 </span>
               ) : (
                 <ViewWorkoutModal

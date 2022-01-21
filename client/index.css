@@ -112,9 +112,9 @@ h2 {
 .app-description {
   margin-top: 10px;
   padding-bottom: 10px;
-  /* margin-left: 75px; */
-  display: flex;
-  justify-content: center;
+  margin-left: 10px;
+  display: flexbox;
+  justify-content: right;
   line-height: normal;
   font-weight: 250;
 }
@@ -127,6 +127,10 @@ h2,
   margin-bottom: 0rem;
   font-weight: 250;
   line-height: 0.5;
+}
+h3 {
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 h1,
@@ -1373,6 +1377,36 @@ hr.comments {
   color: #fff !important;
   background-color: #13554e !important;
   border-color: #13554e;
+}
+
+.btn-dark-modal-edit-workout {
+  /* display: flex; */
+  position: absolute;
+  left: 175px;
+  top: 127px;
+  color: #23887f !important;
+  font-size: 0.85rem !important;
+  font-family: inherit;
+  background-color: transparent !important;
+  background: none;
+  border: transparent !important;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.btn-dark-modal-edit {
+  /* display: flex; */
+  position: absolute;
+  left: 175px;
+  top: 127px;
+  color: #23887f !important;
+  font-size: 0.85rem !important;
+  font-family: inherit;
+  background-color: transparent !important;
+  background: none;
+  border: transparent !important;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 
 .btn-dark-modal {

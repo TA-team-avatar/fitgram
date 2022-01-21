@@ -2,17 +2,36 @@ const db = require('../model/dbModel');
 
 const forumsController = {};
 
+const dateOptions = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hourCycle: 'h12',
+};
+
 // gets all Forums from all users to render on dashboard component
 forumsController.getForumsAllUsers = async (req, res, next) => {
   console.log('reached getForumsAllUsers');
 
   const getForumsAllUsersQuery =
+<<<<<<< HEAD
     'SELECT * FROM forums ORDER BY forums.date_created DESC';
+=======
+    'SELECT * FROM forums ORDER BY forums.date_created';
+>>>>>>> dev
   // console.log('values: ', values);
   try {
     const getAllForums = await db.query(getForumsAllUsersQuery);
     if (getAllForums) {
       console.log(`from getForumsAllUsers: `, getAllForums.rows);
+      getAllForums.rows.forEach((forum) => {
+        forum.date_created = new Date(forum.date_created).toLocaleDateString(
+          'en-US',
+          dateOptions
+        );
+      });
       res.locals.allForums = getAllForums.rows;
       return next();
     }
@@ -39,7 +58,14 @@ forumsController.getForumsSingleUser = async (req, res, next) => {
     );
     if (getForums) {
       console.log(`from getForumsSingleUserQuery: `, getForums.rows);
+      getForums.rows.forEach((forum) => {
+        forum.date_created = new Date(forum.date_created).toLocaleDateString(
+          'en-US',
+          dateOptions
+        );
+      });
       res.locals.userForums = getForums.rows;
+
       return next();
     }
   } catch (err) {
@@ -61,6 +87,9 @@ forumsController.getSpecificForum = async (req, res, next) => {
     const getSpecificForum = await db.query(getSpecificForumQuery, values);
     if (getSpecificForum) {
       console.log(`from getSpecificForum: `, getSpecificForum.rows);
+      getSpecificForum.rows[0].date_created = new Date(
+        getSpecificForum.rows[0].date_created
+      ).toLocaleDateString('en-US', dateOptions);
       res.locals.forum = getSpecificForum.rows[0];
       return next();
     }
@@ -157,7 +186,9 @@ forumsController.updateForum = async (req, res, next) => {
     if (forum.rows.length === 0) {
       throw new Error(`No forum with id of ${forumId} found!`);
     }
-
+    forum.rows[0].date_created = new Date(
+      forum.rows[0].date_created
+    ).toLocaleDateString('en-US', dateOptions);
     res.locals.forum = forum.rows[0];
 
     return next();

@@ -14,7 +14,8 @@ const BuildRoutineModal = ({ userId }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      {/* <Button className='btn-dark-modal' onClick={handleShow}> */}
+      <Button className='btn-success' onClick={handleShow}>
         Create Routine
       </Button>
       <Modal show={show} onHide={handleClose}>

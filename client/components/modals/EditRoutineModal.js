@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { editRoutine } from '../../features/routineSlice';
 import { useDispatch } from 'react-redux';
+import { updateRoutine } from '../../features/routineSlice';
 
 const EditRoutineModal = ({ userId, routineId, name, duration }) => {
   const [routineName, setRoutineName] = useState('');
@@ -19,7 +20,8 @@ const EditRoutineModal = ({ userId, routineId, name, duration }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      {/* <Button className='btn-dark-modal-edit' onClick={handleShow}> */}
+      <Button className='btn btn-success ' onClick={handleShow}>
         Edit Routine
       </Button>
       <Modal show={show} onHide={handleClose}>

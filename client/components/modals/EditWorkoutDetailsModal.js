@@ -5,7 +5,7 @@ import { editWorkout } from '../../features/workoutSlice';
 import { Select, MenuItem } from '@material-ui/core';
 
 const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
-  const { id } = workoutData;
+  const { routine_workout_id: id } = workoutData;
   const [workout, setWorkout] = useState('');
   const [day, setDay] = useState('');
   const [sets, setSets] = useState('');
@@ -28,7 +28,8 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      {/* <Button className='btn-dark-modal' onClick={handleShow}> */}
+      <Button className='btn-success' onClick={handleShow}>
         Edit Workout
       </Button>
       <Modal show={show} onHide={handleClose}>
