@@ -19,7 +19,7 @@
   --bs-gray-800: #073642;
   --bs-gray-900: #002b36;
 
-  --bs-secondary: #839496;
+  --bs-secondary: #242829;
   --bs-success: #2aa198;
 
   --bs-light: #fdf6e3;
@@ -105,16 +105,18 @@ h2 {
   justify-content: center;
   padding-top: 25px;
   padding-bottom: 2px;
-  padding-left: 10px;
+  padding-left: 125px;
+  /* color:  */
   font-size: calc(2.5rem + 1.5vw);
 }
 
 .app-description {
   margin-top: 10px;
   padding-bottom: 10px;
-  margin-left: 10px;
+  padding-left: 125px;
+  width: 60%;
   display: flexbox;
-  justify-content: right;
+  float: right;
   line-height: normal;
   font-weight: 250;
 }
@@ -477,6 +479,7 @@ progress {
 }  */
 .form-control-sm {
   display: block;
+
   width: 100%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -1926,19 +1929,29 @@ hr.comments {
   margin-bottom: 0.25rem !important;
 }
 
+.modal-home1 {
+  width: 70%;
+}
+
 .my-5 {
-  margin-top: 1rem !important;
+  margin-top: 0.5rem !important;
   margin-bottom: 1rem !important;
+  padding: 10px;
+  /* margin: auto; */
+  float: right;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 55%;
 }
 .my-5-2 {
-  margin-top: 1rem !important;
+  margin-top: 0.3rem !important;
   margin-bottom: 1rem !important;
+  padding: 10px;
+  margin: auto;
+  float: right;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 55%;
 }
 
 .my-auto {

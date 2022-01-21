@@ -18,30 +18,33 @@ const LoginForm = (props) => {
   };
 
   return (
-    <div className='my-5'>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type='text'
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder='Username'
-            className='form-control-sm'
-          />
-        </div>
-        <div>
-          <input
-            type='password'
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder='Password'
-            className='form-control-sm'
-          />
-        </div>
-        <div>
-          <button type='submit' className='btn-success'>
-            Login
-          </button>
-        </div>
-      </form>
+    <div className='modal-home1'>
+      <div className='my-5'>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              type='text'
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder='Username'
+              className='form-control-sm'
+            />
+          </div>
+          <div>
+            <input
+              type='password'
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder='Password'
+              className='form-control-sm'
+            />
+          </div>
+
+          <div>
+            <button type='submit' className='btn-success'>
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
