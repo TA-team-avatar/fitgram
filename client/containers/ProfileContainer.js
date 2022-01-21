@@ -41,6 +41,7 @@ const ProfileContainer = () => {
         userId,
       })
     );
+
     dispatch(
       getUserForumData({
         userId,
@@ -56,11 +57,11 @@ const ProfileContainer = () => {
 
   console.log('routine', routineData);
   console.log('routineWO', userRoutineWorkout);
-  // console.log('rw data', userRoutineWorkout);
+
   return (
     <>
       <div>
-        <h1>UserNameHere</h1>
+        <h1>{userData.user_name}</h1>
         <div></div>
         <h3>Total Likes {totalLikes}</h3>
         {currentUserId === userId ? (
