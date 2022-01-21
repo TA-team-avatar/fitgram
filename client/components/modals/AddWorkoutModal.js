@@ -18,7 +18,8 @@ const AddWorkoutModal = ({ routineId }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      {/* <Button className='btn-dark-modal' onClick={handleShow}> */}
+      <Button className='btn-success' onClick={handleShow}>
         Add Workout
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -50,6 +51,7 @@ const AddWorkoutModal = ({ routineId }) => {
                 </MenuItem>
               ))}
             </Select>
+            <br />
             <label className='form-label mt-4'>How many sets?</label>
             <input
               className='form-control'
@@ -103,7 +105,11 @@ const AddWorkoutModal = ({ routineId }) => {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button
+            // variant='secondary'
+            className='btn-success'
+            onClick={handleClose}
+          >
             Cancel
           </Button>
           <Button

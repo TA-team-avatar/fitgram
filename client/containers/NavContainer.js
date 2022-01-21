@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getUserId } from '../features/userSlice';
+import { getUserId, logout } from '../features/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const NavContainer = () => {
@@ -54,8 +54,13 @@ const NavContainer = () => {
                   </a>
                 </li>
                 <li className='nav-item'>
-                  <a className='nav-link' data-bs-toggle='tab' href='#'>
-                    Logout(link)
+                  <a
+                    className='nav-link'
+                    data-bs-toggle='tab'
+                    href='/'
+                    onClick={() => dispatch(logout())}
+                  >
+                    Logout
                   </a>
                 </li>
               </ul>

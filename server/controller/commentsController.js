@@ -3,6 +3,15 @@ const db = require('../model/dbModel');
 
 const commentsController = {};
 
+const dateOptions = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hourCycle: 'h12',
+};
+
 // gets all comments for a specifc forum
 // returns join table that brings user name on owner_user_id
 commentsController.getComments = async (req, res, next) => {
@@ -24,6 +33,11 @@ commentsController.getComments = async (req, res, next) => {
     const getAllComments = await db.query(getCommentsQuery, values);
     console.log(getAllComments);
     if (getAllComments) {
+      getAllComments.rows.forEach((comment) => {
+        comment.date_created = new Date(
+          comment.date_created
+        ).toLocaleDateString('en-US', dateOptions);
+      });
       res.locals.comments = getAllComments.rows;
       // console.log('from getAllComments: ', getAllComments.rows);
       return next();
