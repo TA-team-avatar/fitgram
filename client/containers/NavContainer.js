@@ -3,8 +3,8 @@ import { getUserId } from '../features/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 const NavContainer = () => {
-  // const currentUserId = useSelector((state) => state.user.userId);
-  // const dispatch = useDispatch();
+  const currentUserId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
 
   // // Dispatch actions on mount
   useEffect(() => {
@@ -27,7 +27,7 @@ const NavContainer = () => {
                   <a
                     class='nav-link'
                     data-bs-toggle='tab'
-                    href={`/profile/${userId}`}
+                    href={`/profile/${currentUserId}`}
                   >
                     Profile
                   </a>

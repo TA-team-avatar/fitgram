@@ -41,7 +41,11 @@ export const createRoutine = createAsyncThunk(
 export const updateRoutine = createAsyncThunk(
   'routine/editRoutine',
   async ({ routineId, userId, name, duration }) => {
-    const res = await axios.put(`/routine/${routineId}`, { userId, name, duration });
+    const res = await axios.put(`/routine/${routineId}`, {
+      userId,
+      name,
+      duration,
+    });
     return res.userRoutineData;
   }
 );
