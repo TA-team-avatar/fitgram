@@ -13,17 +13,17 @@ router.get('/:forum_id', getComments, (req, res) => {
 
 router.post('/', addComment, getComments, (req, res) => {
   console.log('exiting /comments ADD COMMENT');
-  return res.sendStatus(200);
+  return res.status(200).json({ comments: res.locals.comments });
 });
 
 router.delete('/', deleteComment, getComments, (req, res) => {
   console.log('exiting /comments DELETE COMMENT');
-  return res.status(200), json({ comments: res.locals.comments });
+  return res.status(200).json({ comments: res.locals.comments });
 });
 
-router.put('/', editComment, (req, res) => {
+router.put('/', editComment, getComments, (req, res) => {
   console.log('exiting /comments EDIT COMMENT');
-  return res.status(200).json({ comment: res.locals.comment });
+  return res.status(200).json({ comments: res.locals.comments });
 });
 
 module.exports = router;

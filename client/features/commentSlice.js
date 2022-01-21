@@ -3,7 +3,6 @@ import axios from 'axios';
 import dummyData from '../constants/dummyData';
 
 const initialState = {
-  commentData: {},
   commentList: [],
   status: null,
 };
@@ -19,17 +18,23 @@ export const getForumComments = createAsyncThunk(
 
 export const deleteComments = createAsyncThunk(
   'comments/deleteComments',
-  async ({ owner_user_id, id }) => {
-    const res = await axios.delete('/comments', { owner_user_id, id });
+  async ({ forum_id, id }) => {
+    const res = await axios.delete('/comments', {
+      data: {
+        forum_id,
+        id,
+      },
+    });
+
     return res.data.comments;
   }
 );
 
 export const editComments = createAsyncThunk(
   'comments/editComments',
-  async ({ description, id }) => {
-    const res = await axios.put('/comments', { description, id });
-    return res.data.comment;
+  async ({ description, id, forum_id }) => {
+    const res = await axios.put('/comments', { description, id, forum_id });
+    return res.data.comments;
   }
 );
 
@@ -41,7 +46,7 @@ export const createComments = createAsyncThunk(
       forum_id,
       description,
     });
-    return res.data.comment;
+    return res.data.comments;
   }
 );
 
@@ -77,7 +82,7 @@ export const commentSlice = createSlice({
       state.status = 'loading';
     },
     [editComments.fulfilled]: (state, { payload }) => {
-      state.commentData = payload;
+      state.commentList = payload;
       state.status = 'success';
     },
     [editComments.rejected]: (state, action) => {

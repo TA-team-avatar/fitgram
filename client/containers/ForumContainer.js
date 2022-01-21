@@ -14,7 +14,7 @@ const ForumContainer = () => {
   const { forumId } = useParams();
   const currentUserId = useSelector((state) => state.user.userId);
   const forumData = useSelector((state) => state.forum.forumData);
-  const commentData = useSelector((state) => state.comment.commentData);
+  const commentList = useSelector((state) => state.comment.commentList);
   const dispatch = useDispatch();
 
   // Destructure Forum Data
@@ -96,10 +96,11 @@ const ForumContainer = () => {
 
           <div className='comments-bottom'>
             <hr class='comments' />
-            {commentData.map((comment, idx) => (
+            {commentList.map((comment, idx) => (
               <CommentBox
                 key={idx}
                 props={comment}
+                forumId={Number(forumId)}
                 currentUserId={currentUserId}
               />
             ))}
