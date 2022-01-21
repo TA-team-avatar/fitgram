@@ -39,11 +39,11 @@ const AddForumModal = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant='primary'
+            className='btn-success'
             onClick={() => {
               /**
                * TODO: API call to Add forum to forum db
