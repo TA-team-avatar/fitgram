@@ -12,7 +12,7 @@ routinesController.getRoutines = async (req, res, next) => {
     'SELECT r.*, rw.* FROM routines r \
     LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
     LEFT JOIN workouts w ON w.id = rw.workout_id \
-    WHERE r.owner_user_id = $1';
+    WHERE r.owner_user_id = $1;';
 
   const paramRoutine = [id];
   try {
@@ -34,7 +34,7 @@ routinesController.createRoutine = async (req, res, next) => {
   const queryRoutine =
     'INSERT INTO routines (owner_user_id, name, duration)\
     VALUES ($1, $2, $3)\
-    RETURNING id';
+    RETURNING id;';
   const paramRoutine = [userId, name, duration];
 
   try {
@@ -66,7 +66,8 @@ routinesController.updateRoutine = async (req, res, next) => {
 
   setQuery = setQuery.replace(/(,\s$)/g, '');
 
-  setQuery = 'UPDATE routines SET ' + setQuery + ' WHERE id = ' + routineId + ';';
+  setQuery =
+    'UPDATE routines SET ' + setQuery + ' WHERE id = ' + routineId + ';';
 
   try {
     await db.query(setQuery);
@@ -101,10 +102,40 @@ routinesController.deleteRoutine = async (req, res, next) => {
   }
 };
 
+routinesController.getUserRoutineWorkout = async (req, res, next) => {
+  const { id } = req.params;
+
+  const query =
+    'SELECT r.id, r.name, r.duration, rw.id routine_workout_id, rw.routine_id, rw.set, rw.repetition_motion, rw.day, rw.weight, w.id workout_id, w.name workout_name FROM routines r\
+    LEFT JOIN routine_workout rw ON rw.routine_id = r.id\
+    LEFT JOIN workouts w ON w.id = rw.workout_id\
+    WHERE r.owner_user_id = $1;';
+  const param = [id];
+
+  let cache = {};
+
+  try {
+    const userRW = await db.query(query, param);
+    userRW.rows.forEach((routine_workout) => {
+      cache[routine_workout.id]
+        ? cache[routine_workout.id].push(routine_workout)
+        : (cache[routine_workout.id] = [routine_workout]);
+    });
+    res.locals.userRW = cache;
+
+    return next();
+  } catch (err) {
+    return next({
+      log: `Error with routinesController.getUserRoutineWorkout ${err}`,
+      message: { err: `error from routinesController ${err}` },
+    });
+  }
+};
+
 routinesController.getRoutineWorkout = async (req, res, next) => {
   const { id } = req.params;
 
-  const query = 'SELECT * FROM routine_workout WHERE routine_id = $1';
+  const query = 'SELECT * FROM routine_workout WHERE routine_id = $1;';
   const params = [id];
 
   try {
@@ -128,7 +159,7 @@ routinesController.insertRoutineWorkout = async (req, res, next) => {
   const queryRoutineWorkout =
     'INSERT INTO routine_workout (routine_id, workout_id, set, repetition_motion, day, weight)\
       VALUES ($1, $2, $3, $4, $5, $6)\
-      RETURNING *';
+      RETURNING *;';
   const paramRoutineWorkout = [
     routine_id,
     workout_id,
@@ -139,8 +170,11 @@ routinesController.insertRoutineWorkout = async (req, res, next) => {
   ];
 
   try {
-    await db.query(queryRoutineWorkout, paramRoutineWorkout);
-
+    const routineWorkout = await db.query(
+      queryRoutineWorkout,
+      paramRoutineWorkout
+    );
+    res.locals.routineWorkout = routineWorkout.rows[0];
     return next();
   } catch (err) {
     return next({
@@ -176,11 +210,15 @@ routinesController.updateRoutineWorkout = async (req, res, next) => {
 
   setQuery = setQuery.replace(/(,\s$)/g, '');
   setQuery =
-    'UPDATE routine_workout SET ' + setQuery + ' WHERE id = ' + id + ';';
+    'UPDATE routine_workout SET ' +
+    setQuery +
+    ' WHERE id = ' +
+    id +
+    ' RETURNING *;';
 
   try {
-    await db.query(setQuery);
-
+    const updateWorkout = await db.query(setQuery);
+    res.locals.updateWorkout = updateWorkout;
     return next();
   } catch (err) {
     return next({
@@ -190,12 +228,14 @@ routinesController.updateRoutineWorkout = async (req, res, next) => {
   }
 };
 routinesController.deleteRoutineWorkout = async (req, res, next) => {
-  const { id } = req.body;
+  const { id, routine_id } = req.body;
 
-  const query = 'DELETE FROM routine_workout WHERE id = $1';
+  const query = 'DELETE FROM routine_workout WHERE id = $1;';
   const param = [id];
   try {
     await db.query(query, param);
+    res.locals.id = id;
+    res.locals.routineId = routine_id;
 
     return next();
   } catch (err) {
