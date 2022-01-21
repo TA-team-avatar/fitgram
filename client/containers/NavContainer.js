@@ -18,33 +18,43 @@ const NavContainer = () => {
   return (
     <div>
       <>
-        <nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
-          <div class='container-fluid'>
-            <a class='navbar-brand'>fit haús</a>
+        <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+          <div className='container-fluid'>
+            <a className='navbar-brand' href='/dashboard'>
+              fitgram
+            </a>
             <div className='navbar-nav'>
-              <ul class='nav nav-tabs'>
-                <li class='nav-item'>
+              <ul className='nav nav-tabs'>
+                <li className='nav-item'>
                   <a
-                    class='nav-link'
+                    className='nav-link'
                     data-bs-toggle='tab'
                     href={`/profile/${currentUserId}`}
                   >
                     Profile
                   </a>
                 </li>
-                <li class='nav-item'>
-                  <a class='nav-link' data-bs-toggle='tab' href='/dashboard'>
+                <li className='nav-item'>
+                  <a
+                    className='nav-link'
+                    data-bs-toggle='tab'
+                    href='/dashboard'
+                  >
                     Dashboard
                   </a>
                 </li>
 
-                <li class='nav-item'>
-                  <a class='nav-link' data-bs-toggle='tab' href='/message/:id'>
+                <li className='nav-item'>
+                  <a
+                    className='nav-link'
+                    data-bs-toggle='tab'
+                    href='/message/:id'
+                  >
                     Messages
                   </a>
                 </li>
-                <li class='nav-item'>
-                  <a class='nav-link' data-bs-toggle='tab' href='#'>
+                <li className='nav-item'>
+                  <a className='nav-link' data-bs-toggle='tab' href='#'>
                     Logout(link)
                   </a>
                 </li>
