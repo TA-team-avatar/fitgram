@@ -10,17 +10,22 @@ commentsController.getComments = async (req, res, next) => {
 
   const getCommentsQuery =
     '\
-    SELECT * FROM comments\
-    LEFT JOIN users ON users.id=comments.owner_user_id\
-    WHERE comments.forum_id=$1;\
+    SELECT c.*, u.user_name\
+    FROM comments c\
+    LEFT JOIN users u\
+    ON u.id=c.owner_user_id\
+    WHERE c.forum_id=$1\
+    ORDER BY date_created DESC;\
     ';
-  const values = [req.params.forum_id];
+
+  const values = [req.params.forum_id || res.locals.forum_id];
 
   try {
     const getAllComments = await db.query(getCommentsQuery, values);
+    console.log(getAllComments);
     if (getAllComments) {
       res.locals.comments = getAllComments.rows;
-      console.log('from getAllComments: ', getAllComments.rows);
+      // console.log('from getAllComments: ', getAllComments.rows);
       return next();
     }
   } catch (err) {
@@ -49,6 +54,7 @@ commentsController.addComment = async (req, res, next) => {
     const addComment = await db.query(addCommentQuery, values);
     if (addComment) {
       console.log('from addComment: ', addComment.rows);
+      res.locals.forum_id = req.body.forum_id;
       return next();
     }
   } catch (err) {
@@ -65,14 +71,15 @@ commentsController.deleteComment = async (req, res, next) => {
   const deleteCommentQuery =
     '\
     DELETE FROM comments\
-    WHERE owner_user_id=$1 AND id=$2\
+    WHERE forum_id=$1 AND id=$2\
     ';
-  const values = [req.body.owner_user_id, req.body.id];
-
+  const values = [req.body.forum_id, req.body.id];
+  console.log('----0000---0011-1-----', req.body);
   try {
     const deleteComment = await db.query(deleteCommentQuery, values);
     if (deleteComment) {
-      console.log('from deleteComment: ', deleteComment.rows);
+      // console.log('from deleteComment: ', deleteComment.rows);
+      res.locals.forum_id = req.body.forum_id;
       return next();
     }
   } catch (err) {
@@ -97,7 +104,7 @@ commentsController.editComment = async (req, res, next) => {
     const editComment = await db.query(editCommentQuery, values);
     if (editComment) {
       console.log('from editComment: ', editComment.rows);
-      res.locals.comment = editComment.rows;
+      res.locals.forum_id = req.body.forum_id;
       return next();
     }
   } catch (err) {
