@@ -12,7 +12,7 @@ const AddCommentModal = ({ currentUserId, forumId }) => {
 
   return (
     <>
-      <Button className='btn btn-secondary me-3' onClick={handleShow}>
+      <Button className='btn-dark-modal-comments' onClick={handleShow}>
         Add Comment
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -34,11 +34,11 @@ const AddCommentModal = ({ currentUserId, forumId }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant='primary'
+            className='btn-success'
             onClick={() => {
               dispatch(
                 createComments({
