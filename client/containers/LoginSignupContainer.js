@@ -8,37 +8,71 @@ import {
 } from 'react-router-dom';
 import LoginForm from './../components/LoginForm';
 import SignupForm from './../components/SignupForm';
+import {
+  gymImage,
+  File1,
+  File2,
+  File3,
+  File4,
+  File5,
+  File6,
+  File7,
+  File8,
+} from '../images/index.js';
 // import GoogleOAuthButton from './../GoogleOAuthLogin';
+
+const images = [
+  gymImage,
+  File1,
+  File2,
+  File3,
+  File4,
+  File5,
+  File6,
+  File7,
+  File8,
+];
+
+// setInterval(changeBg, 1000);
+const bg = images[Math.floor(Math.random() * images.length)];
+
+const styles = {
+  backgroundImage: `url(${gymImage})`,
+  backgroundSize: 'contain',
+  backgroundRepeat: 'no-repeat',
+  width: '100vw',
+  height: '100vh',
+};
 
 const LoginSignupContainer = (props) => {
   return (
-    <div className="h-screen bg-cover bg-[url('https://images.pexels.com/photos/3621168/pexels-photo-3621168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')] ">
-      <div className='pt-10 '>
-        <h1 className='text-8xl font-extrabold font-sans text-center pl-5'>
-          fit haús
-        </h1>
-        <div className='flex flex-col justify-center items-center max-w-xl text-2xl mx-auto px-4 py-4 bg-neutral shadow-md rounded-lg my-10'>
-          <h4>
+    <div style={styles}>
+      {/* // <div className='image' style="background-image: url('../gymImage.jpeg')"> */}
+      <div>
+        <div className='pt-10 '>
+          <div className='app-title'>fit haús</div>
+          <div className='app-description'>
             Never go without a workout plan again. <br></br>
             Share your daily workout with friends. <br></br>
             Follow the exercise programming of celebs, fitness stars, and top
             athletes and coaches.
-          </h4>
+          </div>
         </div>
-      </div>
 
-      <div className='flex flex-col justify-center items-center max-w-xl mx-auto px-4 py-4 shadow-md bg-neutral rounded-lg'>
-        <LoginForm />
-        <SignupForm />
-        {/* <GoogleOAuthButton /> */}
-      </div>
-      {/* <nav><Link to="/mainpage"> Mainpage </Link></nav> */}
+        <div className='my-5'>
+          <LoginForm />
 
-      {/* <img
+          <SignupForm />
+          {/* <GoogleOAuthButton /> */}
+        </div>
+        {/* <nav><Link to="/mainpage"> Mainpage </Link></nav> */}
+
+        {/* <img
         src="https://images.pexels.com/photos/3601094/pexels-photo-3601094.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
         className="login-page-background-image"
         style={{ width: "100vw" }}
       ></img> */}
+      </div>
     </div>
   );
 };

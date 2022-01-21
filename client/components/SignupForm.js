@@ -24,7 +24,7 @@ const SignupForm = (props) => {
   };
 
   return (
-    <div className='my-5'>
+    <div className='my-5-2'>
       <form onSubmit={handleSubmit}>
         <div>
           <input
@@ -33,7 +33,7 @@ const SignupForm = (props) => {
               setUserInfo({ ...userInfo, user_name: e.target.value })
             }
             placeholder='Username'
-            className='text-black my-1'
+            className='form-control-sm'
             required
           />
         </div>
@@ -44,7 +44,7 @@ const SignupForm = (props) => {
               setUserInfo({ ...userInfo, email: e.target.value })
             }
             placeholder='Email'
-            className='text-black my-1'
+            className='form-control-sm '
             required
           />
         </div>
@@ -55,7 +55,7 @@ const SignupForm = (props) => {
               setUserInfo({ ...userInfo, first_name: e.target.value })
             }
             placeholder='First Name'
-            className='text-black my-1'
+            className='form-control-sm'
             required
           />
         </div>
@@ -66,7 +66,7 @@ const SignupForm = (props) => {
               setUserInfo({ ...userInfo, last_name: e.target.value })
             }
             placeholder='Last Name'
-            className='text-black my-1'
+            className='form-control-sm'
             required
           />
         </div>
@@ -77,7 +77,7 @@ const SignupForm = (props) => {
               setUserInfo({ ...userInfo, password: e.target.value })
             }
             placeholder='Password'
-            className='text-black my-1'
+            className='form-control-sm'
             required
           />
         </div>
@@ -88,7 +88,7 @@ const SignupForm = (props) => {
               setUserInfo({ ...userInfo, height: e.target.value })
             }
             placeholder='Height (in)'
-            className='text-black my-1'
+            className='form-control-sm'
           />
         </div>
         <div>
@@ -98,12 +98,12 @@ const SignupForm = (props) => {
               setUserInfo({ ...userInfo, weight: e.target.value })
             }
             placeholder='Weight (lbs)'
-            className='text-black my-1'
+            className='form-control-sm'
           />
         </div>
 
         <div>
-          <button type='submit' className='text-black'>
+          <button type='submit' className='btn-success'>
             Sign Up
           </button>
         </div>
