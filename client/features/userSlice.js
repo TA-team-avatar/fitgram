@@ -14,12 +14,12 @@ export const loginUser = createAsyncThunk('user/loginUser', async (user) => {
     password: user.password,
   };
   const userData = await axios.post('/user/login', data);
-  return userData;
+  return userData.data;
 });
 
 export const signUpUser = createAsyncThunk('user/signUpUser', async (user) => {
   const userData = await axios.post('/user/signup', user);
-  return userData;
+  return userData.data;
 });
 
 export const getUserId = createAsyncThunk('user/getUserId', async (payload) => {
@@ -37,7 +37,7 @@ export const getUserName = createAsyncThunk(
   'user/getUserName',
   async (payload) => {
     const userInfo = await axios.get(`/user/${payload.userId}`);
-    return userInfo;
+    return userInfo.data;
   }
 );
 
@@ -73,8 +73,8 @@ export const userSlice = createSlice({
       state.status = 'loginUser api is pending';
     },
     [loginUser.fulfilled]: (state, { payload }) => {
-      state.userId = payload.data.userID;
-      sessionStorage.setItem('token', payload.data.token);
+      state.userId = payload.userID;
+      sessionStorage.setItem('token', payload.token);
       state.status = 'loginUser fulfilled';
     },
     [loginUser.rejected]: (state) => {
@@ -96,7 +96,7 @@ export const userSlice = createSlice({
       state.status = 'getUserName api is pending';
     },
     [getUserName.fulfilled]: (state, { payload }) => {
-      state.userData = payload.data;
+      state.userData = payload;
       state.status = 'getUserName fulfilled';
     },
     [getUserName.rejected]: (state) => {
@@ -106,8 +106,8 @@ export const userSlice = createSlice({
       state.status = 'signUpUser api is pending';
     },
     [signUpUser.fulfilled]: (state, { payload }) => {
-      state.userId = payload.data.user_id;
-      sessionStorage.setItem('token', payload.data.token);
+      state.userId = payload.user_id;
+      sessionStorage.setItem('token', payload.token);
       state.status = 'signUpUser fulfilled';
     },
     [signUpUser.rejected]: (state) => {
