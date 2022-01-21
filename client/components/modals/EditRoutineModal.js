@@ -19,7 +19,7 @@ const EditRoutineModal = ({ userId, routineId, name, duration }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      <Button className='btn-dark-modal-edit' onClick={handleShow}>
         Edit Routine
       </Button>
       <Modal show={show} onHide={handleClose}>

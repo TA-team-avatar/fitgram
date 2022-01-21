@@ -34,23 +34,34 @@ const images = [
 ];
 
 // setInterval(changeBg, 1000);
-const bg = images[Math.floor(Math.random() * images.length)];
-
-const styles = {
-  backgroundImage: `url(${gymImage})`,
-  backgroundSize: 'contain',
-  backgroundRepeat: 'no-repeat',
-  width: '100vw',
-  height: '100vh',
-};
+// const bg = images[Math.floor(Math.random() * images.length)];
 
 const LoginSignupContainer = (props) => {
+  const [bg, setBg] = useState(
+    images[Math.floor(Math.random() * images.length)]
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBg(images[Math.floor(Math.random() * images.length)]);
+      // console.log('time', new Date());
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const styles = {
+    backgroundImage: `url(${bg})`,
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
+  };
   return (
     <div style={styles}>
       {/* // <div className='image' style="background-image: url('../gymImage.jpeg')"> */}
       <div>
         <div className='pt-10 '>
-          <div className='app-title'>fit haús</div>
+          <div className='app-title'>fitgram</div>
           <div className='app-description'>
             Never go without a workout plan again. <br></br>
             Share your daily workout with friends. <br></br>
@@ -61,7 +72,6 @@ const LoginSignupContainer = (props) => {
 
         <div className='my-5'>
           <LoginForm />
-
           <SignupForm />
           {/* <GoogleOAuthButton /> */}
         </div>
