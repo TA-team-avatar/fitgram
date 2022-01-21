@@ -1,7 +1,6 @@
 const express = require('express');
 const {
   updateRoutine,
-  deleteRoutineWorkout,
   getRoutines,
   createRoutine,
   deleteRoutine,
