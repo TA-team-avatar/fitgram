@@ -13,7 +13,7 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
 
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      <Button className='btn-dark-modal-edit-workout' onClick={handleShow}>
         Edit Workout
       </Button>
       <Modal show={show} onHide={handleClose}>
