@@ -5,10 +5,10 @@ const ViewWorkoutModal = ({ workoutData }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   return (
     <>
-      <Button className='btn-dark-modal' onClick={handleShow}>
+      {/* <Button className='btn-dark-modal' onClick={handleShow}> */}
+      <Button className='btn-success' onClick={handleShow}>
         View Workout
       </Button>
       <Modal show={show} onHide={handleClose}>

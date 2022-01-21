@@ -35,7 +35,8 @@ export const createWorkout = createAsyncThunk(
       day,
     };
     const createWorkout = await axios.post('/routine/workout', body);
-    return createWorkout.data;
+    console.log('here', createWorkout.data);
+    return createWorkout.data.routineWorkout;
   }
 );
 
@@ -51,8 +52,10 @@ export const deleteWorkout = createAsyncThunk(
   'workout/deleteWorkout',
   async (payload) => {
     const res = await axios.delete('/routine/workout', {
-      id: payload.id,
-      routine_id: payload.routineId,
+      data: {
+        id: payload.id,
+        routine_id: payload.routineId,
+      },
     });
     return res.data;
   }
@@ -224,6 +227,7 @@ export const workoutSlice = createSlice({
       state.status = 'createWorkout api is pending';
     },
     [createWorkout.fulfilled]: (state, { payload }) => {
+      console.log(payload.routine_id);
       state.userRoutineWorkoutData[payload.routine_id].push({
         id: payload.id,
         routine_id: payload.routine_id,
@@ -254,7 +258,7 @@ export const workoutSlice = createSlice({
     [deleteWorkout.fulfilled]: (state, { payload }) => {
       state.userRoutineWorkoutData[payload.routine_id] =
         state.userRoutineWorkoutData[payload.routine_id].filter(
-          (data) => data.id !== payload.id
+          (data) => data.routine_workout_id !== payload.id
         );
       state.status = 'deleteWorkout fulfilled';
     },
@@ -266,7 +270,7 @@ export const workoutSlice = createSlice({
     },
     [editWorkout.fulfilled]: (state, { payload }) => {
       state.userRoutineWorkoutData[payload.routine_id].forEach((workout) => {
-        if (workout.id === payload.id) {
+        if (workout.routine_workout_id === payload.id) {
           workout.workout_id = payload.workout_id;
           workout.set = payload.set;
           workout.repetition_motion = payload.repetition_motion;

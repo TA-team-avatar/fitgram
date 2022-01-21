@@ -30,11 +30,7 @@ routinesController.getRoutine = async (req, res, next) => {
 routinesController.getUserRoutines = async (req, res, next) => {
   const { id } = req.params;
 
-  const queryRoutine =
-    'SELECT r.*, rw.id routine_workout_id,rw.workout_id, rw.set, rw.repetition_motion, rw.day, rw.weight, w.name workout_name, w.description FROM routines r \
-    LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
-    LEFT JOIN workouts w ON w.id = rw.workout_id \
-    WHERE r.owner_user_id = $1;';
+  const queryRoutine = 'SELECT * FROM routines WHERE owner_user_id = $1 ';
 
   const paramRoutine = [id];
   try {
@@ -112,15 +108,16 @@ routinesController.updateRoutine = async (req, res, next) => {
 routinesController.deleteRoutine = async (req, res, next) => {
   const { routineId } = req.body;
 
-  const queryRoutine = 'DELETE FROM routines WHERE id = $1';
+  const queryRoutine = 'DELETE FROM routines WHERE id = $1;';
   const paramRoutine = [routineId];
 
   const queryRoutineWorkout =
-    'DELETE FROM routine_workout WHERE routine_id = $1';
+    'DELETE FROM routine_workout WHERE routine_id = $1;';
   const paramRoutineWorkout = [routineId];
   try {
     await db.query(queryRoutineWorkout, paramRoutineWorkout);
     await db.query(queryRoutine, paramRoutine);
+    res.locals.routine_id = routineId;
 
     return next();
   } catch (err) {
@@ -247,7 +244,8 @@ routinesController.updateRoutineWorkout = async (req, res, next) => {
 
   try {
     const updateWorkout = await db.query(setQuery);
-    res.locals.updateWorkout = updateWorkout;
+    res.locals.updateWorkout = updateWorkout.rows[0];
+    console.log(res.locals.updateWorkout);
     return next();
   } catch (err) {
     return next({
@@ -264,7 +262,7 @@ routinesController.deleteRoutineWorkout = async (req, res, next) => {
   try {
     await db.query(query, param);
     res.locals.id = id;
-    res.locals.routineId = routine_id;
+    res.locals.routine_id = routine_id;
 
     return next();
   } catch (err) {

@@ -25,7 +25,7 @@ const ProfileContainer = () => {
   let totalLikes = forumList.reduce((acc, item) => acc + item.likes, 0);
 
   // Dispatch actions on mount
-  useEffect(() => {
+  useEffect(async () => {
     dispatch(
       getUserId({
         token: sessionStorage.getItem('token'),
@@ -56,6 +56,7 @@ const ProfileContainer = () => {
 
   console.log('routine', routineData);
   console.log('routineWO', userRoutineWorkout);
+  // console.log('rw data', userRoutineWorkout);
   return (
     <>
       <div>
@@ -89,16 +90,16 @@ const ProfileContainer = () => {
                     duration={routine.duration}
                   />
                   <button
-                    className='btn-success'
-                    onClick={() => {
-                      dispatch(
+                    className='btn btn-success'
+                    onClick={async () => {
+                      await dispatch(
                         deleteRoutine({
                           routineId: routine.id,
                           userId: Number(userId),
                         })
                       );
                       // Upon deletion of routine, update the state of user's routine workout object
-                      dispatch(
+                      await dispatch(
                         getUserRoutineWorkout({
                           userId,
                         })
@@ -107,9 +108,9 @@ const ProfileContainer = () => {
                   >
                     Delete Routine
                   </button>
-                  <span>
+                  {/* <span>
                     <button className='btn-success'>Edit Routine</button>
-                  </span>
+                  </span> */}
                 </span>
               ) : (
                 <ViewWorkoutModal

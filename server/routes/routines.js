@@ -31,7 +31,7 @@ router.put('/:routineId', updateRoutine, (req, res) => {
 });
 
 router.delete('/', deleteRoutine, (req, res) => {
-  return res.sendStatus(204);
+  return res.status(200).json({ routine_id: res.locals.routine_id });
 });
 
 router.get('/workout/user/:id', getUserRoutineWorkout, (req, res) => {
