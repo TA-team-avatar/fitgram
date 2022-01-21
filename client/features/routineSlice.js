@@ -11,18 +11,18 @@ const initialState = {
 };
 
 export const getRoutines = createAsyncThunk(
-  'routine/getAllRoutines',
-  async () => {
+  'routine/getRoutine',
+  async ({ routineId }) => {
     const res = await axios.get(`/routine/${routineId}`);
-    return res.data.routines;
+    return res.data.routine;
   }
 );
 
 export const getUserRoutines = createAsyncThunk(
   'routine/getUserRoutines',
   async ({ userId }) => {
-    const res = await axios.get(`/routine/${userId}`);
-    return res.userRoutineData;
+    const res = await axios.get(`/routine/user/${userId}`);
+    return res.data.routines;
   }
 );
 
@@ -34,15 +34,19 @@ export const createRoutine = createAsyncThunk(
       name,
       duration,
     });
-    return res.userRoutineData;
+    return res.data.routine;
   }
 );
 
 export const updateRoutine = createAsyncThunk(
   'routine/editRoutine',
   async ({ routineId, userId, name, duration }) => {
-    const res = await axios.put(`/routine/${routineId}`, { userId, name, duration });
-    return res.userRoutineData;
+    const res = await axios.put(`/routine/${routineId}`, {
+      userId,
+      name,
+      duration,
+    });
+    return res.data.routine;
   }
 );
 
@@ -50,14 +54,10 @@ export const deleteRoutine = createAsyncThunk(
   'routine/deleteRoutine',
   async ({ userId, routineId }) => {
     const res = await axios.delete(`/routine`, { userId, routineId });
-    return res.userRoutineData;
+    // return res.userRoutineData;
+    return;
   }
 );
-
-// export const deleteRoutineWorkout = createAsyncThunk(
-//   'routine/deleteRoutineWorkout',
-//   async({})
-// );
 
 export const routineSlice = createSlice({
   name: 'routine',
@@ -68,7 +68,7 @@ export const routineSlice = createSlice({
       state.status = 'loading';
     },
     [deleteRoutine.fulfilled]: (state, { payload }) => {
-      state.userRoutineData = payload;
+      // state.userRoutineData = payload;
       state.status = 'success';
     },
     [deleteRoutine.rejected]: (state, action) => {
@@ -78,7 +78,12 @@ export const routineSlice = createSlice({
       state.status = 'loading';
     },
     [updateRoutine.fulfilled]: (state, { payload }) => {
-      state.userRoutineData = payload;
+      // state.userRoutineData.forEach((routine) => {
+      //   if (routine.id === payload.id) {
+      //     routine.name = payload.name;
+      //     routine.duration = payload.duration;
+      //   }
+      // });
       state.status = 'success';
     },
     [updateRoutine.rejected]: (state, action) => {
@@ -88,7 +93,7 @@ export const routineSlice = createSlice({
       state.status = 'loading';
     },
     [createRoutine.fulfilled]: (state, { payload }) => {
-      state.userRoutineData = payload;
+      state.userRoutineData.push(payload);
       state.status = 'success';
     },
     [createRoutine.rejected]: (state, action) => {

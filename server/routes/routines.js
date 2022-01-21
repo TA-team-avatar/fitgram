@@ -1,7 +1,7 @@
 const express = require('express');
 const {
   updateRoutine,
-  getRoutines,
+  getRoutine,
   createRoutine,
   deleteRoutine,
   getRoutineWorkout,
@@ -9,20 +9,25 @@ const {
   updateRoutineWorkout,
   deleteRoutineWorkout,
   getUserRoutineWorkout,
+  getUserRoutines,
 } = require('./../controller/routinesController.js');
 
 const router = express.Router();
 
-router.get('/', getRoutines, (req, res) => {
+router.get('/:id', getRoutine, (req, res) => {
+  return res.status(200).json({ routine: res.locals.routine });
+});
+
+router.get('/user/:id', getUserRoutines, (req, res) => {
   return res.status(200).json({ routines: res.locals.routines });
 });
 
 router.post('/', createRoutine, (req, res) => {
-  return res.sendStatus(200);
+  return res.status(200).json({ routine: res.locals.routine });
 });
 
-router.put('/:id', updateRoutine, (req, res) => {
-  return res.sendStatus(200);
+router.put('/:routineId', updateRoutine, (req, res) => {
+  return res.status(200).json({ routine: res.locals.routine });
 });
 
 router.delete('/', deleteRoutine, (req, res) => {
