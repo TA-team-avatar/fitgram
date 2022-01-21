@@ -7,13 +7,13 @@ const NavContainer = () => {
   // const dispatch = useDispatch();
 
   // // Dispatch actions on mount
-  // useEffect(() => {
-  //   dispatch(
-  //     getUserId({
-  //       token: sessionStorage.getItem("token"),
-  //     })
-  //   );
-  // }, []);
+  useEffect(() => {
+    dispatch(
+      getUserId({
+        token: sessionStorage.getItem('token'),
+      })
+    );
+  }, []);
 
   return (
     <div>
@@ -27,7 +27,7 @@ const NavContainer = () => {
                   <a
                     class='nav-link'
                     data-bs-toggle='tab'
-                    href='/profile/:userId'
+                    href={`/profile/${userId}`}
                   >
                     Profile
                   </a>
