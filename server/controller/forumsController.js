@@ -1,18 +1,33 @@
-const db = require("../model/dbModel");
+const db = require('../model/dbModel');
 
 const forumsController = {};
 
+const dateOptions = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hourCycle: 'h12',
+};
+
 // gets all Forums from all users to render on dashboard component
 forumsController.getForumsAllUsers = async (req, res, next) => {
-  console.log("reached getForumsAllUsers");
+  console.log('reached getForumsAllUsers');
 
   const getForumsAllUsersQuery =
-    "SELECT * FROM forums ORDER BY forums.date_created";
+    'SELECT * FROM forums ORDER BY forums.date_created';
   // console.log('values: ', values);
   try {
     const getAllForums = await db.query(getForumsAllUsersQuery);
     if (getAllForums) {
       console.log(`from getForumsAllUsers: `, getAllForums.rows);
+      getAllForums.rows.forEach((forum) => {
+        forum.date_created = new Date(forum.date_created).toLocaleDateString(
+          'en-US',
+          dateOptions
+        );
+      });
       res.locals.allForums = getAllForums.rows;
       return next();
     }
@@ -29,7 +44,7 @@ forumsController.getForumsAllUsers = async (req, res, next) => {
 forumsController.getForumsSingleUser = async (req, res, next) => {
   const userId = req.params.owner_user_id;
   const getForumsSingleUserQuery =
-    "SELECT * FROM forums WHERE owner_user_id=$1";
+    'SELECT * FROM forums WHERE owner_user_id=$1';
   const getForumsSingleUserParam = [userId];
 
   try {
@@ -39,7 +54,14 @@ forumsController.getForumsSingleUser = async (req, res, next) => {
     );
     if (getForums) {
       console.log(`from getForumsSingleUserQuery: `, getForums.rows);
+      getForums.rows.forEach((forum) => {
+        forum.date_created = new Date(forum.date_created).toLocaleDateString(
+          'en-US',
+          dateOptions
+        );
+      });
       res.locals.userForums = getForums.rows;
+
       return next();
     }
   } catch (err) {
@@ -52,15 +74,18 @@ forumsController.getForumsSingleUser = async (req, res, next) => {
 
 // gets one specific forum for one specific user
 forumsController.getSpecificForum = async (req, res, next) => {
-  const getSpecificForumQuery = "SELECT * FROM forums WHERE id=$1";
+  const getSpecificForumQuery = 'SELECT * FROM forums WHERE id=$1';
   const values = [req.params.id];
 
-  console.log("reached getSpecificForum");
+  console.log('reached getSpecificForum');
 
   try {
     const getSpecificForum = await db.query(getSpecificForumQuery, values);
     if (getSpecificForum) {
       console.log(`from getSpecificForum: `, getSpecificForum.rows);
+      getSpecificForum.rows[0].date_created = new Date(
+        getSpecificForum.rows[0].date_created
+      ).toLocaleDateString('en-US', dateOptions);
       res.locals.forum = getSpecificForum.rows[0];
       return next();
     }
@@ -76,10 +101,10 @@ forumsController.getSpecificForum = async (req, res, next) => {
 forumsController.deleteSpecificForum = async (req, res, next) => {
   const forumId = req.params.id;
 
-  const deleteForumQuery = "DELETE FROM forums WHERE id=$1";
+  const deleteForumQuery = 'DELETE FROM forums WHERE id=$1';
   const deleteForumParam = [forumId];
 
-  console.log("reached deleteSpecificForum");
+  console.log('reached deleteSpecificForum');
 
   try {
     const deleteForum = await db.query(deleteForumQuery, deleteForumParam);
@@ -99,11 +124,11 @@ forumsController.deleteSpecificForum = async (req, res, next) => {
 // creates new forum for authorized user
 forumsController.createNewForum = async (req, res, next) => {
   const createNewForumQuery =
-    "\
+    '\
     INSERT INTO forums (owner_user_id, name)\
-    VALUES ($1, $2)";
+    VALUES ($1, $2)';
   const values = [req.body.owner_user_id, req.body.name];
-  console.log("reached createNewForum");
+  console.log('reached createNewForum');
 
   try {
     const createNewForum = await db.query(createNewForumQuery, values);
@@ -125,31 +150,31 @@ forumsController.createNewForum = async (req, res, next) => {
 forumsController.updateForum = async (req, res, next) => {
   const forumId = req.params.id;
 
-  const schema = ["routine_id", "name"];
+  const schema = ['routine_id', 'name'];
 
   let setValue = schema.reduce((str, field) => {
     if (field in req.body) {
-      if (field === "routine_id" && req.body[field] === "NULL") {
-        str += field + " = " + req.body[field] + ", ";
+      if (field === 'routine_id' && req.body[field] === 'NULL') {
+        str += field + ' = ' + req.body[field] + ', ';
       } else {
-        str += field + " = " + "'" + req.body[field] + "', ";
+        str += field + ' = ' + "'" + req.body[field] + "', ";
       }
       return str;
     } else {
       return str;
     }
-  }, "");
+  }, '');
 
-  setValue = setValue.replace(/(,\s$)/g, "");
+  setValue = setValue.replace(/(,\s$)/g, '');
 
   setValue =
-    "UPDATE forums SET " +
+    'UPDATE forums SET ' +
     setValue +
-    " " +
-    "WHERE id=" +
+    ' ' +
+    'WHERE id=' +
     forumId +
-    " " +
-    "RETURNING id, owner_user_id, routine_id, name, likes, dislikes, date_created";
+    ' ' +
+    'RETURNING id, owner_user_id, routine_id, name, likes, dislikes, date_created';
 
   try {
     const forum = await db.query(setValue);
@@ -157,7 +182,9 @@ forumsController.updateForum = async (req, res, next) => {
     if (forum.rows.length === 0) {
       throw new Error(`No forum with id of ${forumId} found!`);
     }
-
+    forum.rows[0].date_created = new Date(
+      forum.rows[0].date_created
+    ).toLocaleDateString('en-US', dateOptions);
     res.locals.forum = forum.rows[0];
 
     return next();
