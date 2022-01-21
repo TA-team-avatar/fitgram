@@ -42,7 +42,7 @@ export const createWorkout = createAsyncThunk(
 export const getUserRoutineWorkout = createAsyncThunk(
   'workout/getUserRoutineWorkout',
   async (payload) => {
-    const userRW = axios.get(`/routine/workout/user/${payload.userId}`);
+    const userRW = await axios.get(`/routine/workout/user/${payload.userId}`);
     return userRW.data;
   }
 );
@@ -50,7 +50,7 @@ export const getUserRoutineWorkout = createAsyncThunk(
 export const deleteWorkout = createAsyncThunk(
   'workout/deleteWorkout',
   async (payload) => {
-    const res = axios.delete('/routine/workout', {
+    const res = await axios.delete('/routine/workout', {
       id: payload.id,
       routine_id: payload.routineId,
     });
@@ -77,7 +77,7 @@ export const editWorkout = createAsyncThunk(
       weight,
       day,
     };
-    const res = axios.put(`/routine/workout/${id}`, body);
+    const res = await axios.put(`/routine/workout/${id}`, body);
     return res.data;
   }
 );
