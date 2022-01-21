@@ -5,11 +5,33 @@ const db = require('../model/dbModel');
 
 const routinesController = {};
 
-routinesController.getRoutines = async (req, res, next) => {
-  const { id } = req.query;
+routinesController.getRoutine = async (req, res, next) => {
+  const { routineId } = req.params;
+
+  const query =
+    'SELECT r.*, rw.*, w.* FROM routines r \
+    LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
+    LEFT JOIN workouts w ON w.id = rw.workout_id \
+    WHERE r.id = $1;';
+  const params = [routineId];
+
+  try {
+    const routine = await db.query(query, params);
+    res.locals.routine = routine.rows[0];
+  } catch (err) {
+    return next({
+      log: `Error with routinesController.getRoutines ${err}`,
+      message: { err: `error from routinesController ${err}` },
+    });
+  }
+  return next();
+};
+
+routinesController.getUserRoutines = async (req, res, next) => {
+  const { id } = req.params;
 
   const queryRoutine =
-    'SELECT r.*, rw.* FROM routines r \
+    'SELECT r.*, rw.*, w.* FROM routines r \
     LEFT JOIN routine_workout rw ON rw.routine_id = r.id \
     LEFT JOIN workouts w ON w.id = rw.workout_id \
     WHERE r.owner_user_id = $1;';
@@ -22,7 +44,7 @@ routinesController.getRoutines = async (req, res, next) => {
     return next();
   } catch (err) {
     return next({
-      log: `Error with routinesController.getRoutines ${err}`,
+      log: `Error with routinesController.getUserRoutines ${err}`,
       message: { err: `error from routinesController ${err}` },
     });
   }
@@ -34,11 +56,12 @@ routinesController.createRoutine = async (req, res, next) => {
   const queryRoutine =
     'INSERT INTO routines (owner_user_id, name, duration)\
     VALUES ($1, $2, $3)\
-    RETURNING id;';
+    RETURNING *;';
   const paramRoutine = [userId, name, duration];
 
   try {
-    await db.query(queryRoutine, paramRoutine);
+    const routine = await db.query(queryRoutine, paramRoutine);
+    res.locals.routine = routine.rows[0];
 
     return next();
   } catch (err) {
@@ -67,10 +90,15 @@ routinesController.updateRoutine = async (req, res, next) => {
   setQuery = setQuery.replace(/(,\s$)/g, '');
 
   setQuery =
-    'UPDATE routines SET ' + setQuery + ' WHERE id = ' + routineId + ';';
+    'UPDATE routines SET ' +
+    setQuery +
+    ' WHERE id = ' +
+    routineId +
+    ' RETURNING *;';
 
   try {
-    await db.query(setQuery);
+    const routine = await db.query(setQuery);
+    res.locals.routine = routine.rows[0];
 
     return next();
   } catch (err) {
@@ -83,6 +111,7 @@ routinesController.updateRoutine = async (req, res, next) => {
 
 routinesController.deleteRoutine = async (req, res, next) => {
   const { routineId } = req.body;
+
   const queryRoutine = 'DELETE FROM routines WHERE id = $1';
   const paramRoutine = [routineId];
 
@@ -90,8 +119,8 @@ routinesController.deleteRoutine = async (req, res, next) => {
     'DELETE FROM routine_workout WHERE routine_id = $1';
   const paramRoutineWorkout = [routineId];
   try {
-    await db.query(queryRoutine, paramRoutine);
     await db.query(queryRoutineWorkout, paramRoutineWorkout);
+    await db.query(queryRoutine, paramRoutine);
 
     return next();
   } catch (err) {
