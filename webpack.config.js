@@ -58,6 +58,7 @@ module.exports = {
       '/session/**': 'http://localhost:3000',
       '/routine/**': 'http://localhost:3000',
       '/workout/**': 'http://localhost:3000',
+      '/comments/**': 'http://localhost:3000',
     },
   },
 };

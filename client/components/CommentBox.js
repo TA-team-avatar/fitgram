@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { deleteComments } from '../features/commentSlice';
 import EditCommentModal from './modals/EditCommentModal';
 
-const CommentBox = ({ props, currentUserId }) => {
+const CommentBox = ({ props, currentUserId, forumId }) => {
   const dispatch = useDispatch();
   const { id, description, date_created, user_name, owner_user_id } = props;
   return (
@@ -21,6 +21,7 @@ const CommentBox = ({ props, currentUserId }) => {
                 dispatch(
                   deleteComments({
                     id: id,
+                    forum_id: forumId,
                   })
                 );
               }}
@@ -28,7 +29,11 @@ const CommentBox = ({ props, currentUserId }) => {
               Delete Comment
             </button>
             <div>
-              <EditCommentModal id={id} description={description} />
+              <EditCommentModal
+                id={id}
+                description={description}
+                forum_id={forumId}
+              />
             </div>
           </div>
         ) : (

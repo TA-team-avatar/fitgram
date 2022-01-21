@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { editComments } from '../../features/commentSlice';
 
-const EditCommentModal = ({ id, description }) => {
+const EditCommentModal = ({ id, description, forum_id }) => {
   const [comment, setComment] = useState('');
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -51,6 +51,7 @@ const EditCommentModal = ({ id, description }) => {
                 editComments({
                   description: comment,
                   id: id,
+                  forum_id: forum_id,
                 })
               );
               handleClose();
