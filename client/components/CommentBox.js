@@ -9,30 +9,32 @@ const CommentBox = ({ props, currentUserId }) => {
   return (
     <>
       <div className='secondary'>{description}</div>
-      <span>User name: {user_name}</span>&nbsp;&nbsp;
-      <span>Date posted: {date_created}</span>
-      {owner_user_id === currentUserId ? (
-        <div>
-          <button
-            className='btn btn-secondary me-3'
-            onClick={() => {
-              dispatch(
-                deleteComments({
-                  owner_user_id: owner_user_id,
-                  id: id,
-                })
-              );
-            }}
-          >
-            Delete Comment
-          </button>
+      <span className='second-span-comments'>User name: {user_name}</span>
+      &nbsp;&nbsp;
+      <span className='second-span-comments2'>
+        Date posted: {date_created}
+        {owner_user_id === currentUserId ? (
           <div>
-            <EditCommentModal id={id} description={description} />
+            <button
+              className='btn-success'
+              onClick={() => {
+                dispatch(
+                  deleteComments({
+                    id: id,
+                  })
+                );
+              }}
+            >
+              Delete Comment
+            </button>
+            <div>
+              <EditCommentModal id={id} description={description} />
+            </div>
           </div>
-        </div>
-      ) : (
-        <></>
-      )}
+        ) : (
+          <></>
+        )}
+      </span>
       <hr />
     </>
   );

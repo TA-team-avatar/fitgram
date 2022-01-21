@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { editWorkout } from "../../features/workoutSlice";
-import { Select, MenuItem } from "@material-ui/core";
+import React, { useState, useEffect } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { editWorkout } from '../../features/workoutSlice';
+import { Select, MenuItem } from '@material-ui/core';
 
 const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
   const { id } = workoutData;
-  const [workout, setWorkout] = useState("");
-  const [day, setDay] = useState("");
-  const [sets, setSets] = useState("");
-  const [weight, setWeight] = useState("");
-  const [rm, setRm] = useState("");
+  const [workout, setWorkout] = useState('');
+  const [day, setDay] = useState('');
+  const [sets, setSets] = useState('');
+  const [weight, setWeight] = useState('');
+  const [rm, setRm] = useState('');
   const [show, setShow] = useState(false);
   const workouts = useSelector((state) => state.workout.workoutData);
   const handleClose = () => setShow(false);
@@ -28,7 +28,7 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
 
   return (
     <>
-      <Button className="btn btn-secondary me-3" onClick={handleShow}>
+      <Button className='btn-dark-modal' onClick={handleShow}>
         Edit Workout
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -38,20 +38,20 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
         <Modal.Body>
           <div>Workouts</div>
           <form>
-            <label className="form-label mt-4">Please choose workout</label>
+            <label className='form-label mt-4'>Please choose workout</label>
             <Select
               onChange={(e) => {
                 setWorkout(e.target.value);
               }}
-              className="dropdown-menu"
-              color="secondary"
-              variant="outlined"
+              className='dropdown-menu'
+              color='secondary'
+              variant='outlined'
               value={workout}
               displayEmpty
               required
               fullWidth
             >
-              <MenuItem required value="" disabled>
+              <MenuItem required value='' disabled>
                 Workouts
               </MenuItem>
               {workouts.map((wo, idx) => (
@@ -60,52 +60,52 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
                 </MenuItem>
               ))}
             </Select>
-            <label className="form-label mt-4">How many sets?</label>
+            <label className='form-label mt-4'>How many sets?</label>
             <input
-              className="form-control"
-              type="number"
+              className='form-control'
+              type='number'
               value={sets}
               onChange={(e) => {
                 setSets(e.target.value);
               }}
             />
-            <label className="form-label mt-4">
+            <label className='form-label mt-4'>
               How many repetition motion for each set?
             </label>
             <input
-              className="form-control"
-              type="number"
+              className='form-control'
+              type='number'
               value={rm}
               onChange={(e) => {
                 setRm(e.target.value);
               }}
             />
-            <label className="form-label mt-4">Weight for each RM?</label>
+            <label className='form-label mt-4'>Weight for each RM?</label>
             <input
-              className="form-control"
-              type="number"
+              className='form-control'
+              type='number'
               value={weight}
               onChange={(e) => {
                 setWeight(e.target.value);
               }}
             />
-            <label className="form-label mt-4">Please select day</label>
+            <label className='form-label mt-4'>Please select day</label>
             <Select
               onChange={(e) => {
                 setDay(e.target.value);
               }}
-              className="dropdown-menu"
-              color="secondary"
-              variant="outlined"
+              className='dropdown-menu'
+              color='secondary'
+              variant='outlined'
               value={day}
               displayEmpty
               required
               fullWidth
             >
-              <MenuItem required value="" disabled>
+              <MenuItem required value='' disabled>
                 Days
               </MenuItem>
-              {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(
                 (d, idx) => (
                   <MenuItem key={idx} value={d}>
                     {d}
@@ -116,11 +116,11 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant="primary"
+            className='btn-success'
             onClick={() => {
               dispatch(
                 editWorkout({
