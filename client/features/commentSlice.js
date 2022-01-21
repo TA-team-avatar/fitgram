@@ -3,7 +3,6 @@ import axios from 'axios';
 import dummyData from '../constants/dummyData';
 
 const initialState = {
-<<<<<<< HEAD
   commentData: {},
   commentList: [],
   status: null,
@@ -95,33 +94,6 @@ export const commentSlice = createSlice({
     [createComments.rejected]: (state, action) => {
       state.status = 'failed';
     },
-=======
-  commentData: [],
-  status: null,
-};
-
-export const commentSlice = createSlice({
-  name: 'comment',
-  initialState,
-  reducers: {},
-});
-
-export const {
-  getForumComments,
-  createComments,
-  deleteComments,
-  editComments,
-} = commentSlice.actions;
-
-export const forumSlice = createSlice({
-  name: 'forum',
-  initialState,
-  reducers: {},
-  extraReducers: {
-    [getAllForums.pending]: (state, action) => {
-      state.status = 'loading';
-    },
->>>>>>> dev
   },
 });
 
