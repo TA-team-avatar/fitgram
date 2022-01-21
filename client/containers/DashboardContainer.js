@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { getAllForums, deleteForum } from "../features/forumSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import AddForumModal from "../components/modals/AddForumModal";
-import { getUserId } from "../features/userSlice";
+import React, { useEffect } from 'react';
+import { getAllForums, deleteForum } from '../features/forumSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import AddForumModal from '../components/modals/AddForumModal';
+import { getUserId } from '../features/userSlice';
 
 const DashboardContainer = () => {
   const forumList = useSelector((state) => state.forum.forumList);
@@ -15,7 +15,7 @@ const DashboardContainer = () => {
     dispatch(getAllForums());
     dispatch(
       getUserId({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem('token'),
       })
     );
   }, []);
@@ -24,11 +24,11 @@ const DashboardContainer = () => {
     <>
       <div>
         <h1>Welcome to Your Dashboard</h1>
-        <hr />
+        <hr className='my-2' />
         <div>
           <AddForumModal />
         </div>
-        <hr />
+        <hr className='my-2' />
         <div className='span-containers'>
           {forumList.map((forum, idx) => (
             <div className='div-span' key={idx}>
@@ -36,7 +36,7 @@ const DashboardContainer = () => {
                 {forum.name}
               </Link>
               <span className='second-span'>
-                {" "}
+                {' '}
                 Date Created: {forum.date_created}
               </span>
               <span>
