@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import React, { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 
 const ViewWorkoutModal = ({ workoutData }) => {
   const [show, setShow] = useState(false);
@@ -8,7 +8,7 @@ const ViewWorkoutModal = ({ workoutData }) => {
 
   return (
     <>
-      <Button className="btn btn-secondary me-3" onClick={handleShow}>
+      <Button className='btn-dark-modal' onClick={handleShow}>
         View Workout
       </Button>
       <Modal show={show} onHide={handleClose}>
@@ -33,7 +33,7 @@ const ViewWorkoutModal = ({ workoutData }) => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
         </Modal.Footer>

@@ -29,8 +29,8 @@ export const getUserId = createAsyncThunk('user/getUserId', async (payload) => {
   const userId = await axios.post('/session/token', data, {
     headers: { 'Content-Type': 'application/json' },
   });
-  console.log('userData==>', userId);
-  return userId;
+  console.log('userData==>', userId.data.user_id);
+  return userId.data.user_id;
 });
 
 export const getUserName = createAsyncThunk(
@@ -85,7 +85,7 @@ export const userSlice = createSlice({
       state.status = 'getUserId api is pending';
     },
     [getUserId.fulfilled]: (state, { payload }) => {
-      state.userId = payload.data.user_id;
+      state.userId = payload;
       state.status = 'getUserId fulfilled';
     },
     [getUserId.rejected]: (state) => {

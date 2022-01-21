@@ -25,7 +25,7 @@ const LoginForm = (props) => {
             type='text'
             onChange={(e) => setUsername(e.target.value)}
             placeholder='Username'
-            className='text-black my-1'
+            className='form-control-sm'
           />
         </div>
         <div>
@@ -33,11 +33,11 @@ const LoginForm = (props) => {
             type='password'
             onChange={(e) => setPassword(e.target.value)}
             placeholder='Password'
-            className='text-black my-1'
+            className='form-control-sm'
           />
         </div>
         <div>
-          <button type='submit' className='text-black'>
+          <button type='submit' className='btn-success'>
             Login
           </button>
         </div>

@@ -26,7 +26,7 @@ const AddRoutineModal = () => {
 
   return (
     <>
-      <Button className='btn-secondary' onClick={handleShow}>
+      <Button className='btn-dark-modal' onClick={handleShow}>
         Add Routine
       </Button>
       <Modal className='modal' show={show} onHide={handleClose}>
@@ -64,11 +64,11 @@ const AddRoutineModal = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant='secondary'
+            className='btn-success'
             onClick={() => {
               const forumId = forumData.id;
               dispatch(
