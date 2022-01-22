@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserId, getUserName } from "../features/userSlice";
-import { getUserForumData } from "../features/forumSlice";
-import { getUserRoutines, deleteRoutine } from "../features/routineSlice";
-import { getUserRoutineWorkout, getWorkout } from "../features/workoutSlice";
-import BuildRoutineModal from "../components/modals/BuildRoutineModal";
-import EditRoutineModal from "../components/modals/EditRoutineModal";
-import EditWorkoutModal from "../components/modals/EditWorkoutModal";
-import ViewWorkoutModal from "../components/modals/ViewWorkoutModal";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserId, getUserName } from '../features/userSlice';
+import { getUserForumData } from '../features/forumSlice';
+import { getUserRoutines, deleteRoutine } from '../features/routineSlice';
+import { getUserRoutineWorkout, getWorkout } from '../features/workoutSlice';
+import BuildRoutineModal from '../components/modals/BuildRoutineModal';
+import EditRoutineModal from '../components/modals/EditRoutineModal';
+import EditWorkoutModal from '../components/modals/EditWorkoutModal';
+import ViewWorkoutModal from '../components/modals/ViewWorkoutModal';
 
 const ProfileContainer = () => {
   let { userId } = useParams();
@@ -28,7 +28,7 @@ const ProfileContainer = () => {
   useEffect(async () => {
     dispatch(
       getUserId({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem('token'),
       })
     );
     dispatch(
@@ -67,7 +67,9 @@ const ProfileContainer = () => {
             <hr />
           </>
         ) : (
-          <></>
+          <>
+            <hr />
+          </>
         )}
         <>
           {routineData.map((routine, index) => (
