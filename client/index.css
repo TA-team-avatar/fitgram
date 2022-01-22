@@ -1321,6 +1321,23 @@ hr.comments {
   padding: 25px;
   font-size: small;
 }
+.profile-heading-border {
+  margin: 0.5rem 0;
+}
+.profile-heading {
+  padding: 10px;
+}
+.userprofile-likes {
+  display: inline;
+  font-size: 14px;
+  margin-left: 25px;
+}
+.username-profile {
+  padding: 5px;
+  display: inline;
+  margin-left: 15px;
+  font-size: 25px;
+}
 .visitUserProfile {
   float: right;
   margin-right: 145px;
