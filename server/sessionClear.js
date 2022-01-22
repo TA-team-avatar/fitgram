@@ -25,7 +25,7 @@ const deleteSession = async () => {
 
 module.exports = () => {
   console.log('running cron schedule every 20 seconds to delete old sessions');
-  cron.schedule('* * * * *', () => {
+  cron.schedule('* */2 * * *', () => {
     console.log('HELLOOOOO');
     deleteSession();
   });

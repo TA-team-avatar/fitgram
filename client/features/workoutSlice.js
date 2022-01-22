@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import dummyData from "../constants/dummyData";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import dummyData from '../constants/dummyData';
 
 const initialState = {
   routineWorkoutData: [],
@@ -8,13 +8,13 @@ const initialState = {
   workoutData: [],
 };
 
-export const getWorkout = createAsyncThunk("workout/getWorkout", async () => {
-  const workouts = await axios.get("/workout");
+export const getWorkout = createAsyncThunk('workout/getWorkout', async () => {
+  const workouts = await axios.get('/workout');
   return workouts.data;
 });
 
 export const getRoutineWorkout = createAsyncThunk(
-  "workout/getRoutineWorkout",
+  'workout/getRoutineWorkout',
   async (data) => {
     const routineWorkout = await axios.get(
       `/routine/workout/${data.routineId}`
@@ -24,7 +24,7 @@ export const getRoutineWorkout = createAsyncThunk(
 );
 
 export const createWorkout = createAsyncThunk(
-  "workout/createWorkout",
+  'workout/createWorkout',
   async ({ routine_id, workout_id, set, repetition_motion, weight, day }) => {
     const body = {
       routine_id,
@@ -34,14 +34,14 @@ export const createWorkout = createAsyncThunk(
       weight,
       day,
     };
-    const createWorkout = await axios.post("/routine/workout", body);
-    console.log("here", createWorkout.data);
+    const createWorkout = await axios.post('/routine/workout', body);
+    console.log('here', createWorkout.data);
     return createWorkout.data.routineWorkout;
   }
 );
 
 export const getUserRoutineWorkout = createAsyncThunk(
-  "workout/getUserRoutineWorkout",
+  'workout/getUserRoutineWorkout',
   async (payload) => {
     const userRW = await axios.get(`/routine/workout/user/${payload.userId}`);
     return userRW.data;
@@ -49,9 +49,9 @@ export const getUserRoutineWorkout = createAsyncThunk(
 );
 
 export const deleteWorkout = createAsyncThunk(
-  "workout/deleteWorkout",
+  'workout/deleteWorkout',
   async (payload) => {
-    const res = await axios.delete("/routine/workout", {
+    const res = await axios.delete('/routine/workout', {
       data: {
         id: payload.id,
         routine_id: payload.routineId,
@@ -62,7 +62,7 @@ export const deleteWorkout = createAsyncThunk(
 );
 
 export const editWorkout = createAsyncThunk(
-  "workout/editWorkout",
+  'workout/editWorkout',
   async ({
     id,
     routine_id,
@@ -86,32 +86,32 @@ export const editWorkout = createAsyncThunk(
 );
 
 export const workoutSlice = createSlice({
-  name: "workout",
+  name: 'workout',
   initialState,
   reducers: {},
   extraReducers: {
     [getWorkout.pending]: (state) => {
-      state.status = "getWorkout api is pending";
+      state.status = 'getWorkout api is pending';
     },
     [getWorkout.fulfilled]: (state, { payload }) => {
       state.workoutData = [...payload.workouts];
-      state.status = "getWorkout fulfilled";
+      state.status = 'getWorkout fulfilled';
     },
     [getWorkout.rejected]: (state) => {
-      state.status = "Something went wrong in getWorkout Call";
+      state.status = 'Something went wrong in getWorkout Call';
     },
     [getRoutineWorkout.pending]: (state) => {
-      state.status = "getRoutineWorkout api is pending";
+      state.status = 'getRoutineWorkout api is pending';
     },
     [getRoutineWorkout.fulfilled]: (state, { payload }) => {
       state.routineWorkoutData = [...payload.routineWorkouts];
-      state.status = "getRoutineWorkout fulfilled";
+      state.status = 'getRoutineWorkout fulfilled';
     },
     [getRoutineWorkout.rejected]: (state) => {
-      state.status = "Something went wrong in getRoutineWorkout Call";
+      state.status = 'Something went wrong in getRoutineWorkout Call';
     },
     [createWorkout.pending]: (state) => {
-      state.status = "createWorkout api is pending";
+      state.status = 'createWorkout api is pending';
     },
     [createWorkout.fulfilled]: (state, { payload }) => {
       console.log(payload.routine_id);
@@ -134,36 +134,36 @@ export const workoutSlice = createSlice({
             weight: payload.weight,
             day: payload.day,
           });
-      state.status = "createWorkout fulfilled";
+      state.status = 'createWorkout fulfilled';
     },
     [createWorkout.rejected]: (state) => {
-      state.status = "Something went wrong in createWorkout Call";
+      state.status = 'Something went wrong in createWorkout Call';
     },
     [getUserRoutineWorkout.pending]: (state) => {
-      state.status = "getUserRoutineWorkout api is pending";
+      state.status = 'getUserRoutineWorkout api is pending';
     },
     [getUserRoutineWorkout.fulfilled]: (state, { payload }) => {
       state.userRoutineWorkoutData = payload.userRW;
-      state.status = "getUserRoutineWorkout fulfilled";
+      state.status = 'getUserRoutineWorkout fulfilled';
     },
     [getUserRoutineWorkout.rejected]: (state) => {
-      state.status = "Something went wrong in getUserRoutineWorkout Call";
+      state.status = 'Something went wrong in getUserRoutineWorkout Call';
     },
     [deleteWorkout.pending]: (state) => {
-      state.status = "deleteWorkout api is pending";
+      state.status = 'deleteWorkout api is pending';
     },
     [deleteWorkout.fulfilled]: (state, { payload }) => {
       state.userRoutineWorkoutData[payload.routine_id] =
         state.userRoutineWorkoutData[payload.routine_id].filter(
           (data) => data.routine_workout_id !== payload.id
         );
-      state.status = "deleteWorkout fulfilled";
+      state.status = 'deleteWorkout fulfilled';
     },
     [deleteWorkout.rejected]: (state) => {
-      state.status = "Something went wrong in deleteWorkout Call";
+      state.status = 'Something went wrong in deleteWorkout Call';
     },
     [editWorkout.pending]: (state) => {
-      state.status = "editWorkout api is pending";
+      state.status = 'editWorkout api is pending';
     },
     [editWorkout.fulfilled]: (state, { payload }) => {
       state.userRoutineWorkoutData[payload.routine_id].forEach((workout) => {
@@ -175,10 +175,10 @@ export const workoutSlice = createSlice({
           workout.day = payload.day;
         }
       });
-      state.status = "editWorkout fulfilled";
+      state.status = 'editWorkout fulfilled';
     },
     [editWorkout.rejected]: (state) => {
-      state.status = "Something went wrong in editWorkout Call";
+      state.status = 'Something went wrong in editWorkout Call';
     },
   },
 });

@@ -70,7 +70,9 @@ const ProfileContainer = () => {
               <hr />
             </>
           ) : (
-            <></>
+            <>
+              <hr />
+            </>
           )}
           <>
             <div className='routine-workout'>
@@ -78,7 +80,7 @@ const ProfileContainer = () => {
                 <div key={index}>
                   <h3>{routine.name}</h3>
                   <div>Duration: {routine.duration}</div>
-                  <div>{routine.date_created}</div>
+                  {/* <div>{routine.date_created}</div> */}
                   {currentUserId === userId ? (
                     <span className='modal-buttons-span'>
                       <EditWorkoutModal
