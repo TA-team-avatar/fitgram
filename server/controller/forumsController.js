@@ -16,11 +16,7 @@ forumsController.getForumsAllUsers = async (req, res, next) => {
   console.log('reached getForumsAllUsers');
 
   const getForumsAllUsersQuery =
-<<<<<<< HEAD
     'SELECT * FROM forums ORDER BY forums.date_created DESC';
-=======
-    'SELECT * FROM forums ORDER BY forums.date_created';
->>>>>>> dev
   // console.log('values: ', values);
   try {
     const getAllForums = await db.query(getForumsAllUsersQuery);
