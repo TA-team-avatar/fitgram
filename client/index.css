@@ -1321,15 +1321,57 @@ hr.comments {
   padding: 25px;
   font-size: small;
 }
+.profile-heading-border {
+  margin: 0.5rem 0;
+}
+.profile-heading {
+  padding: 5px;
+  margin-left: 15px;
+}
+.userprofile-likes {
+  display: inline;
+  font-size: 14px;
+  margin-left: 25px;
+}
+.username-profile {
+  padding: 5px;
+  display: inline;
+  margin-left: 15px;
+  font-size: 25px;
+}
 .visitUserProfile {
   float: right;
   margin-right: 145px;
   margin-top: 15px;
 }
+.routine-workout {
+  /* border-bottom: 1px solid #6f7e80;
+  padding: 10px;
+  margin: 3px;
+  display: flexbox; */
+  margin-left: 15px;
+  padding: 10px;
+  font-size: small;
+}
+.modal-buttons-span {
+  display: inline-block;
+  padding: 5px;
+}
+.routine-heading {
+  margin-top: 0;
+}
+.first-span-routine {
+  font-size: 12px;
+  margin-left: 12px;
+  display: flex;
+  justify-content: space-between;
+}
 
 .btn-success-1 {
   color: rgb(219, 211, 211);
   font-size: 10px;
+  margin-right: 45px;
+  position: relative;
   border-radius: 0.5rem;
   margin-top: 0.5rem;
   padding: 5px;
@@ -1448,6 +1490,36 @@ hr.comments {
   /* position: absolute; */
   left: 175px;
   top: 127px;
+  color: #23887f !important;
+  font-size: 0.85rem !important;
+  font-family: inherit;
+  background-color: transparent !important;
+  background: none;
+  border: transparent !important;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.btn-dark-modal-login {
+  display: flexbox;
+  padding: 10px;
+  top: 15%;
+  left: 45%;
+  margin: 0;
+  position: absolute;
+  color: #23887f !important;
+  font-size: 1.5rem !important;
+  font-family: inherit;
+  background-color: transparent !important;
+  background: none;
+  border: transparent !important;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.btn-dark-modal-createRoutine {
+  left: 10px;
+  top: 50px;
   color: #23887f !important;
   font-size: 0.85rem !important;
   font-family: inherit;

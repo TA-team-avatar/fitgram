@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserId, getUserName } from "../features/userSlice";
-import { getUserForumData } from "../features/forumSlice";
-import { getUserRoutines, deleteRoutine } from "../features/routineSlice";
-import { getUserRoutineWorkout, getWorkout } from "../features/workoutSlice";
-import BuildRoutineModal from "../components/modals/BuildRoutineModal";
-import EditRoutineModal from "../components/modals/EditRoutineModal";
-import EditWorkoutModal from "../components/modals/EditWorkoutModal";
-import ViewWorkoutModal from "../components/modals/ViewWorkoutModal";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserId, getUserName } from '../features/userSlice';
+import { getUserForumData } from '../features/forumSlice';
+import { getUserRoutines, deleteRoutine } from '../features/routineSlice';
+import { getUserRoutineWorkout, getWorkout } from '../features/workoutSlice';
+import BuildRoutineModal from '../components/modals/BuildRoutineModal';
+import EditRoutineModal from '../components/modals/EditRoutineModal';
+import EditWorkoutModal from '../components/modals/EditWorkoutModal';
+import ViewWorkoutModal from '../components/modals/ViewWorkoutModal';
 
 const ProfileContainer = () => {
   let { userId } = useParams();
@@ -28,7 +28,7 @@ const ProfileContainer = () => {
   useEffect(async () => {
     dispatch(
       getUserId({
-        token: sessionStorage.getItem("token"),
+        token: sessionStorage.getItem('token'),
       })
     );
     dispatch(
@@ -58,67 +58,73 @@ const ProfileContainer = () => {
   return (
     <>
       <div>
-        <h1>{userData.user_name}</h1>
-        <div></div>
-        <h3>Total Likes {totalLikes}</h3>
-        {currentUserId === userId ? (
+        <div className='profile-heading'>
+          <h1 className='username-profile'>{userData.user_name}</h1>
+          <h3 className='userprofile-likes'>Total Likes: {totalLikes}</h3>
+        </div>
+        <hr className='profile-heading-border' />
+        <div>
+          {currentUserId === userId ? (
+            <>
+              <BuildRoutineModal userId={userId} />
+              <hr />
+            </>
+          ) : (
+            <></>
+          )}
           <>
-            <BuildRoutineModal userId={userId} />
-            <hr />
-          </>
-        ) : (
-          <></>
-        )}
-        <>
-          {routineData.map((routine, index) => (
-            <div key={index}>
-              <h3>{routine.name}</h3>
-              <div>Duration: {routine.duration}</div>
-              <div>{routine.date_created}</div>
-              {currentUserId === userId ? (
-                <span>
-                  <EditWorkoutModal
-                    routineId={routine.id}
-                    workoutData={userRoutineWorkout[routine.id]}
-                  />
-                  <EditRoutineModal
-                    userId={userId}
-                    routineId={routine.id}
-                    name={routine.name}
-                    duration={routine.duration}
-                  />
-                  <button
-                    className='btn-dark-modal'
-                    onClick={async () => {
-                      await dispatch(
-                        deleteRoutine({
-                          routineId: routine.id,
-                          userId: Number(userId),
-                        })
-                      );
-                      // Upon deletion of routine, update the state of user's routine workout object
-                      await dispatch(
-                        getUserRoutineWorkout({
-                          userId,
-                        })
-                      );
-                    }}
-                  >
-                    Delete Routine
-                  </button>
-                  {/* <span>
+            <div className='routine-workout'>
+              {routineData.map((routine, index) => (
+                <div key={index}>
+                  <h3>{routine.name}</h3>
+                  <div>Duration: {routine.duration}</div>
+                  <div>{routine.date_created}</div>
+                  {currentUserId === userId ? (
+                    <span className='modal-buttons-span'>
+                      <EditWorkoutModal
+                        routineId={routine.id}
+                        workoutData={userRoutineWorkout[routine.id]}
+                      />
+                      <EditRoutineModal
+                        userId={userId}
+                        routineId={routine.id}
+                        name={routine.name}
+                        duration={routine.duration}
+                      />
+                      <button
+                        className='btn-success'
+                        onClick={async () => {
+                          await dispatch(
+                            deleteRoutine({
+                              routineId: routine.id,
+                              userId: Number(userId),
+                            })
+                          );
+                          // Upon deletion of routine, update the state of user's routine workout object
+                          await dispatch(
+                            getUserRoutineWorkout({
+                              userId,
+                            })
+                          );
+                        }}
+                      >
+                        Delete Routine
+                      </button>
+                      {/* <span>
                     <button className='btn-success'>Edit Routine</button>
                   </span> */}
-                </span>
-              ) : (
-                <ViewWorkoutModal
-                  workoutData={userRoutineWorkout[routine.id]}
-                />
-              )}
-              <hr />
+                    </span>
+                  ) : (
+                    <ViewWorkoutModal
+                      workoutData={userRoutineWorkout[routine.id]}
+                    />
+                  )}
+                  <hr />
+                </div>
+              ))}
             </div>
-          ))}
-        </>
+          </>
+        </div>
       </div>
     </>
   );

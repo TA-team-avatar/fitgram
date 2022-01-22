@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { getRoutines } from "../features/routineSlice";
-import { getRoutineWorkout } from "../features/workoutSlice";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { getRoutines } from '../features/routineSlice';
+import { getRoutineWorkout } from '../features/workoutSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const RoutineTemplate = () => {
   const routineId = useSelector((state) => state.forum.forumData).routine_id;
@@ -9,7 +9,7 @@ const RoutineTemplate = () => {
   const routineWorkoutData = useSelector(
     (state) => state.workout.routineWorkoutData
   );
-  console.log("here", routineWorkoutData);
+  console.log('here', routineWorkoutData);
   const dispatch = useDispatch();
 
   // Dispatch actions on mount
@@ -30,7 +30,7 @@ const RoutineTemplate = () => {
     <>
       <div className='containers'>
         <div className='div-span'>Routine Name: {routineData?.name}</div>
-        <div className='first-span'>
+        <div className='first-span-routine'>
           Routine Duration: {routineData?.duration}
         </div>
         <hr />
