@@ -53,9 +53,9 @@ export const updateRoutine = createAsyncThunk(
 export const deleteRoutine = createAsyncThunk(
   'routine/deleteRoutine',
   async ({ userId, routineId }) => {
-    const res = await axios.delete(`/routine`, { userId, routineId });
-    // return res.userRoutineData;
-    return;
+    const res = await axios.delete(`/routine`, { data: { userId, routineId } });
+    console.log(res.data);
+    return res.data;
   }
 );
 
@@ -68,7 +68,9 @@ export const routineSlice = createSlice({
       state.status = 'loading';
     },
     [deleteRoutine.fulfilled]: (state, { payload }) => {
-      // state.userRoutineData = payload;
+      state.userRoutineData = state.userRoutineData.filter(
+        (routine) => routine.id !== payload.routine_id
+      );
       state.status = 'success';
     },
     [deleteRoutine.rejected]: (state, action) => {
@@ -78,12 +80,12 @@ export const routineSlice = createSlice({
       state.status = 'loading';
     },
     [updateRoutine.fulfilled]: (state, { payload }) => {
-      // state.userRoutineData.forEach((routine) => {
-      //   if (routine.id === payload.id) {
-      //     routine.name = payload.name;
-      //     routine.duration = payload.duration;
-      //   }
-      // });
+      state.userRoutineData.forEach((routine) => {
+        if (routine.id === payload.id) {
+          routine.name = payload.name;
+          routine.duration = payload.duration;
+        }
+      });
       state.status = 'success';
     },
     [updateRoutine.rejected]: (state, action) => {
@@ -113,7 +115,7 @@ export const routineSlice = createSlice({
       state.status = 'loading';
     },
     [getRoutines.fulfilled]: (state, { payload }) => {
-      state.data.routine = payload; //note where this data goes different than others
+      state.routineData = payload; //note where this data goes different than others
       state.status = 'success';
     },
     [getRoutines.rejected]: (state, action) => {

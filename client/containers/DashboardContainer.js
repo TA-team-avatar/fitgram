@@ -24,16 +24,20 @@ const DashboardContainer = () => {
     <>
       <div>
         <h1>Welcome to Your Dashboard</h1>
-        <hr />
+        <hr className='my-2' />
         <div>
           <AddForumModal />
         </div>
-        <hr />
+        <hr className='my-2' />
         <div className='span-containers'>
           {forumList.map((forum, idx) => (
             <div className='div-span' key={idx}>
-              <Link to={`/forum_page/${forum.id}`}>{forum.name}</Link>
-              <span className='second-span'>
+              <div>
+                <Link to={`/forum_page/${forum.id}`} className=''>
+                  {forum.name}
+                </Link>
+              </div>
+              <span className='second-span py-0'>
                 {' '}
                 Date Created: {forum.date_created}
               </span>
