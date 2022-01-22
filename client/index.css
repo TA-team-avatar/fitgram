@@ -1741,6 +1741,7 @@ hr.comments {
 
 .modal-dialog-edit-workout {
   max-width: 56% !important;
+  min-width: 500px;
 }
 
 .modal.fade .modal-dialog {
