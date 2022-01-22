@@ -80,7 +80,7 @@ const ProfileContainer = () => {
                   <div>Duration: {routine.duration}</div>
                   <div>{routine.date_created}</div>
                   {currentUserId === userId ? (
-                    <span>
+                    <span className='modal-buttons-span'>
                       <EditWorkoutModal
                         routineId={routine.id}
                         workoutData={userRoutineWorkout[routine.id]}
@@ -92,7 +92,7 @@ const ProfileContainer = () => {
                         duration={routine.duration}
                       />
                       <button
-                        className='btn-dark-modal'
+                        className='btn-success'
                         onClick={async () => {
                           await dispatch(
                             deleteRoutine({

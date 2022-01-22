@@ -52,7 +52,6 @@ const ForumContainer = () => {
             <></>
           )}
         </div>
-        <hr />
         {/* Buttons section */}
         <div className='visitUserProfile'>
           <Link to={`/profile/${owner_user_id}`} className=' btn-success-1'>
@@ -65,26 +64,29 @@ const ForumContainer = () => {
           <span className='second-span'>Date Posted: {date_created}</span>
           <hr />
           {/* Routine section */}
-          <div>Routine</div>
-          {routine_id ? <RoutineTemplate /> : <></>}
-          {owner_user_id === currentUserId ? (
-            routine_id ? (
-              <button
-                className=' btn-success'
-                onClick={() => {
-                  dispatch(
-                    removeRoutineToForum({
-                      forumId: Number(forumId),
-                    })
-                  );
-                }}
-              >
-                Remove Routine
-              </button>
-            ) : (
-              <></>
-            )
-          ) : null}
+
+          <div className='span-containers'>
+            <div className='routine-heading'>Routine</div>
+            {routine_id ? <RoutineTemplate /> : <></>}
+            {owner_user_id === currentUserId ? (
+              routine_id ? (
+                <button
+                  className=' btn-success'
+                  onClick={() => {
+                    dispatch(
+                      removeRoutineToForum({
+                        forumId: Number(forumId),
+                      })
+                    );
+                  }}
+                >
+                  Remove Routine
+                </button>
+              ) : (
+                <></>
+              )
+            ) : null}
+          </div>
         </div>
         <hr />
         {/* Likes and dislikes section */}
