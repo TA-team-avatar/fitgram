@@ -34,15 +34,30 @@ const RoutineTemplate = () => {
           Routine Duration: {routineData?.duration}
         </div>
         <hr />
-        {routineWorkoutData.map((rw, idx) => (
-          <div key={idx}>
-            <span>Day: {rw.day}</span>&nbsp;
-            <span>Workout: {rw.workout_name}</span>&nbsp;
-            <span>Set: {rw.set}</span>&nbsp;
-            <span>RM: {rw.repetition_motion}</span>&nbsp;
-            <span>Weight: {rw.weight}</span>&nbsp;
-          </div>
-        ))}
+        <table className='table'>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Workout</th>
+              <th>Set</th>
+              <th>RM</th>
+              <th>Weight</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {routineWorkoutData.map((rw, idx) => (
+              <tr key={idx}>
+                <td>{rw.day}</td>
+                <td>{rw.workout_name}</td>
+                <td>{rw.set}</td>
+                <td>{rw.repetition_motion}</td>
+                <td>{rw.weight}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );

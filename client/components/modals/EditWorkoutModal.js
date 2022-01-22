@@ -13,11 +13,15 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
 
   return (
     <>
-      {/* <Button className='btn-dark-modal-edit-workout' onClick={handleShow}> */}
-      <Button className='btn btn-success' onClick={handleShow}>
+      <Button className='btn-dark-modal-edit-workout' onClick={handleShow}>
         Edit Workout
       </Button>
-      <Modal show={show} onHide={handleClose}>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        dialogClassName='modal-dialog-edit-workout'
+      >
         <Modal.Header closeButton>
           <Modal.Title>Edit Routine Workouts</Modal.Title>
         </Modal.Header>
@@ -26,36 +30,55 @@ const EditWorkoutModal = ({ routineId, workoutData }) => {
           <hr />
           <AddWorkoutModal routineId={routineId} />
           <hr />
-          {workoutData?.length > 0 ? (
-            workoutData.map((rw, idx) => (
-              <div key={idx}>
-                <span>Day: {rw.day}</span>&nbsp;
-                <span>Workout: {rw.workout_name}</span>&nbsp;
-                <span>Set: {rw.set}</span>&nbsp;
-                <span>RM: {rw.repetition_motion}</span>&nbsp;
-                <span>Weight: {rw.weight}</span>&nbsp;
-                <EditWorkoutDetailsModal
-                  routineId={routineId}
-                  workoutData={rw}
-                />
-                <button
-                  className='btn btn-success'
-                  onClick={() => {
-                    dispatch(
-                      deleteWorkout({
-                        routineId,
-                        id: rw.routine_workout_id,
-                      })
-                    );
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            ))
-          ) : (
-            <></>
-          )}
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Workout</th>
+                <th>Set</th>
+                <th>RM</th>
+                <th>Weight</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {workoutData?.length > 0 ? (
+                workoutData.map((rw, idx) => (
+                  <tr key={idx}>
+                    <td>{rw.day}</td>
+                    <td>{rw.workout_name}</td>
+                    <td>{rw.set}</td>
+                    <td>{rw.repetition_motion}</td>
+                    <td>{rw.weight}</td>
+                    <td>
+                      <EditWorkoutDetailsModal
+                        routineId={routineId}
+                        workoutData={rw}
+                      />
+                    </td>
+                    <td>
+                      <button
+                        className='btn btn-success'
+                        onClick={() => {
+                          dispatch(
+                            deleteWorkout({
+                              routineId,
+                              id: rw.routine_workout_id,
+                            })
+                          );
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <></>
+              )}
+            </tbody>
+          </table>
         </Modal.Body>
         <Modal.Footer>
           <Button className='btn-success' onClick={handleClose}>

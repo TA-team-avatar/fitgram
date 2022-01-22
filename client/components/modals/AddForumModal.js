@@ -14,8 +14,7 @@ const AddForumModal = () => {
   return (
     <>
       <div>
-        {/* <Button className='btn-dark-modal' onClick={handleShow}> */}
-        <Button className='btn btn-success my-0' onClick={handleShow}>
+        <Button className='btn-dark-modal' onClick={handleShow}>
           Add Forum
         </Button>
       </div>
