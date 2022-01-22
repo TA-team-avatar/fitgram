@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import dummyData from '../constants/dummyData';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import dummyData from "../constants/dummyData";
 
 const initialState = {
   routineData: {},
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const getRoutines = createAsyncThunk(
-  'routine/getRoutine',
+  "routine/getRoutine",
   async ({ routineId }) => {
     const res = await axios.get(`/routine/${routineId}`);
     return res.data.routine;
@@ -19,7 +19,7 @@ export const getRoutines = createAsyncThunk(
 );
 
 export const getUserRoutines = createAsyncThunk(
-  'routine/getUserRoutines',
+  "routine/getUserRoutines",
   async ({ userId }) => {
     const res = await axios.get(`/routine/user/${userId}`);
     return res.data.routines;
@@ -27,7 +27,7 @@ export const getUserRoutines = createAsyncThunk(
 );
 
 export const createRoutine = createAsyncThunk(
-  'routine/createRoutine',
+  "routine/createRoutine",
   async ({ userId, name, duration }) => {
     const res = await axios.post(`/routine`, {
       userId,
@@ -39,7 +39,7 @@ export const createRoutine = createAsyncThunk(
 );
 
 export const updateRoutine = createAsyncThunk(
-  'routine/editRoutine',
+  "routine/editRoutine",
   async ({ routineId, userId, name, duration }) => {
     const res = await axios.put(`/routine/${routineId}`, {
       userId,
@@ -51,7 +51,7 @@ export const updateRoutine = createAsyncThunk(
 );
 
 export const deleteRoutine = createAsyncThunk(
-  'routine/deleteRoutine',
+  "routine/deleteRoutine",
   async ({ userId, routineId }) => {
     const res = await axios.delete(`/routine`, { data: { userId, routineId } });
     console.log(res.data);
@@ -60,24 +60,24 @@ export const deleteRoutine = createAsyncThunk(
 );
 
 export const routineSlice = createSlice({
-  name: 'routine',
+  name: "routine",
   initialState,
   reducers: {},
   extraReducers: {
     [deleteRoutine.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [deleteRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData = state.userRoutineData.filter(
         (routine) => routine.id !== payload.routine_id
       );
-      state.status = 'success';
+      state.status = "success";
     },
     [deleteRoutine.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
     },
     [updateRoutine.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [updateRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData.forEach((routine) => {
@@ -86,134 +86,43 @@ export const routineSlice = createSlice({
           routine.duration = payload.duration;
         }
       });
-      state.status = 'success';
+      state.status = "success";
     },
     [updateRoutine.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
     },
     [createRoutine.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [createRoutine.fulfilled]: (state, { payload }) => {
       state.userRoutineData.push(payload);
-      state.status = 'success';
+      state.status = "success";
     },
     [createRoutine.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
     },
     [getUserRoutines.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [getUserRoutines.fulfilled]: (state, { payload }) => {
       state.userRoutineData = payload;
-      state.status = 'success';
+      state.status = "success";
     },
     [getUserRoutines.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
     },
     [getRoutines.pending]: (state, action) => {
-      state.status = 'loading';
+      state.status = "loading";
     },
     [getRoutines.fulfilled]: (state, { payload }) => {
       state.routineData = payload; //note where this data goes different than others
-      state.status = 'success';
+      state.status = "success";
     },
     [getRoutines.rejected]: (state, action) => {
-      state.status = 'failed';
+      state.status = "failed";
     },
   },
 });
 export const {} = routineSlice.actions;
 
 export default routineSlice.reducer;
-
-// export const routineSlice = createSlice({
-//   name: 'routine',
-//   initialState,
-//   reducers: {
-//     getRoutine: (state, action) => {
-//       const routineId = action.payload.routineId;
-
-//       /**
-//        * TODO: Make API call to get routine information
-//        */
-//       let res = dummyData.routines.filter(
-//         (routine) => routine.id === routineId
-//       )[0];
-
-//       if (res) {
-//         res = JSON.parse(JSON.stringify(res));
-//       }
-
-//       state.routineData = res;
-//     },
-
-// getUserRoutines: (state, action) => {
-//   const userId = action.payload.userId;
-//   /**
-//    * TODO: Make API call to get routine information
-//    */
-//   let res = dummyData.routines.filter(
-//     (routine) => routine.owner_user_id === userId
-//   );
-
-//   if (res) {
-//     res = JSON.parse(JSON.stringify(res));
-//   }
-//   state.userRoutineData = res;
-// },
-// createRoutine: (state, action) => {
-//   const { userId, name, duration } = action.payload;
-
-//   /**
-//    * TODO:
-//    * Make API call to edit routine
-//    */
-//   state.userRoutineData.push({
-//     id: 5,
-//     name,
-//     owner_user_id: userId,
-//     duration,
-//   });
-// },
-// editRoutine: (state, action) => {
-//   const { userId, routineId, name, duration } = action.payload;
-
-//   /**
-//    * TODO:
-//    * Make API call to edit routine
-//    */
-
-//   let routines = JSON.parse(JSON.stringify(dummyData.routines));
-
-//   routines = routines.filter((routine) => routine.owner_user_id === userId);
-
-//   routines.forEach((routine) => {
-//     if (routine.id === routineId) {
-//       routine.name = name;
-//       routine.duration = duration;
-//     }
-//   });
-
-//   state.userRoutineData = routines;
-// },
-//   deleteRoutine: (state, action) => {
-//     const { userId, routineId } = action.payload;
-
-//     /**
-//      * TODO: Make API call to remove routine
-//      */
-
-//     let res = dummyData.routines.filter(
-//       (routine) =>
-//         routine.id !== routineId && routine.owner_user_id === userId
-//     );
-
-//     if (res) {
-//       res = JSON.parse(JSON.stringify(res));
-//     }
-
-//     state.userRoutineData = res;
-//   },
-// },
-// });
