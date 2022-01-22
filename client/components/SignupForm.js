@@ -25,7 +25,7 @@ const SignupForm = (props) => {
 
   return (
     <div className='modal-home1'>
-      <div className='my-5-2'>
+      <div className='signup'>
         <form onSubmit={handleSubmit}>
           <div>
             <input
@@ -104,7 +104,7 @@ const SignupForm = (props) => {
           </div>
 
           <div>
-            <button type='submit' className='btn-success'>
+            <button type='submit' className='btn-success-signup'>
               Sign Up
             </button>
           </div>

@@ -19,7 +19,7 @@ const LoginForm = (props) => {
 
   return (
     <div className='modal-home1'>
-      <div className='my-5'>
+      <div className='login'>
         <form onSubmit={handleSubmit}>
           <div>
             <input
@@ -39,7 +39,7 @@ const LoginForm = (props) => {
           </div>
 
           <div>
-            <button type='submit' className='btn-success'>
+            <button type='submit' className='btn-success-login'>
               Login
             </button>
           </div>

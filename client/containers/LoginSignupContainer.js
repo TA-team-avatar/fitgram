@@ -53,19 +53,24 @@ const LoginSignupContainer = (props) => {
     backgroundImage: `url(${bg})`,
     backgroundSize: 'contain',
     backgroundRepeat: 'no-repeat',
-    width: '100wh',
+    backgroundAttachment: 'fixed',
+    width: '450px',
     height: '100vh',
   };
+
   return (
     <div style={styles}>
       {/* // <div className='image' style="background-image: url('../gymImage.jpeg')"> */}
+
       <div>
-        <div className='app-title'>fitgram</div>
-        <div className='app-description'>
-          Never go without a workout plan again. <br></br>
-          Share your daily workout with friends. <br></br>
-          Follow the exercise programming of celebs, <br></br>
-          fitness stars, top athletes and coaches.
+        <div className='heading-container'>
+          <div className='app-title'>fitgram</div>
+          <div className='app-description'>
+            Never go without a workout plan again. <br></br>
+            Share your daily workout with friends. <br></br>
+            Follow the exercise programming of celebs, <br></br>
+            fitness stars, top athletes and coaches.
+          </div>
         </div>
         <div className='my-5'>
           <LoginForm />

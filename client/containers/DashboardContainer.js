@@ -40,7 +40,7 @@ const DashboardContainer = () => {
               <span>
                 {forum.owner_user_id === currentUserId ? (
                   <button
-                    className=' btn-success'
+                    className=' btn-success-profile'
                     onClick={() => {
                       dispatch(
                         deleteForum({
@@ -54,7 +54,7 @@ const DashboardContainer = () => {
                 ) : (
                   <Link
                     to={`/profile/${forum.owner_user_id}`}
-                    className=' btn-success'
+                    className=' btn-success-profile'
                   >
                     <button>View User Profile</button>
                   </Link>
