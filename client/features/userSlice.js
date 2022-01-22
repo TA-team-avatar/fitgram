@@ -50,28 +50,6 @@ export const userSlice = createSlice({
       state.userData = {};
       sessionStorage.clear();
     },
-    // getUserId: (state, action) => {
-    //   const token = action.payload.token;
-    //   /**
-    //    * TODO: Make API call to get User ID from the server.
-    //    */
-    //   const res = dummyData.user;
-    //   state.userId = res;
-    // },
-    // getUserName: (state, action) => {
-    //   const userId = action.payload.userId;
-    //   // console.log('line 25', userId);
-    //   /**
-    //    * TODO: Make API call to get User Name from the server.
-    //    */
-    //   let res = dummyData.users.filter((user) => user.id === userId)[0];
-    //   if (res) {
-    //     res = JSON.parse(JSON.stringify(res));
-    //   }
-    //   // console.log('line 29', res);
-    //   state.userData = res;
-    //   // console.log('state.userData', state.userData);
-    // },
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
@@ -80,7 +58,6 @@ export const userSlice = createSlice({
     [loginUser.fulfilled]: (state, { payload }) => {
       state.userId = payload.userID;
       sessionStorage.setItem('token', payload.token);
-      console.log('--------- LOGIN session set: ', payload.token);
       state.status = 'loginUser fulfilled';
     },
     [loginUser.rejected]: (state) => {
@@ -114,7 +91,6 @@ export const userSlice = createSlice({
     [signUpUser.fulfilled]: (state, { payload }) => {
       state.userId = payload.user_id;
       sessionStorage.setItem('token', payload.token);
-      console.log('--------- SIGNUP session set: ', payload.token);
       state.status = 'signUpUser fulfilled';
     },
     [signUpUser.rejected]: (state) => {
