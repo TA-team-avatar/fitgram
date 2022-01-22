@@ -56,7 +56,7 @@ const App = () => {
                   onClick={() => {
                     window.location.href = '/';
                   }}
-                  className='text-3xl border-2 border-primary-500'
+                  className='btn-dark-modal-login'
                 >
                   Log in
                 </button>
