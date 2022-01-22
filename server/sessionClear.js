@@ -2,21 +2,21 @@ const cron = require('node-cron');
 const db = require('./model/dbModel');
 
 const deleteSession = async () => {
+  let expDate = new Date();
+  expDate.setDate(expDate.getDate() - 1);
+  expDate = [expDate.toISOString()];
+
+  console.log('EXP-DATE FROM SESSION CLEAR: ', expDate);
+
   const deleteSessionQuery =
     '\
-  DELETE s.token FROM sessions s\
-  WHERE token=$1';
-
-  const token = sessionStorage.getItem('token');
-  const values = [token];
-
-  console.log('TOKEN: ', token);
+    DELETE FROM sessions \
+    WHERE date_created < $1';
 
   try {
-    const deleteSession = await db.query(deleteSessionQuery, values);
+    const deleteSession = await db.query(deleteSessionQuery, expDate);
     if (deleteSession) {
       console.log('session deleted');
-      sessionStorage.clear();
     }
   } catch (err) {
     console.log('error in deleteSession from sessionClear.js: ', err);
