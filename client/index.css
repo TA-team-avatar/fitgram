@@ -19,7 +19,7 @@
   --bs-gray-800: #073642;
   --bs-gray-900: #002b36;
 
-  --bs-secondary: #839496;
+  --bs-secondary: #242829;
   --bs-success: #2aa198;
 
   --bs-light: #fdf6e3;
@@ -99,22 +99,30 @@ h2 {
   margin: auto;
   padding: 15px;
 }
-
+.heading-container {
+  width: 100%;
+  height: 200px;
+  margin-right: auto;
+  padding-left: 125px;
+  /* padding-left: 100px; */
+  align-items: right;
+}
 .app-title {
-  display: flex;
-  justify-content: center;
-  padding-top: 25px;
-  padding-bottom: 2px;
-  padding-left: 10px;
+  margin-top: 25px;
+  padding-bottom: 10px;
+  padding-left: 360px;
+  display: flexbox;
+  position: fixed;
   font-size: calc(2.5rem + 1.5vw);
 }
 
 .app-description {
-  margin-top: 10px;
+  margin-top: 125px;
   padding-bottom: 10px;
-  margin-left: 10px;
+  padding-left: 375px;
+  /* width: 60%; */
   display: flexbox;
-  justify-content: right;
+  position: fixed;
   line-height: normal;
   font-weight: 250;
 }
@@ -436,29 +444,29 @@ progress {
   }
 }
 
-.form-label {
+/* .form-label {
   margin-bottom: 0.5rem;
-}
+} */
 
-.col-form-label {
+/* .col-form-label {
   padding-top: calc(0.375rem + 1px);
   padding-bottom: calc(0.375rem + 1px);
   margin-bottom: 0;
   font-size: inherit;
   line-height: 1.5;
-}
+} */
 
-.col-form-label-lg {
+/* .col-form-label-lg {
   padding-top: calc(0.5rem + 1px);
   padding-bottom: calc(0.5rem + 1px);
   font-size: 1.25rem;
-}
+} */
 
-.col-form-label-sm {
+/* .col-form-label-sm {
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
   font-size: 0.875rem;
-}
+} */
 
 .form-text {
   margin-top: 0.25rem;
@@ -476,8 +484,9 @@ progress {
   color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
 }  */
 .form-control-sm {
-  display: block;
-  width: 100%;
+  display: flexbox;
+  margin-left: 520px;
+  width: 60%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -493,7 +502,7 @@ progress {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
   }
@@ -505,7 +514,7 @@ progress {
 
 .form-control[type='file']:not(:disabled):not([readonly]) {
   cursor: pointer;
-}
+} */
 
 .form-control:focus {
   color: #073642;
@@ -1257,7 +1266,7 @@ textarea.form-control.is-invalid {
 }
 .span-containers {
   margin: auto;
-  width: 45%;
+  width: auto;
   padding: 15px;
 }
 .span-likes {
@@ -1328,7 +1337,21 @@ hr.comments {
   border-color: #23887f;
   text-decoration: none;
 }
-
+.div-span {
+  /* text-align: ; */
+}
+.btn-success-profile {
+  color: rgb(219, 211, 211);
+  font-size: 10px;
+  border-radius: 0.5rem;
+  float: right;
+  margin-left: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 5px;
+  background-color: #1e6963;
+  border-color: #23887f;
+}
 .btn-success {
   color: rgb(219, 211, 211);
   font-size: 10px;
@@ -1339,6 +1362,32 @@ hr.comments {
   background-color: #1e6963;
   border-color: #23887f;
 }
+.btn-success-login {
+  color: rgb(219, 211, 211);
+  font-size: 10px;
+  margin-left: 750px;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  position: right;
+  margin-top: 0.5rem;
+  padding: 5px;
+  background-color: #1e6963;
+  border-color: #23887f;
+}
+.btn-success-signup {
+  color: rgb(219, 211, 211);
+  font-size: 10px;
+  margin-left: 750px;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  position: right;
+  margin-top: 0.5rem;
+  padding: 5px;
+  background-color: #1e6963;
+  border-color: #23887f;
+}
+
 .btn-success-deleteComment {
   color: rgb(219, 211, 211) !important;
   font-size: 8px;
@@ -1926,20 +1975,31 @@ hr.comments {
   margin-bottom: 0.25rem !important;
 }
 
+.modal-home1 {
+  width: 100%;
+}
+
 .my-5 {
-  margin-top: 1rem !important;
+  /* width: 85%;
   margin-bottom: 1rem !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 10px;
+  padding-bottom: 10px;
+  padding-left: 550px; */
+  /* margin: auto; */
+  /* display: flexbox;
+  position: fixed; */
+  /* float:right; */
+  /* flex-direction: column; */
 }
-.my-5-2 {
-  margin-top: 1rem !important;
+/* .my-5-2 {
+  margin-top: 0.3rem !important;
   margin-bottom: 1rem !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  padding: 10px;
+  margin: auto;
+  display: flexbox;
+  position: fixed;
+  width: 55%;
+} */
 
 .my-auto {
   margin-top: auto !important;

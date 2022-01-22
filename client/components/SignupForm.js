@@ -24,90 +24,92 @@ const SignupForm = (props) => {
   };
 
   return (
-    <div className='my-5-2'>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type='text'
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, user_name: e.target.value })
-            }
-            placeholder='Username'
-            className='form-control-sm'
-            required
-          />
-        </div>
-        <div>
-          <input
-            type='email'
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, email: e.target.value })
-            }
-            placeholder='Email'
-            className='form-control-sm '
-            required
-          />
-        </div>
-        <div>
-          <input
-            type='text'
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, first_name: e.target.value })
-            }
-            placeholder='First Name'
-            className='form-control-sm'
-            required
-          />
-        </div>
-        <div>
-          <input
-            type='text'
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, last_name: e.target.value })
-            }
-            placeholder='Last Name'
-            className='form-control-sm'
-            required
-          />
-        </div>
-        <div>
-          <input
-            type='password'
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, password: e.target.value })
-            }
-            placeholder='Password'
-            className='form-control-sm'
-            required
-          />
-        </div>
-        <div>
-          <input
-            type='number'
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, height: e.target.value })
-            }
-            placeholder='Height (in)'
-            className='form-control-sm'
-          />
-        </div>
-        <div>
-          <input
-            type='number'
-            onChange={(e) =>
-              setUserInfo({ ...userInfo, weight: e.target.value })
-            }
-            placeholder='Weight (lbs)'
-            className='form-control-sm'
-          />
-        </div>
+    <div className='modal-home1'>
+      <div className='signup'>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              type='text'
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, user_name: e.target.value })
+              }
+              placeholder='Username'
+              className='form-control-sm'
+              required
+            />
+          </div>
+          <div>
+            <input
+              type='email'
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, email: e.target.value })
+              }
+              placeholder='Email'
+              className='form-control-sm '
+              required
+            />
+          </div>
+          <div>
+            <input
+              type='text'
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, first_name: e.target.value })
+              }
+              placeholder='First Name'
+              className='form-control-sm'
+              required
+            />
+          </div>
+          <div>
+            <input
+              type='text'
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, last_name: e.target.value })
+              }
+              placeholder='Last Name'
+              className='form-control-sm'
+              required
+            />
+          </div>
+          <div>
+            <input
+              type='password'
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, password: e.target.value })
+              }
+              placeholder='Password'
+              className='form-control-sm'
+              required
+            />
+          </div>
+          <div>
+            <input
+              type='number'
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, height: e.target.value })
+              }
+              placeholder='Height (in)'
+              className='form-control-sm'
+            />
+          </div>
+          <div>
+            <input
+              type='number'
+              onChange={(e) =>
+                setUserInfo({ ...userInfo, weight: e.target.value })
+              }
+              placeholder='Weight (lbs)'
+              className='form-control-sm'
+            />
+          </div>
 
-        <div>
-          <button type='submit' className='btn-success'>
-            Sign Up
-          </button>
-        </div>
-      </form>
+          <div>
+            <button type='submit' className='btn-success-signup'>
+              Sign Up
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
