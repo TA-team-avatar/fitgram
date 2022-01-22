@@ -26,10 +26,10 @@ const AddRoutineModal = () => {
 
   return (
     <>
-      <Button className='btn btn-secondary me-3' onClick={handleShow}>
+      <Button className='btn-dark-modal' onClick={handleShow}>
         Add Routine
       </Button>
-      <Modal show={show} onHide={handleClose}>
+      <Modal className='modal' show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Routine</Modal.Title>
         </Modal.Header>
@@ -60,22 +60,16 @@ const AddRoutineModal = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <div className='invalid-feedback'>
-                You must choose the routine!
-              </div>
             </form>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button className='btn-success' onClick={handleClose}>
             Cancel
           </Button>
           <Button
-            variant='primary'
+            className='btn-success'
             onClick={() => {
-              /**
-               * TODO: Add routine id to forum
-               */
               const forumId = forumData.id;
               dispatch(
                 addRoutineToForum({

@@ -1,9 +1,9 @@
-const express = require('express');
-
+const express = require("express");
 const router = express.Router();
+const { getWorkout } = require("../controller/workoutController");
 
-router.get('/', (req, res) => {
-  return res.sendStatus(200);
+router.get("/", getWorkout, (req, res) => {
+  return res.status(200).json({ workouts: res.locals.workouts });
 });
 
 module.exports = router;
