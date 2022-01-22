@@ -228,15 +228,25 @@ export const workoutSlice = createSlice({
     },
     [createWorkout.fulfilled]: (state, { payload }) => {
       console.log(payload.routine_id);
-      state.userRoutineWorkoutData[payload.routine_id].push({
-        id: payload.id,
-        routine_id: payload.routine_id,
-        workout_id: payload.workout_id,
-        set: payload.set,
-        repetition_motion: payload.repetition_motion,
-        weight: payload.weight,
-        day: payload.day,
-      });
+      state.userRoutineWorkoutData[payload.routine_id]
+        ? state.userRoutineWorkoutData[payload.routine_id].push({
+            id: payload.id,
+            routine_id: payload.routine_id,
+            workout_id: payload.workout_id,
+            set: payload.set,
+            repetition_motion: payload.repetition_motion,
+            weight: payload.weight,
+            day: payload.day,
+          })
+        : (state.userRoutineWorkoutData[payload.routine_id] = {
+            id: payload.id,
+            routine_id: payload.routine_id,
+            workout_id: payload.workout_id,
+            set: payload.set,
+            repetition_motion: payload.repetition_motion,
+            weight: payload.weight,
+            day: payload.day,
+          });
       state.status = 'createWorkout fulfilled';
     },
     [createWorkout.rejected]: (state) => {

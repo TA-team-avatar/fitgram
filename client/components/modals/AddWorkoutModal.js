@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { createWorkout } from '../../features/workoutSlice';
+import {
+  createWorkout,
+  getUserRoutineWorkout,
+} from '../../features/workoutSlice';
 import { Select, MenuItem } from '@material-ui/core';
 
 const AddWorkoutModal = ({ routineId }) => {
+  const userId = useSelector((state) => state.user.userId);
   const [workout, setWorkout] = useState('');
   const [day, setDay] = useState('');
   const [sets, setSets] = useState('');
@@ -114,8 +118,8 @@ const AddWorkoutModal = ({ routineId }) => {
           </Button>
           <Button
             className='btn-success'
-            onClick={() => {
-              dispatch(
+            onClick={async () => {
+              await dispatch(
                 createWorkout({
                   routine_id: routineId,
                   workout_id: workout,
@@ -125,6 +129,7 @@ const AddWorkoutModal = ({ routineId }) => {
                   day,
                 })
               );
+              await dispatch(getUserRoutineWorkout({ userId }));
               handleClose();
             }}
           >
