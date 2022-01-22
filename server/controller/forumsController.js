@@ -16,12 +16,12 @@ forumsController.getForumsAllUsers = async (req, res, next) => {
   console.log('reached getForumsAllUsers');
 
   const getForumsAllUsersQuery =
-    'SELECT * FROM forums ORDER BY forums.date_created';
+    'SELECT * FROM forums ORDER BY forums.date_created DESC';
   // console.log('values: ', values);
   try {
     const getAllForums = await db.query(getForumsAllUsersQuery);
     if (getAllForums) {
-      console.log(`from getForumsAllUsers: `, getAllForums.rows);
+      // console.log(`from getForumsAllUsers: `, getAllForums.rows);
       getAllForums.rows.forEach((forum) => {
         forum.date_created = new Date(forum.date_created).toLocaleDateString(
           'en-US',
