@@ -1,18 +1,22 @@
 const cron = require('node-cron');
 const db = require('./model/dbModel');
 
-deleteSession = async () => {
-  const deleteSessionQuery = '\
-  DELETE token FROM sessions\
+const deleteSession = async () => {
+  const deleteSessionQuery =
+    '\
+  DELETE s.token FROM sessions s\
   WHERE token=$1';
 
   const token = sessionStorage.getItem('token');
   const values = [token];
 
+  console.log('TOKEN: ', token);
+
   try {
-    const deleteSession = db.query(deleteSessionQuery, values);
+    const deleteSession = await db.query(deleteSessionQuery, values);
     if (deleteSession) {
       console.log('session deleted');
+      sessionStorage.clear();
     }
   } catch (err) {
     console.log('error in deleteSession from sessionClear.js: ', err);
@@ -21,7 +25,8 @@ deleteSession = async () => {
 
 module.exports = () => {
   console.log('running cron schedule every 20 seconds to delete old sessions');
-  cron.schedule('20 * * * * *', () => {
+  cron.schedule('* * * * *', () => {
+    console.log('HELLOOOOO');
     deleteSession();
   });
 };

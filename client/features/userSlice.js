@@ -80,6 +80,7 @@ export const userSlice = createSlice({
     [loginUser.fulfilled]: (state, { payload }) => {
       state.userId = payload.userID;
       sessionStorage.setItem('token', payload.token);
+      console.log('--------- LOGIN session set: ', payload.token);
       state.status = 'loginUser fulfilled';
     },
     [loginUser.rejected]: (state) => {
@@ -113,6 +114,7 @@ export const userSlice = createSlice({
     [signUpUser.fulfilled]: (state, { payload }) => {
       state.userId = payload.user_id;
       sessionStorage.setItem('token', payload.token);
+      console.log('--------- SIGNUP session set: ', payload.token);
       state.status = 'signUpUser fulfilled';
     },
     [signUpUser.rejected]: (state) => {
