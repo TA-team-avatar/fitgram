@@ -67,22 +67,24 @@ const ForumContainer = () => {
           {/* Routine section */}
           <div>Routine</div>
           {routine_id ? <RoutineTemplate /> : <></>}
-          {routine_id ? (
-            <button
-              className=' btn-success'
-              onClick={() => {
-                dispatch(
-                  removeRoutineToForum({
-                    forumId: Number(forumId),
-                  })
-                );
-              }}
-            >
-              Remove Routine
-            </button>
-          ) : (
-            <></>
-          )}
+          {owner_user_id === currentUserId ? (
+            routine_id ? (
+              <button
+                className=' btn-success'
+                onClick={() => {
+                  dispatch(
+                    removeRoutineToForum({
+                      forumId: Number(forumId),
+                    })
+                  );
+                }}
+              >
+                Remove Routine
+              </button>
+            ) : (
+              <></>
+            )
+          ) : null}
         </div>
         <hr />
         {/* Likes and dislikes section */}

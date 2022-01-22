@@ -91,7 +91,7 @@ const ProfileContainer = () => {
                     duration={routine.duration}
                   />
                   <button
-                    className='btn btn-success'
+                    className='btn-dark-modal'
                     onClick={async () => {
                       await dispatch(
                         deleteRoutine({

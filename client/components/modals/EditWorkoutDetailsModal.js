@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { editWorkout } from '../../features/workoutSlice';
+import {
+  editWorkout,
+  getUserRoutineWorkout,
+} from '../../features/workoutSlice';
 import { Select, MenuItem } from '@material-ui/core';
 
 const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
+  const userId = useSelector((state) => state.user.userId);
   const { routine_workout_id: id } = workoutData;
   const [workout, setWorkout] = useState('');
   const [day, setDay] = useState('');
@@ -61,6 +65,7 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
                 </MenuItem>
               ))}
             </Select>
+            <br />
             <label className='form-label mt-4'>How many sets?</label>
             <input
               className='form-control'
@@ -122,8 +127,8 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
           </Button>
           <Button
             className='btn-success'
-            onClick={() => {
-              dispatch(
+            onClick={async () => {
+              await dispatch(
                 editWorkout({
                   routine_id: routineId,
                   id,
@@ -134,6 +139,7 @@ const EditWorkoutDetailsModal = ({ routineId, workoutData }) => {
                   day,
                 })
               );
+              await dispatch(getUserRoutineWorkout({ userId }));
               handleClose();
             }}
           >
